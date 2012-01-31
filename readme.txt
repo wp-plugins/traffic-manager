@@ -26,6 +26,7 @@ This plugin is under GPL licence
 = Localization =
 
 * English (United States), default language
+* French (France) translation provided by SedLex
 
 = Features of the framework =
 
@@ -52,9 +53,12 @@ Have fun !
 
 1. Statistics on the web traffic
 2. Distribution of the OS and browser
-3. DÃ©tails on connections
+3. Details on connections
 
 == Changelog ==
+
+=1.0.2=
+* Add French Translations
 
 =1.0.1=
 * First release
@@ -66,4 +70,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:469dcf597152ef93d3bf743d460611da
+InfoVersion:2616045a35a4b7c9b763c9520d1bba31
