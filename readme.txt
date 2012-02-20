@@ -9,17 +9,19 @@ Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: trunk
 
-You will be able to manage the Internet traffic on your website and to enhance it by: 
+You will be able to manage the Internet traffic on your website and to enhance it.
 
 == Description ==
 
-You will be able to manage the Internet traffic on your website and to enhance it by: 
+You will be able to manage the Internet traffic on your website and to enhance it.
 
-* See statistics on users browsing your website; 
-* See statistics on web crawler;
-* Inform Google, Bing, etc. when your site is updated;
-* Configure Google Analytics;
-* Add sitemap.xml information on your website;
+You may: 
+
+* see statistics on users browsing your website; 
+* see statistics on web crawler;
+* inform Google, Bing, etc. when your site is updated;
+* configure Google Analytics;
+* add sitemap.xml information on your website;
 
 This plugin is under GPL licence
 
@@ -57,10 +59,13 @@ Have fun !
 
 == Changelog ==
 
-=1.0.2=
+= 1.0.3 =
+* Fix a bug with local data
+
+= 1.0.2 =
 * Add French Translations
 
-=1.0.1=
+= 1.0.1 =
 * First release
 
 == Frequently Asked Questions ==
@@ -70,4 +75,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:2616045a35a4b7c9b763c9520d1bba31
+InfoVersion:7cb3eb6825bd80735c7ac609eb83f602
