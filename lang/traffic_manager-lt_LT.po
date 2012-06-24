@@ -1,0 +1,305 @@
+msgid ""
+msgstr ""
+"Generated: SL Framework (http://www.sedlex.fr)\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-02-25T13:36:01+00:00\n"
+"Last-Translator: Zydrius <http://meninisautolyginimas.lt>\n"
+"Last-Translator: ydrius <http://meninisautolyginimas.lt>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Poedit-Language: Lithuanian\n"
+"X-Poedit-Country: Lithuania\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+
+msgid "3 Year"
+msgstr "3 metai"
+
+msgid "1 Year"
+msgstr "1 metai"
+
+msgid "6 Month"
+msgstr "6 mėn."
+
+msgid "1 Month"
+msgstr "1 mėn."
+
+msgid "2 Week"
+msgstr "2 savaitės"
+
+msgid "1 Week"
+msgstr "1 savaitė"
+
+msgid "The authentication with Google Analytics is successful"
+msgstr "Autentifikavimas su &quot;Google Analytics&quot; yra sėkmingas"
+
+msgid "The authentication with Google Analytics have failed... please retry!"
+msgstr "Autentifikavimas su &quot;Google Analytics&quot; nepavyko ... bandykite dar kartą!"
+
+msgid "The Google Analytics's authorization has been revoked as requested"
+msgstr "&quot;Google Analytics&quot; leidimas buvo atšauktas, kaip reikalaujama"
+
+msgid "Local Web Statistics"
+msgstr "Vietinė Web statistika"
+
+msgid "Do you want to manage the web statistics locally?"
+msgstr "Ar norite, kad būtų galima valdyti interneto statistiką vietoje?"
+
+msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
+msgstr "Jei taip, statistika bus saugomi vietos SQL duomenų bazės. Būkite tikri, kad turite laisvą vietą savo duomenų bazėje"
+
+msgid "The next compression of the database will occur on %s"
+msgstr "Kitas duomenų bazės suspaudimas įvyks% s"
+
+msgid "Do you want to display the last viewed pages?"
+msgstr "Ar norite pamatyti paskutinius peržiūrėtus puslapius?"
+
+msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
+msgstr "Jei taip, sąrašas bus rodomas per pastaruosius peržiūrėtus puslapius, įskaitant vartotojo IP, url peržiūrėtą puslapį, laikas, naršyklė vardas, OS pavadinimas ir tt..."
+
+msgid "How many pages should be displayed?"
+msgstr "Kiek puslapių turi būti rodoma?"
+
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr "Rodyti statistinius duomenis apie apsilankymų ir peržiūrėtų puslapių skaičių?"
+
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr "Rodyti statistiką apie lankytojus, OS ir naršyklę tipų?"
+
+msgid "What are the colors for the charts?"
+msgstr "Kokios topų spalvos?"
+
+msgid "The default colors are %s."
+msgstr "Numatytosios spalvos yra %s."
+
+msgid "What are the period for which charts should be provided?"
+msgstr "Koks yra laikotarpis, už kurį turėtų būti pateiktos diagramos?"
+
+msgid "Do you want to track the logged user?"
+msgstr "Ar jūs norite sekti prisijungusius vartotojus?"
+
+msgid "Google Analytics Web Statistics"
+msgstr "Google Analytics Web statistika"
+
+msgid "Do you want to manage the web statistics with Google Analytics?"
+msgstr "Ar norite valdyti interneto statistiką su Google Analytics?"
+
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
+msgstr "Dėl papildomos informacijos prašome apsilankykite tinklapyje.  Reikia prisiregistruoti tinklapyje"
+
+msgid "Google Analytics ID:"
+msgstr "Google Analytics ID:"
+
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr "&quot;Google Analytics ID turėtų būti panašus į %s."
+
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr "ūs taip pat galite % sauthenticate%s su jūsų &quot;Google&quot; sąskaita ir taip palengvinti šį procesą."
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr "Nes dabar, tai yra patvirtinta su jūsų &quot;Google Analytics&quot; paskyrų puslapis. %s Unapprove autentiškumo %s"
+
+msgid "Select..."
+msgstr "Pasirinkite..."
+
+msgid "Choose your website in this list"
+msgstr "Šiame sąraše pasirinkite savo svetainę"
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr "Atkreipkite dėmesį, kad &quot;Google Analytics ID %s yra %s."
+
+msgid "No Google Analytics ID configured for now."
+msgstr "Google Analytics ID yra nesukonfigūruotas dabar."
+
+msgid "Sitemaps Configuration"
+msgstr "Puslapio konfiguravimas"
+
+msgid "Do you want to compute a Sitemaps file?"
+msgstr "Ar norite skaičiuoti kompiuterius apsilankius Sitemap?"
+
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr "Sitemap XML failą, kuriame URL jūsų svetainėje. Jis informuoja apie paiešką URL  į jūsų svetainę."
+
+msgid "No sitemap has been generated yet."
+msgstr "Sitemap nebuvo sugeneruotas dar."
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr "Klaida generuojant sitemap: %s."
+
+msgid "The last sitemap has been generated on %s."
+msgstr "Paskutinis sitemap buvo sugeneruotas į %s."
+
+msgid "How many posts and pages will be included in this file?"
+msgstr "Kiek įrašų ir puslapių bus įtraukti į šį failą?"
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr "Jei turite per daug pranešimų, nustatyti šį skaičių iki 1000, pavyzdžiui, kad būtų išvengta bet kokios atminties problemų. Jei šį skaičių bus 0, visi pranešimai bus įtraukti.."
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr "Ar norite pranešti apie %s, kai svetainės struktūra yra atnaujinama?"
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr "%s dar niekada nebuvo pranešta. Laukiama kito atnaujinimo."
+
+msgid "An error occured when notifying %s for the last time."
+msgstr "Klaida, kai paskutinį kartą pranešinėjo apie %s."
+
+msgid "%s has be notified for the last time on %s."
+msgstr "%s paskutinį kartą buvo pranešta %s."
+
+msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
+msgstr "Jūs galite pamatyti čia savo svetainės statistiką vietoje arba su Google Analytics) ir pagerinti būsimą srautą informuoantj interneto skaitytojus apie savo turinį (Sitemaps ir pranešimai)."
+
+msgid "from %s to %s"
+msgstr "iš %s į %s"
+
+msgid "Week %s (%s)"
+msgstr "Savaitė %s (%s)"
+
+msgid "%s %s"
+msgstr "%s %s"
+
+msgid "Google Analytics Data"
+msgstr "Google Analytics duomenys"
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr "Pagal Google Analytics duomenų, čia yra apsilankymų ir puslapių peržiūrų skaičius."
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr "DĖMESIO: &quot;Google&quot; mano, kad savaitė prasideda sekmadienį, kuris yra ne ISO 8601 reikalavimas (paprastai prasideda pirmadieniais). Taigi būkite atsargūs, kai lyginant su jūsų kalendorine savaite: per savaitę numeriai gali būti skirtingi."
+
+msgid "Month"
+msgstr "Mėnuo"
+
+msgid "Number of Visitors"
+msgstr "Lankytojų skaičius"
+
+msgid "Number of Page Views"
+msgstr "Puslapių peržiūrėjimų skaičius"
+
+msgid "Visitors and Page Views (%s)"
+msgstr "Lankytojai ir puslapio peržiūros (%s)"
+
+msgid "Time Line"
+msgstr "Laiko juosta"
+
+msgid "Local Data"
+msgstr "Vietiniai duomenys"
+
+msgid "According to Local Data, here is the number of visits and the number of page views."
+msgstr "Pagal vietinius duomenys, čia yra apsilankymų ir puslapių peržiūrėtų skaičių."
+
+msgid "Visits Count"
+msgstr "Apsilankymų skaičius"
+
+msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
+msgstr "Pagal Google Analytics duomenys, čia yra naršyklės tipų ir OS pasiskirstymas."
+
+msgid "Browser name"
+msgstr "Naršyklė"
+
+msgid "Number of visitors"
+msgstr "Lankytojų skaičius"
+
+msgid "Browser distribution (%s)"
+msgstr "Naršyklių pasiskirstymas (%s)"
+
+msgid "OS name"
+msgstr "Operacinės sistemos pavadinimas"
+
+msgid "Operating System distribution (%s)"
+msgstr "Operacinė sistema pasiskirstymas (%s)"
+
+msgid "According to Local Data, here is the distribution of browser types and OS."
+msgstr "Pagal vietinius duomenys, čia buvo naršyklių tipų ir OS pasiskirstymas."
+
+msgid "Browser and OS Statistics"
+msgstr "Naršyklių ir OS statistika"
+
+msgid "Time"
+msgstr "Laikas"
+
+msgid "IP Address"
+msgstr "IP adresas"
+
+msgid "Viewed Page"
+msgstr "Peržiūrėtas puslapis"
+
+msgid "Browser"
+msgstr "Naršyklė"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Time spent"
+msgstr "Praleistas laikas"
+
+msgid "If the entry is displayed for the first time, the time field will be in bold characters."
+msgstr "Jei įrašas bus rodomas pirmą kartą, laukas bus paryškintas."
+
+msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
+msgstr "Jei vartotojas pasiekia jūsų svetainę pirmą kartą šiandien, IP laukas bus paryškintas."
+
+msgid "Searched keywords are been stripped : the search is performed from the secured google website (i.e. with https)."
+msgstr "Ieškomi raktiniai žodžiai buvo: paieška atliekama iš garantuotos Google tinklapio( tai yra su https)."
+
+msgid "Plugin: %s"
+msgstr "Įskiepis: %s"
+
+msgid "Plugin: %s, website: %s"
+msgstr "Įskiepis: %s, svetainė: %s"
+
+msgid "No data for now... Please wait until someone visits your website"
+msgstr "Nėra dar duomenų... Prašome palaukti, kol kas nors aplanko jūsų svetainę"
+
+msgid "Details on the Last %s Viewed Pages"
+msgstr "Išsami informacija apie paskutinį %s peržiūrėta puslapį"
+
+msgid "You have configured no graph... Please go on the parameters tab to configure them."
+msgstr "Jūs nenustatėte jokio grafiko ... Prašome eiti į skirtuką Parametrai ir sukonfigūruoti juos."
+
+msgid "Web Statistics"
+msgstr "Web statistika"
+
+msgid "Parameters"
+msgstr "Parametrai"
+
+msgid "Manage translations"
+msgstr "Vertimų manageris"
+
+msgid "Give feedback"
+msgstr "Atsiliepimai"
+
+msgid "Other plugins"
+msgstr "Kiti įskiepiai"
+
+msgid "An unknown error occured during the API request"
+msgstr "Įvyko nežinoma klaida per API prašymą"
+
+msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
+msgstr "Leidimas atrodo, kad pasibaigė arba buvo atšauktas. Prašome panaikinti leidimą (žr. žemiau) ir vėl prisijungti!"
+
+msgid "No token provided!"
+msgstr "Nėra jokių raktų!"
+
+msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
+msgstr "Failas %s negali būti sukurtas. Prašome įsitikinti, kad failo teisės leidžia rašyti į šį aplanką: %s"
+
+msgid "Problem with folder rights on %s"
+msgstr "Problema su bylos teisėmis %s"
+
+msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
+msgstr "Failas% s negali būti ištrintas. Jūs turite problemų su failų leidimu arba saugumo apribojimu."
+

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-01-31T10:41:11+00:00\n"
+"PO-Revision-Date: 2012-06-24T12:25:15+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgid "Local Web Statistics"
 msgstr "Statistiques Web locales"
 
 msgid "Do you want to manage the web statistics locally?"
-msgstr "Voulez-vous gérer les statistiques web localement ? "
+msgstr "Voulez-vous gérer les statistiques web localement ?"
 
 msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
 msgstr "Si oui, les statistiques seront stockées dans la base de données SQL. Assurez-vous que vous disposez d&#039;espace mémoire libre dans votre base de données."
@@ -90,7 +90,7 @@ msgid "Google Analytics Web Statistics"
 msgstr "Statistiques Web de Google Analytics"
 
 msgid "Do you want to manage the web statistics with Google Analytics?"
-msgstr "Voulez-vous gérer les statistiques web avec Google Analytics ? "
+msgstr "Voulez-vous gérer les statistiques web avec Google Analytics ?"
 
 msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
 msgstr "Pour de plus amples informations, merci de visiter le site %s. De plus, vous pouvez consulter les accès que vous avez autorisé sur cette %spage%s."
@@ -102,10 +102,10 @@ msgid "The Google Analytics ID is should be similar to %s."
 msgstr "L&#039;identifiant Google Analytics doit être de la forme %s."
 
 msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
-msgstr "Vous pouvez également vous %sauthentifier%s avec votre compte Google Analytics et ainsi simplifier le processus. "
+msgstr "Vous pouvez également vous %sauthentifier%s avec votre compte Google Analytics et ainsi simplifier le processus."
 
 msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
-msgstr "Pour l&#039;instant, cette page est authentifiée avec votre compte Google Analytics. %sDésapprouvez l&#039;authentifiaction%s"
+msgstr "Pour l&#039;instant, cette page est authentifiée avec votre compte Google Analytics. %sDésapprouvez l&#039;authentification%s"
 
 msgid "Select..."
 msgstr "Sélectionnez..."
@@ -147,7 +147,7 @@ msgid "Do you want to notify %s when the sitemap is updated?"
 msgstr "Voulez-vous notifier %s quand le sitemap sera mis à jour ?"
 
 msgid "%s has never been notified yet. Waiting for the next update."
-msgstr "%s n&#039;a jamais été mis à jour pour l&#039;instant. En attente de la prochaine mise à jour. "
+msgstr "%s n&#039;a jamais été mis à jour pour l&#039;instant. En attente de la prochaine mise à jour."
 
 msgid "An error occured when notifying %s for the last time."
 msgstr "Une erreur est survenue lors de la notification de %s lors de la dernère tentative."
@@ -162,7 +162,7 @@ msgid "from %s to %s"
 msgstr "du %s au %s"
 
 msgid "Week %s (%s)"
-msgstr "Semaine %s (%)"
+msgstr "Semaine %s (%s)"
 
 msgid "%s %s"
 msgstr "%s %s"
@@ -172,6 +172,15 @@ msgstr "Données Google Analytics"
 
 msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
 msgstr "Selon les données de Google Analytics, voici le nombre de visites et le nombre de pages vues."
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr "Aujourd&#039;hui, %s personnes ont visité votre site et %s pages ont été vues (%s et %s pour hier)"
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr "Cette semaine, %s personnes ont visité votre site et %s pages ont été vues (%s et %s pour la semaine dernière)"
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr "Ce mois ci, %s personnes ont visité votre site et %s pages ont été vues (%s et %s pour le mois dernier)"
 
 msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
 msgstr "NOTA : Google considère que les semaines commencent le dimanche ce qui n&#039;est pas conforme avec l&#039;ISO 8601 (les semaines commançant normallement le lundi). Ainsi, soyez vigilalnt quand vous comparer les semaines avec votre calendrier : le numéro de semaine peut être légèrement différent.."
@@ -255,10 +264,10 @@ msgid "Searched keywords are been stripped : the search is performed from the se
 msgstr "Les mots recherchés ont été masqués : la recherche a été effectuée à partir d&#039;une page Google sécurisée (i.e. avec https)"
 
 msgid "Plugin: %s"
-msgstr "Plugin: %s"
+msgstr "Plugin : %s"
 
 msgid "Plugin: %s, website: %s"
-msgstr "Plugin: %s, site web: %s"
+msgstr "Plugin : %s, site web : %s"
 
 msgid "No data for now... Please wait until someone visits your website"
 msgstr "Aucune donnée pour l&#039;instant... Merci d&#039;attendre jusqu&#039;à ce que quelqu&#039;un visite votre site web."
@@ -298,7 +307,4 @@ msgstr "Le fichier %s ne peut pas être créé. Merci de vérifier que les droit
 
 msgid "Problem with folder rights on %s"
 msgstr "Problème avec les droits sur le répertoire %s"
-
-msgid "The file %s cannot be deleted. You should have a problem with file permissions or security restrictions."
-msgstr "Le fichier %s ne peut pas être supprimé. Vous devez avoir un problème avec les droits d&#039;accès ou les limitations de sécurité."
 

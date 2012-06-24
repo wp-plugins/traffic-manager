@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.0.3
+Version: 1.0.4
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -67,7 +67,8 @@ class traffic_manager extends pluginSedLex {
 		
 		// activation and deactivation functions (Do not modify)
 		register_activation_hook(__FILE__, array($this,'install'));
-		register_deactivation_hook(__FILE__, array($this,'uninstall'));
+		register_deactivation_hook(__FILE__, array($this,'deactivate'));
+		register_uninstall_hook(__FILE__, array($this,'uninstall_removedata'));
 	}
 
 	/**====================================================================================================================================================
@@ -178,10 +179,13 @@ class traffic_manager extends pluginSedLex {
 	*/
 	
 	function javascript_UserWebStat() {	
+		
 		// Si on est dans la partie d'administration, on ne log rien
 		if (is_admin()) {
 			return ; 
 		}
+		// On charge le jquery si ce n'est deja fait
+		wp_enqueue_script("jquery") ; 
 		
 		if ($this->get_param('localwebstat')) {
 			$current_user = wp_get_current_user();			
@@ -318,7 +322,11 @@ class traffic_manager extends pluginSedLex {
 		global $_GET ; 
 		global $_POST ; 
 		
-		
+		// On concatene si besoin pour economiser de la place dans la bdd
+		if ($this->get_param('local_cron_concat')=="") {
+			$this->set_param('local_cron_concat', strtotime(date("Y-m-d 0:0:1")." +1 day")) ; 
+		}
+				
 		// Si la page est avec un GET token, on refresh en postant 
 		if (isset($_GET['token']))  {
 			?>
@@ -497,13 +505,13 @@ class traffic_manager extends pluginSedLex {
 		$parameters = ob_get_clean() ; 
 		
 		if ($this->get_param('sitemaps')) {
-				$nameFile = "sitemap.xml" ; 
-				$resu = $this->generateSitemaps($nameFile) ; 
-				// If an error occurred
-				if (isset($resu['error'])) {
-					echo "<div class='error fade'><p>".$resu['error']."</p></div>" ; 				
-				} 
-			}
+			$nameFile = "sitemap.xml" ; 
+			$resu = $this->generateSitemaps($nameFile) ; 
+			// If an error occurred
+			if (isset($resu['error'])) {
+				echo "<div class='error fade'><p>".$resu['error']."</p></div>" ; 				
+			} 
+		}
 	
 		?>
 		
@@ -597,6 +605,8 @@ class traffic_manager extends pluginSedLex {
 							
 							$first = true ; 
 							$nb = 0 ; 
+							$last_persons = "0" ; 
+							$last_visits = "0" ; 
 							foreach ($data['visits'] as $k => $d) {
 								if ($pas=="ga:date") {
 									if (!$first) $rows .= "," ; 
@@ -631,12 +641,25 @@ class traffic_manager extends pluginSedLex {
 										$nb++ ; 
 									}
 								}
+								$beforelast_persons = $last_persons ; 	
+								$beforelast_visits = $last_visits ; 
+								$last_persons = $visit ; 
+								$last_visits = $pageViews ; 
 							}
 							$width = "900" ; 
 							$height = "400" ; 
 							?>
 							<h3><?php echo __('Google Analytics Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Google Analytics Data, here is the number of visits and the number of page views.', $this->pluginID)?></p>
+							<p><?php 
+								if ($pas=="ga:date") {
+									echo sprintf(__('Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								} else if ($pas=="ga:year,ga:week") {
+									echo sprintf(__('This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								} else if ($pas=="ga:year,ga:month") {
+									echo sprintf(__('This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								}?>
+							</p>
 							<?php
 							if ($pas=="ga:year,ga:week") {
 								?>
@@ -668,12 +691,15 @@ class traffic_manager extends pluginSedLex {
 							<?php
 						}	
 						
+						
 						if ( ($this->get_param('localwebstat')) && ($this->get_param('local_show_visits')) && (isset($data_local['visits'])) ) {
 							$google_show = true ; 
 							$rows = "" ; 
 							$first = true ; 
 							$nb = 0 ; 
 							
+							$last_persons = "0" ; 
+							$last_visits = "0" ; 
 							foreach ($data_local['visits'] as $k => $d) {
 								$k = trim($k) ; 
 								if ($pas_local=="day") {
@@ -709,12 +735,25 @@ class traffic_manager extends pluginSedLex {
 										$nb++ ; 
 									}
 								}
+								$beforelast_persons = $last_persons ; 	
+								$beforelast_visits = $last_visits ; 
+								$last_persons = $visit ; 
+								$last_visits = $pageViews ; 
 							}
 							$width = "900" ; 
 							$height = "400" ; 
 							?>
 							<h3><?php echo __('Local Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Local Data, here is the number of visits and the number of page views.', $this->pluginID)?></p>
+							<p><?php 
+								if ($pas_local=="day") {
+									echo sprintf(__('Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								} else if ($pas_local=="week") {
+									echo sprintf(__('This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								} else if ($pas_local=="month") {
+									echo sprintf(__('This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month).', $this->pluginID), "<span style='font-size:120%;font-weight:bold;'>".$last_persons."</span>","<span style='font-size:120%;font-weight:bold;'>".$last_visits."</span>","<span style='font-weight:bold;'>".$beforelast_persons."</span>", "<span style='font-weight:bold;'>".$beforelast_visits."</span>") ; 
+								}?>
+							</p>							
 							<div id="local_visits_count" style="margin: 0px auto; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 							<script  type="text/javascript">
 								google.setOnLoadCallback(CountVisits_local);
@@ -738,6 +777,8 @@ class traffic_manager extends pluginSedLex {
 							</script>
 							<?php
 						}
+						
+
 						
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
