@@ -1,0 +1,310 @@
+msgid ""
+msgstr ""
+"Generated: SL Framework (http://www.sedlex.fr)\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-06-26T05:50:38+00:00\n"
+"Last-Translator: ollol <lorenzoapra.jimdo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: Italy\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+
+msgid "3 Year"
+msgstr "3 Anni"
+
+msgid "1 Year"
+msgstr "1 Anno"
+
+msgid "6 Month"
+msgstr "6 Mesi"
+
+msgid "1 Month"
+msgstr "1 Mese"
+
+msgid "2 Week"
+msgstr "2 Settimane"
+
+msgid "1 Week"
+msgstr "1 Settimana"
+
+msgid "The authentication with Google Analytics is successful"
+msgstr "L&#039;autenticazione con Google Analytics è avvenuta con successo"
+
+msgid "The authentication with Google Analytics have failed... please retry!"
+msgstr "L&#039;autenticazione con Google Analytics è fallita.... Per favore riprovare"
+
+msgid "The Google Analytics's authorization has been revoked as requested"
+msgstr "L&#039;autorizzazione per Google Analytics è stata revocata come richiesto"
+
+msgid "Local Web Statistics"
+msgstr "Statistiche web locali"
+
+msgid "Do you want to manage the web statistics locally?"
+msgstr "Vuoi gestire le statistiche web a livello locale?"
+
+msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
+msgstr "Se è così, le statistiche saranno memorizzate nel database locale SQL. Assicurarsi di avere spazio libero nel vostro database"
+
+msgid "The next compression of the database will occur on %s"
+msgstr "La compressione successiva del database avverrà in %s"
+
+msgid "Do you want to display the last viewed pages?"
+msgstr "Vuoi visualizzare le ultime pagine viste?"
+
+msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
+msgstr "Se è così, un elenco delle ultime pagine viste verrà visualizzata includendo anche IP dell&#039;utente, l&#039;URL della pagina visualizzata, il tempo, il referer, il nome del browser, il nome del sistema operativo, ecc"
+
+msgid "How many pages should be displayed?"
+msgstr "Quante pagine devono essere visualizzate?"
+
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr ""
+
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr ""
+
+msgid "What are the colors for the charts?"
+msgstr ""
+
+msgid "The default colors are %s."
+msgstr ""
+
+msgid "What are the period for which charts should be provided?"
+msgstr ""
+
+msgid "Do you want to track the logged user?"
+msgstr ""
+
+msgid "Google Analytics Web Statistics"
+msgstr ""
+
+msgid "Do you want to manage the web statistics with Google Analytics?"
+msgstr ""
+
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
+msgstr ""
+
+msgid "Google Analytics ID:"
+msgstr ""
+
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr ""
+
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr ""
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr ""
+
+msgid "Select..."
+msgstr ""
+
+msgid "Choose your website in this list"
+msgstr ""
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr ""
+
+msgid "No Google Analytics ID configured for now."
+msgstr ""
+
+msgid "Sitemaps Configuration"
+msgstr ""
+
+msgid "Do you want to compute a Sitemaps file?"
+msgstr ""
+
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr ""
+
+msgid "No sitemap has been generated yet."
+msgstr ""
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr ""
+
+msgid "The last sitemap has been generated on %s."
+msgstr ""
+
+msgid "How many posts and pages will be included in this file?"
+msgstr ""
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr ""
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr ""
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr ""
+
+msgid "An error occured when notifying %s for the last time."
+msgstr ""
+
+msgid "%s has be notified for the last time on %s."
+msgstr ""
+
+msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
+msgstr ""
+
+msgid "from %s to %s"
+msgstr ""
+
+msgid "Week %s (%s)"
+msgstr ""
+
+msgid "%s %s"
+msgstr ""
+
+msgid "Google Analytics Data"
+msgstr ""
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr ""
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr ""
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr ""
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr ""
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Number of Visitors"
+msgstr ""
+
+msgid "Number of Page Views"
+msgstr ""
+
+msgid "Visitors and Page Views (%s)"
+msgstr ""
+
+msgid "Time Line"
+msgstr ""
+
+msgid "Local Data"
+msgstr ""
+
+msgid "According to Local Data, here is the number of visits and the number of page views."
+msgstr ""
+
+msgid "Visits Count"
+msgstr ""
+
+msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
+msgstr ""
+
+msgid "Browser name"
+msgstr ""
+
+msgid "Number of visitors"
+msgstr ""
+
+msgid "Browser distribution (%s)"
+msgstr ""
+
+msgid "OS name"
+msgstr ""
+
+msgid "Operating System distribution (%s)"
+msgstr ""
+
+msgid "According to Local Data, here is the distribution of browser types and OS."
+msgstr ""
+
+msgid "Browser and OS Statistics"
+msgstr ""
+
+msgid "Time"
+msgstr "Ora"
+
+msgid "IP Address"
+msgstr "Indirizzo IP"
+
+msgid "Viewed Page"
+msgstr ""
+
+msgid "Browser"
+msgstr "Browser"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Referer"
+msgstr ""
+
+msgid "Time spent"
+msgstr "Tempo usato"
+
+msgid "If the entry is displayed for the first time, the time field will be in bold characters."
+msgstr ""
+
+msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
+msgstr ""
+
+msgid "Searched keywords are been stripped : the search is performed from the secured google website (i.e. with https)."
+msgstr ""
+
+msgid "Plugin: %s"
+msgstr ""
+
+msgid "Plugin: %s, website: %s"
+msgstr ""
+
+msgid "No data for now... Please wait until someone visits your website"
+msgstr ""
+
+msgid "Details on the Last %s Viewed Pages"
+msgstr ""
+
+msgid "You have configured no graph... Please go on the parameters tab to configure them."
+msgstr ""
+
+msgid "Web Statistics"
+msgstr ""
+
+msgid "Parameters"
+msgstr ""
+
+msgid "Manage translations"
+msgstr ""
+
+msgid "Give feedback"
+msgstr ""
+
+msgid "Other plugins"
+msgstr "Altri plugins"
+
+msgid "An unknown error occured during the API request"
+msgstr ""
+
+msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
+msgstr ""
+
+msgid "No token provided!"
+msgstr ""
+
+msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
+msgstr ""
+
+msgid "Problem with folder rights on %s"
+msgstr ""
+
