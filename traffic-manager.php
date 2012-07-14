@@ -324,7 +324,7 @@ class traffic_manager extends pluginSedLex {
 		
 		// On concatene si besoin pour economiser de la place dans la bdd
 		if ($this->get_param('local_cron_concat')=="") {
-			$this->set_param('local_cron_concat', strtotime(date("Y-m-d 0:0:1")." +1 day")) ; 
+			$this->set_param('local_cron_concat', strtotime(date_i18n("Y-m-d 0:0:1")." +1 day")) ; 
 		}
 				
 		// Si la page est avec un GET token, on refresh en postant 
@@ -369,7 +369,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('localwebstat', __('Do you want to manage the web statistics locally?', $this->pluginID),"", "", array('local_track_user', 'local_detail', 'local_detail_nb', 'local_show_visits', 'local_show_type', 'local_color', 'local_period')) ; 
 			$params->add_comment(__("If so, stats will be stored in the local SQL database. Be sure that you have free space into your database", $this->pluginID)) ; 
 			if ($this->get_param('localwebstat')) {
-				$params->add_comment(sprintf(__("The next compression of the database will occur on %s", $this->pluginID), date("Y-m-d H:i:s", $this->get_param('local_cron_concat')))) ; 
+				$params->add_comment(sprintf(__("The next compression of the database will occur on %s", $this->pluginID), date_i18n("Y-m-d H:i:s", $this->get_param('local_cron_concat')))) ; 
 			}
 			
 			$params->add_param('local_detail', __('Do you want to display the last viewed pages?', $this->pluginID),"", "", array('local_detail_nb')) ; 
@@ -460,7 +460,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_comment(__("A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling.", $this->pluginID)) ; 
 			if ($this->get_param('sitemaps_date')=="") {
 				$params->add_comment(__("No sitemap has been generated yet.", $this->pluginID)) ; 
-			} else if (@date("Ymd", $this->get_param('sitemaps_date'))===FALSE) {
+			} else if (@date_i18n("Ymd", $this->get_param('sitemaps_date'))===FALSE) {
 				$params->add_comment(sprintf(__("An error occured on the next sitemap generation : %s.", $this->pluginID), $this->get_param('sitemaps_date'))) ; 
 			} else {
 				$params->add_comment(sprintf(__("The last sitemap has been generated on %s.", $this->pluginID), $this->get_param('sitemaps_date'))) ; 
@@ -473,7 +473,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('sitemaps_notify_'.$name_crawler_s, sprintf(__('Do you want to notify %s when the sitemap is updated?', $this->pluginID), $name_crawler)) ; 
 			if ($this->get_param('sitemaps_notify_'.$name_crawler_s.'_date')=="") {
 				$params->add_comment(sprintf(__("%s has never been notified yet. Waiting for the next update.", $this->pluginID), $name_crawler)) ; 
-			} else if (@date("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
+			} else if (@date_i18n("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
 				$params->add_comment(sprintf(__("An error occured when notifying %s for the last time.", $this->pluginID), $name_crawler)) ; 
 			} else {
 				$params->add_comment(sprintf(__("%s has be notified for the last time on %s.", $this->pluginID), $name_crawler, $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))) ; 
@@ -484,7 +484,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('sitemaps_notify_'.$name_crawler_s, sprintf(__('Do you want to notify %s when the sitemap is updated?', $this->pluginID), $name_crawler)) ; 
 			if ($this->get_param('sitemaps_notify_'.$name_crawler_s.'_date')=="") {
 				$params->add_comment(sprintf(__("%s has never been notified yet. Waiting for the next update.", $this->pluginID), $name_crawler)) ; 
-			} else if (@date("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
+			} else if (@date_i18n("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
 				$params->add_comment(sprintf(__("An error occured when notifying %s for the last time.", $this->pluginID), $name_crawler)) ; 
 			} else {
 				$params->add_comment(sprintf(__("%s has be notified for the last time on %s.", $this->pluginID), $name_crawler, $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))) ; 
@@ -495,7 +495,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('sitemaps_notify_'.$name_crawler_s, sprintf(__('Do you want to notify %s when the sitemap is updated?', $this->pluginID), "Bing & Yahoo")) ; 
 			if ($this->get_param('sitemaps_notify_'.$name_crawler_s.'_date')=="") {
 				$params->add_comment(sprintf(__("%s has never been notified yet. Waiting for the next update.", $this->pluginID), $name_crawler)) ; 
-			} else if (@date("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
+			} else if (@date_i18n("Ymd", $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))===FALSE) {
 				$params->add_comment(sprintf(__("An error occured when notifying %s for the last time.", $this->pluginID), $name_crawler)) ; 
 			} else {
 				$params->add_comment(sprintf(__("%s has be notified for the last time on %s.", $this->pluginID), $name_crawler, $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))) ; 
@@ -542,21 +542,21 @@ class traffic_manager extends pluginSedLex {
 					//----------------------------------
 				
 					$period = $this->get_param('google_period') ; 
-					$date2 = date("Y-m-d") ; 
-					$date1 = date("Y-m-d", strtotime($date2 . " - 1 month")) ;
+					$date2 = date_i18n("Y-m-d") ; 
+					$date1 = date_i18n("Y-m-d", strtotime($date2 . " - 1 month")) ;
 					$pas = "ga:date" ; 
 					$ptd=sprintf(__("from %s to %s", $this->pluginID), date_i18n(get_option('date_format') , strtotime($date1)), date_i18n(get_option('date_format') , strtotime($date2))) ; 
 					foreach ($period as $p) {
 						if (strpos($p[0], "*")!==false) {
 							switch ($p[1]) {
-								case 'a3' : $date1 = date("Y-m-d", strtotime(date("Y-m-01", strtotime($date2 . " -3 years")))) ; $pas = "ga:year,ga:month" ; break ; 
+								case 'a3' : $date1 = date_i18n("Y-m-d", strtotime(date_i18n("Y-m-01", strtotime($date2 . " -3 years")))) ; $pas = "ga:year,ga:month" ; break ; 
 								// -1day car commence le dimanche
-								case 'a1' : $date1 = date("Y-m-d", strtotime(date("o-\\WW", strtotime($date2 . " -1 year")) ." -1 day")) ;  $pas = "ga:year,ga:week" ; break ; 
+								case 'a1' : $date1 = date_i18n("Y-m-d", strtotime(date_i18n("o-\\WW", strtotime($date2 . " -1 year")) ." -1 day")) ;  $pas = "ga:year,ga:week" ; break ; 
 								// -1day car commence le dimanche
-								case 'm6' : $date1 = date("Y-m-d", strtotime(date("o-\\WW", strtotime($date2 . " -6 months")) ." -1 day"));  $pas = "ga:year,ga:week" ;  break ; 
-								case 'm1' : $date1 = date("Y-m-d", strtotime($date2 . " -1 month")) ;  $pas = "ga:date" ;  break ; 
-								case 'w2' : $date1 = date("Y-m-d", strtotime($date2 . " -2 weeks")) ;  $pas = "ga:date" ;  break ; 
-								case 'w1' : $date1 = date("Y-m-d", strtotime($date2 . " -1 week")) ;  $pas = "ga:date" ;  break ; 
+								case 'm6' : $date1 = date_i18n("Y-m-d", strtotime(date_i18n("o-\\WW", strtotime($date2 . " -6 months")) ." -1 day"));  $pas = "ga:year,ga:week" ;  break ; 
+								case 'm1' : $date1 = date_i18n("Y-m-d", strtotime($date2 . " -1 month")) ;  $pas = "ga:date" ;  break ; 
+								case 'w2' : $date1 = date_i18n("Y-m-d", strtotime($date2 . " -2 weeks")) ;  $pas = "ga:date" ;  break ; 
+								case 'w1' : $date1 = date_i18n("Y-m-d", strtotime($date2 . " -1 week")) ;  $pas = "ga:date" ;  break ; 
 							}
 						}
 					}
@@ -570,24 +570,24 @@ class traffic_manager extends pluginSedLex {
 					//----------------------------------
 				
 					$period_local = $this->get_param('local_period') ; 
-					$date2_local = date("Ymd") ; 
-					$date1_local = date("Ymd", strtotime($date2_local . " - 1 month")) ;
+					$date2_local = date_i18n("Ymd") ; 
+					$date1_local = date_i18n("Ymd", strtotime($date2_local . " - 1 month")) ;
 					$pas_local = "day" ; 
 					$ptd_local = sprintf(__("from %s to %s", $this->pluginID), date_i18n(get_option('date_format') , strtotime($date1_local)), date_i18n(get_option('date_format') , strtotime($date2_local))) ; 
 					foreach ($period_local as $p) {
 						if (strpos($p[0], "*")!==false) {
 							switch ($p[1]) {
-								case 'a3' : $date1_local = date("Ymd", strtotime(date("Y-m-01", strtotime($date2_local . " - 3 years")))) ; $pas_local = "month" ;  break ; 
-								case 'a1' : $date1_local = date("Ymd", strtotime(date("o-\\WW", strtotime($date2 . " -1 year"))))  ;  $pas_local = "week" ;  break ; 
-								case 'm6' : $date1_local = date("Ymd", strtotime(date("o-\\WW", strtotime($date2 . " -6 months"))));  $pas_local = "week" ;  break ; 
-								case 'm1' : $date1_local = date("Ymd", strtotime($date2_local . " - 1 month")) ;  $pas_local = "day" ;  break ; 
-								case 'w2' : $date1_local = date("Ymd", strtotime($date2_local . " - 2 weeks")) ;  $pas_local = "day" ;  break ; 
-								case 'w1' : $date1_local = date("Ymd", strtotime($date2_local . " - 1 week")) ;  $pas_local = "day" ;  break ; 
+								case 'a3' : $date1_local = date_i18n("Ymd", strtotime(date_i18n("Y-m-01", strtotime($date2_local . " - 3 years")))) ; $pas_local = "month" ;  break ; 
+								case 'a1' : $date1_local = date_i18n("Ymd", strtotime(date_i18n("o-\\WW", strtotime($date2 . " -1 year"))))  ;  $pas_local = "week" ;  break ; 
+								case 'm6' : $date1_local = date_i18n("Ymd", strtotime(date_i18n("o-\\WW", strtotime($date2 . " -6 months"))));  $pas_local = "week" ;  break ; 
+								case 'm1' : $date1_local = date_i18n("Ymd", strtotime($date2_local . " - 1 month")) ;  $pas_local = "day" ;  break ; 
+								case 'w2' : $date1_local = date_i18n("Ymd", strtotime($date2_local . " - 2 weeks")) ;  $pas_local = "day" ;  break ; 
+								case 'w1' : $date1_local = date_i18n("Ymd", strtotime($date2_local . " - 1 week")) ;  $pas_local = "day" ;  break ; 
 							}
 						}
 					}
 					
-					$data_local = $this->get_local_data($date1_local, date("Ymd", strtotime($date2_local . " + 1 day")), $pas_local) ; 
+					$data_local = $this->get_local_data($date1_local, date_i18n("Ymd", strtotime($date2_local . " + 1 day")), $pas_local) ; 
 					$ptd_local =sprintf(__("from %s to %s", $this->pluginID), date_i18n(get_option('date_format') , strtotime($date1_local )), date_i18n(get_option('date_format') , strtotime($date2_local ))) ; 
 				}
 				
@@ -633,7 +633,7 @@ class traffic_manager extends pluginSedLex {
 									// On boucle sur les annees
 									foreach ($d as $m => $a) {
 										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date("H"),date("i"),date("s") ,$m, date("j"))), $k) ; 
+										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,$m, date_i18n("j"))), $k) ; 
 										$visit = $a["ga:visits"] ; 
 										$pageViews = $a["ga:pageviews"] ; 
 										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
@@ -670,6 +670,8 @@ class traffic_manager extends pluginSedLex {
 							<div id="google_visits_count" style="margin: 0px auto; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 							<script  type="text/javascript">
 								google.setOnLoadCallback(CountVisits);
+								google.load('visualization', '1', {'packages':['corechart']});
+								
 								function CountVisits() {
 									var data = new google.visualization.DataTable();
 									data.addColumn('string', '<?php echo __('Month', $this->pluginID)?>');
@@ -727,7 +729,7 @@ class traffic_manager extends pluginSedLex {
 									// On boucle sur les annees
 									foreach ($d as $m => $a) {
 										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date("H"),date("i"),date("s") ,$m, date("j"))), $k) ; 
+										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,$m, date_i18n("j"))), $k) ; 
 										$visit = $a["visits"] ; 
 										$pageViews = $a["pageviews"] ; 
 										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
@@ -957,6 +959,7 @@ class traffic_manager extends pluginSedLex {
 							$table->title(array(__("Time", $this->pluginID),__("IP Address", $this->pluginID), __("Viewed Page", $this->pluginID), __("Browser", $this->pluginID), __("OS", $this->pluginID) , __("Referer", $this->pluginID), __("Time spent", $this->pluginID) )) ;
 							?>
 							
+							<p><?php echo sprintf(__('Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly.', $this->pluginID), "<strong>".date_i18n('Y-m-d H:i:s')."</strong>")?></p>
 							<p><?php echo __('If the entry is displayed for the first time, the time field will be in bold characters.', $this->pluginID)?></p>
 							<p><?php echo __('If the user accesses your website for the first time today, the IP field will be in blod characters.', $this->pluginID)?></p>
 							<?php
@@ -992,7 +995,7 @@ class traffic_manager extends pluginSedLex {
 								} else if ( (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=([&#]+)/i", $referer, $matches)) || (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=$/i", $referer, $matches)) ) {
 									$source = "google" ; 
 									$type_referer = "stripped_words" ;
-									$referer = __('Searched keywords are been stripped : the search is performed from the secured google website (i.e. with https).', $this->pluginID) ; 
+									$referer = __('Searched keywords are been stripped by Google.', $this->pluginID) ; 
 								} else if (preg_match("/^http:\/\/www\.bing(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
 									$source = "bing" ; 
 									$type_referer = "words" ;
@@ -1106,6 +1109,89 @@ class traffic_manager extends pluginSedLex {
 		<?php
 	}
 	
+	
+	
+	/** ====================================================================================================================================================
+	* Test if IP is private
+	*
+	* @return string adress
+	*/
+
+	function ip_is_private($ip) {
+		$pri_addrs = array(
+		  '10.0.0.0|10.255.255.255',
+		  '172.16.0.0|172.31.255.255',
+		  '192.168.0.0|192.168.255.255',
+		  '169.254.0.0|169.254.255.255',
+		  '127.0.0.0|127.255.255.255'
+		 );
+
+		$long_ip = ip2long($ip);
+		if($long_ip != -1) {
+			foreach($pri_addrs AS $pri_addr) {
+				list($start, $end) = explode('|', $pri_addr);
+				// IF IS PRIVATE
+				if($long_ip >= ip2long($start) && $long_ip <= ip2long($end)) {
+					return TRUE;
+				}
+			}
+		}
+		return FALSE;
+	}
+	/** ====================================================================================================================================================
+	* Get the Remote address (support of proxy)
+	*
+	* @return string adress
+	*/
+
+	function getRemoteAddress() {
+		$hostname = $_SERVER['REMOTE_ADDR'];
+		
+		$arh = array();
+		$rx_http = '/\AHTTP_/';
+		foreach($_SERVER as $key => $val) {
+			if( preg_match($rx_http, $key) ) {
+				$arh_key = preg_replace($rx_http, '', $key);
+				$rx_matches = array();
+				// do some nasty string manipulations to restore the original letter case
+				// this should work in most cases
+				$rx_matches = explode('_', $arh_key);
+				if (count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
+					foreach($rx_matches as $ak_key => $ak_val) {
+						$rx_matches[$ak_key] = ucfirst($ak_val);
+					}
+					$arh_key = implode('-', $rx_matches);
+				}	
+				$arh[$arh_key] = $val;
+			}
+		}
+		
+		$headers = $arh;
+		
+		foreach($headers as $k => $v) {
+			if(strcasecmp($k, "x-forwarded-for"))
+				continue;
+
+			$hostnames = explode(",", $v);
+			$first = true ; 
+			$hostname = "" ; 
+			foreach ($hostnames as $h) {
+				if ($this->ip_is_private($h)) {
+					continue ; 
+				}
+				
+				if (!$first) {
+					$hostname .= " via " ; 
+				}
+				
+				$hostname .= trim($h);
+				$first=false ; 
+			}
+			break;
+		}
+
+		return $hostname;
+	}
 	/** ====================================================================================================================================================
 	* Callback updating the SQL table with browser info
 	*
@@ -1114,11 +1200,9 @@ class traffic_manager extends pluginSedLex {
 	
 	function UserWebStat() {
 		global $wpdb ; 
+		$wpdb->show_errors(); 
 		
 		// Retrieve Information and Parameters
-		//$browserName = mysql_real_escape_string($_POST['browserName']) ; 
-		//$browserVersion = mysql_real_escape_string($_POST['browserVersion']) ; 
-		//$platformName = mysql_real_escape_string($_POST['platform']) ; 
 		$browserUserAgent = mysql_real_escape_string($_POST['browserUserAgent']) ; 
 		$cookieEnabled = mysql_real_escape_string($_POST['cookieEnabled']) ; 
 		$referer = mysql_real_escape_string($_POST['referer']) ; 
@@ -1142,7 +1226,7 @@ class traffic_manager extends pluginSedLex {
 			$sql_select .= "type='single' AND " ;   
 			$sql_select .= "page='".$page."' AND " ;   
 			$sql_select .= "singleCookie='".$singleCookie."' AND " ; 
-			$sql_select .= "time > CURRENT_TIMESTAMP - INTERVAL 1 MINUTE LIMIT 1" ; 
+			$sql_select .= "time > DATE_SUB('".date_i18n('Y-m-d H:i:s')."',INTERVAL 1 MINUTE) LIMIT 1" ; 
 			$result = $wpdb->get_row($sql_select) ; 
 			if ($result) {
 				// Si depasse le max time  on arrete le rafraichissement car c'est probablement une page 'ouverte sans personne devant'.
@@ -1152,7 +1236,7 @@ class traffic_manager extends pluginSedLex {
 				}
 				// On met a jour les informations de la base
 				$sql_update = "UPDATE ".$this->table_name." SET " ; 
-				$sql_update .= "time=NOW(), " ; 
+				$sql_update .= "time='".date_i18n('Y-m-d H:i:s')."', " ; 
 				$sql_update .= "refreshNumber='".$refreshNumber."' WHERE " ; 
 				$sql_update .= "id='".$result->id."' " ; 
 				$wpdb->query($sql_update) ; 
@@ -1161,13 +1245,14 @@ class traffic_manager extends pluginSedLex {
 				$sql_select = "SELECT id FROM ".$this->table_name." WHERE " ; 
 				$sql_select .= "type='single' AND " ;   
 				$sql_select .= "singleCookie='".$singleCookie."' AND " ; 
-				$sql_select .= "time BETWEEN curdate() and curdate() + interval 1 day" ; 
+				$sql_select .= "time BETWEEN '".date_i18n('Y-m-d 0:0:0')."' AND '".date_i18n('Y-m-d H:i:s')."' " ; 
 				$result = $wpdb->get_row($sql_select) ; 
 				if ($result) {
 					$unique = "0" ; 
 				} else {
 					$unique = "1" ; 
 				}
+				echo $unique."#," ; 
 				
 				// Insert new entry for this visitor
 				$refreshNumber = 0 ; 
@@ -1176,7 +1261,7 @@ class traffic_manager extends pluginSedLex {
 				$sql_insert .= "count=1, " ; 
 				$sql_insert .= "uniq_visit=".$unique.", " ; 
 				$sql_insert .= "viewed=FALSE, " ; 
-				$sql_insert .= "ip='".$_SERVER["REMOTE_ADDR"]."', " ; 
+				$sql_insert .= "ip='".$this->getRemoteAddress()."', " ; 
 				$sql_insert .= "browserName='".$browserName."', " ; 
 				$sql_insert .= "browserVersion='".$browserVersion."', " ;  
 				$sql_insert .= "platformName='".$platformName."', " ;  
@@ -1184,7 +1269,7 @@ class traffic_manager extends pluginSedLex {
 				$sql_insert .= "browserUserAgent='".$browserUserAgent."', " ;  
 				$sql_insert .= "referer='".$referer."', " ;  
 				$sql_insert .= "page='".$page."', " ;   
-				$sql_insert .= "time=NOW(), " ; 
+				$sql_insert .= "time='".date_i18n('Y-m-d H:i:s')."', " ; 
 				$sql_insert .= "singleCookie='".$singleCookie."', " ; 
 				$sql_insert .= "refreshNumber='".$refreshNumber."'" ; 
 				$wpdb->query($sql_insert) ; 
@@ -1193,12 +1278,12 @@ class traffic_manager extends pluginSedLex {
 		
 		// On concatene si besoin pour economiser de la place dans la bdd
 		if ($this->get_param('local_cron_concat')=="") {
-			$this->set_param('local_cron_concat', strtotime(date("Y-m-d 0:0:1")." +1 day")) ; 
+			$this->set_param('local_cron_concat', strtotime(date_i18n("Y-m-d 0:0:1")." +1 day")) ; 
 		}
 		
-		if (strtotime(date("Y-m-d H:i:s"))>$this->get_param('local_cron_concat')) {
+		if (strtotime(date_i18n("Y-m-d H:i:s"))>$this->get_param('local_cron_concat')) {
 			// On me en place le prochain cron
-			$this->set_param('local_cron_concat', strtotime(date("Ymd 0:0:1")." +1 day")) ; 
+			$this->set_param('local_cron_concat', strtotime(date_i18n("Ymd 0:0:1")." +1 day")) ; 
 			
 			$offset = 2 ; // Deux jours et 7 jours avant ...
 			$max = -1 ; 
@@ -1208,13 +1293,13 @@ class traffic_manager extends pluginSedLex {
 			$sql_old .= "ORDER BY time ASC LIMIT 1" ; 
 			$oldest = $wpdb->get_row($sql_old) ; 
 			if ($oldest) {
-				$max = floor((strtotime(date("Y-m-d 0:0:0")." -".($offset)." day")-strtotime($oldest->time))/86400) ; 
+				$max = floor((strtotime(date_i18n("Y-m-d 0:0:0")." -".($offset)." day")-strtotime($oldest->time))/86400) ; 
 			}
 			
 			for ($i=0 ; $i<=$max ; $i++) {
 				$offset ++ ; 
-				$date1 = date("Y-m-d  0:0:0", strtotime(date("Y-m-d")." -".($offset)." day"));
-				$date2 = date("Y-m-d  23:59:59", strtotime(date("Y-m-d")." -".($offset)." day"));
+				$date1 = date_i18n("Y-m-d  0:0:0", strtotime(date_i18n("Y-m-d")." -".($offset)." day"));
+				$date2 = date_i18n("Y-m-d  23:59:59", strtotime(date_i18n("Y-m-d")." -".($offset)." day"));
 
 				// On concatene les donnees single en donnees day_browser et day_os
 				$sql_browser = "SELECT SUM(count) as nb, SUM(uniq_visit) as nb2, browserName FROM ".$this->table_name." WHERE " ; 
@@ -1493,11 +1578,11 @@ class traffic_manager extends pluginSedLex {
 				$result['visits'] = array() ; 
 				// On complete avec des fausses donnees si les jours ne sont pas presents
 				for ($i=0 ; $i < floor((strtotime($date2)-strtotime($date1))/86400) ; $i++) {
-					$result['visits'][" ".date("Ymd", strtotime($date1." +".$i." day"))." "] = array("pageviews" => 0, "visits" => 0) ; 
+					$result['visits'][" ".date_i18n("Ymd", strtotime($date1." +".$i." day"))." "] = array("pageviews" => 0, "visits" => 0) ; 
 				}
 				
 				foreach ($res as $r) {
-					$result['visits'][" ".date("Ymd", strtotime($r->day))." "] = array("pageviews" => $r->pageviews, "visits" => $r->visits) ; 
+					$result['visits'][" ".date_i18n("Ymd", strtotime($r->day))." "] = array("pageviews" => $r->pageviews, "visits" => $r->visits) ; 
 				}
 			}
 			if ($pas == 'week') {
@@ -1516,13 +1601,13 @@ class traffic_manager extends pluginSedLex {
 				$endTime = strtotime($date2);
 				$lastWeek = "" ; 
 				while ($startTime < $endTime) {  
-    				$result['visits'][" ".date('Y', $startTime)." "][" ".date('W', $startTime)." "] = array("pageviews" => 0, "visits" => 0) ; 
-    				$lastWeek = date('YW', $startTime) ; 
+    				$result['visits'][" ".date_i18n('Y', $startTime)." "][" ".date_i18n('W', $startTime)." "] = array("pageviews" => 0, "visits" => 0) ; 
+    				$lastWeek = date_i18n('YW', $startTime) ; 
     				$startTime += strtotime('+1 week', 0);
 				}
 				// Pour eviter de louper la derniere
-				if (date('YW', $endTime)!=$lastWeek) {
-    				$result['visits'][" ".date('Y', $endTime)." "][" ".date('W', $endTime)." "] = array("pageviews" => 0, "visits" => 0) ; 				
+				if (date_i18n('YW', $endTime)!=$lastWeek) {
+    				$result['visits'][" ".date_i18n('Y', $endTime)." "][" ".date_i18n('W', $endTime)." "] = array("pageviews" => 0, "visits" => 0) ; 				
 				}
 				
 				foreach ($res as $r) {
@@ -1548,13 +1633,13 @@ class traffic_manager extends pluginSedLex {
 				$endTime = strtotime($date2);
 				$lastWeek = "" ; 
 				while ($startTime < $endTime) {  
-    				$result['visits'][" ".date('Y', $startTime)." "][" ".date('m', $startTime)." "] = array("pageviews" => 0, "visits" => 0) ; 
-    				$lastMonth = date('Ym', $startTime) ; 
+    				$result['visits'][" ".date_i18n('Y', $startTime)." "][" ".date_i18n('m', $startTime)." "] = array("pageviews" => 0, "visits" => 0) ; 
+    				$lastMonth = date_i18n('Ym', $startTime) ; 
     				$startTime += strtotime('+1 month', 0);
 				}
 				// Pour eviter de louper la derniere
-				if (date('Ym', $endTime)!=$lastMonth) {
-    				$result['visits'][" ".date('Y', $endTime)." "][" ".date('m', $endTime)." "] = array("pageviews" => 0, "visits" => 0) ; 				
+				if (date_i18n('Ym', $endTime)!=$lastMonth) {
+    				$result['visits'][" ".date_i18n('Y', $endTime)." "][" ".date_i18n('m', $endTime)." "] = array("pageviews" => 0, "visits" => 0) ; 				
 				}
 				
 				foreach ($res as $r) {
@@ -1654,7 +1739,7 @@ class traffic_manager extends pluginSedLex {
 		
 		$sitemap .= "\t".'<url>'."\n" ; 
   		$sitemap .= "\t\t".'<loc>'. get_site_url() .'</loc>'."\n" ; 
-  		$sitemap .= "\t\t".'<lastmod>'. date("Y-m-d") .'</lastmod>'."\n" ; 
+  		$sitemap .= "\t\t".'<lastmod>'. date_i18n("Y-m-d") .'</lastmod>'."\n" ; 
   		$sitemap .= "\t\t".'<changefreq>daily</changefreq>'."\n" ; 
   		$sitemap .= "\t\t".'<priority>1.0</priority>'."\n" ; 
 		$sitemap .= "\t".'</url>'."\n";
@@ -1679,7 +1764,7 @@ class traffic_manager extends pluginSedLex {
 				$gz = gzencode($sitemap, 9);
 				@file_put_contents(ABSPATH . $filename.".gz", $gz) ; 
 			}
-			$this->set_param("sitemaps_date",  date("Y-m-d H:i:s"));
+			$this->set_param("sitemaps_date",  date_i18n("Y-m-d H:i:s"));
 			$this->notifyCrawlers(get_site_url()."/".$filename) ; 
 			return array('info'=>'sitemaps saved') ; 
 		}
@@ -1702,7 +1787,7 @@ class traffic_manager extends pluginSedLex {
 			if ( is_wp_error($response) || ($response['response']['code']!="200") )  {
 				$this->set_param("sitemaps_notify_google_date", __('An unknown error occured during the API request',  $this->pluginID));
 			} else {
-				$this->set_param("sitemaps_notify_google_date", date("Y-m-d H:i:s"));
+				$this->set_param("sitemaps_notify_google_date", date_i18n("Y-m-d H:i:s"));
 			}
 		}
 		//Ping Ask
@@ -1712,7 +1797,7 @@ class traffic_manager extends pluginSedLex {
 			if ( is_wp_error($response) || ($response['response']['code']!="200") )  {
 				$this->set_param("sitemaps_notify_ask_date", __('An unknown error occured during the API request',  $this->pluginID));
 			} else {
-				$this->set_param("sitemaps_notify_ask_date", date("Y-m-d H:i:s"));
+				$this->set_param("sitemaps_notify_ask_date", date_i18n("Y-m-d H:i:s"));
 			}
 		}
 		//Ping Bing
@@ -1722,7 +1807,7 @@ class traffic_manager extends pluginSedLex {
 			if ( is_wp_error($response) || ($response['response']['code']!="200") )  {
 				$this->set_param("sitemaps_notify_bing_date", __('An unknown error occured during the API request',  $this->pluginID));
 			} else {
-				$this->set_param("sitemaps_notify_bing_date", date("Y-m-d H:i:s"));
+				$this->set_param("sitemaps_notify_bing_date", date_i18n("Y-m-d H:i:s"));
 			}
 		}
 	}
