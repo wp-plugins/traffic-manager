@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-07-01T11:33:57+00:00\n"
+"PO-Revision-Date: 2012-08-01T14:28:04+00:00\n"
 "Last-Translator: xmee.de <blog.xmee.de>\n"
+"Last-Translator: Textdrache <http://www.textdrache.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,290 +22,101 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 
 msgid "3 Year"
-msgstr "3. Jahr"
+msgstr "3 Jahre"
 
 msgid "1 Year"
-msgstr "1. Jahr"
+msgstr "1 Jahre"
 
 msgid "6 Month"
-msgstr "6. Monat"
+msgstr "6 Monate"
 
 msgid "1 Month"
-msgstr "1. Monat"
+msgstr "1 Monat"
 
 msgid "2 Week"
-msgstr "2. Woche"
+msgstr "2 Wochen"
 
 msgid "1 Week"
-msgstr "1. Woche"
+msgstr "1 Woche"
 
 msgid "The authentication with Google Analytics is successful"
 msgstr "Die Authentifizierung mit Google Analytics war erfolgreich"
-
-msgid "The authentication with Google Analytics have failed... please retry!"
-msgstr ""
-
-msgid "The Google Analytics's authorization has been revoked as requested"
-msgstr ""
-
-msgid "Local Web Statistics"
-msgstr ""
-
-msgid "Do you want to manage the web statistics locally?"
-msgstr ""
-
-msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
-msgstr ""
-
-msgid "The next compression of the database will occur on %s"
-msgstr ""
-
-msgid "Do you want to display the last viewed pages?"
-msgstr ""
-
-msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
-msgstr ""
-
-msgid "How many pages should be displayed?"
-msgstr ""
-
-msgid "Show statistics on number of visits and viewed pages?"
-msgstr ""
-
-msgid "Show statistics on the OS and browser types of your visitors?"
-msgstr ""
-
-msgid "What are the colors for the charts?"
-msgstr ""
-
-msgid "The default colors are %s."
-msgstr ""
-
-msgid "What are the period for which charts should be provided?"
-msgstr ""
-
-msgid "Do you want to track the logged user?"
-msgstr ""
-
-msgid "Google Analytics Web Statistics"
-msgstr ""
-
-msgid "Do you want to manage the web statistics with Google Analytics?"
-msgstr ""
-
-msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
-msgstr ""
-
-msgid "Google Analytics ID:"
-msgstr ""
-
-msgid "The Google Analytics ID is should be similar to %s."
-msgstr ""
-
-msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
-msgstr ""
-
-msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
-msgstr ""
-
-msgid "Select..."
-msgstr ""
-
-msgid "Choose your website in this list"
-msgstr ""
-
-msgid "Please note that the Google Analytics ID for %s is %s."
-msgstr ""
-
-msgid "No Google Analytics ID configured for now."
-msgstr ""
-
-msgid "Sitemaps Configuration"
-msgstr ""
-
-msgid "Do you want to compute a Sitemaps file?"
-msgstr ""
-
-msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
-msgstr ""
-
-msgid "No sitemap has been generated yet."
-msgstr ""
-
-msgid "An error occured on the next sitemap generation : %s."
-msgstr ""
-
-msgid "The last sitemap has been generated on %s."
-msgstr ""
-
-msgid "How many posts and pages will be included in this file?"
-msgstr ""
-
-msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
-msgstr ""
-
-msgid "Do you want to notify %s when the sitemap is updated?"
-msgstr ""
-
-msgid "%s has never been notified yet. Waiting for the next update."
-msgstr ""
-
-msgid "An error occured when notifying %s for the last time."
-msgstr ""
-
-msgid "%s has be notified for the last time on %s."
-msgstr ""
-
-msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
-msgstr ""
-
-msgid "from %s to %s"
-msgstr ""
-
-msgid "Week %s (%s)"
-msgstr ""
-
-msgid "%s %s"
-msgstr ""
-
-msgid "Google Analytics Data"
-msgstr ""
-
-msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
-msgstr ""
-
-msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
-msgstr ""
-
-msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
-msgstr ""
-
-msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
-msgstr ""
-
-msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
-msgstr ""
-
-msgid "Month"
-msgstr ""
-
-msgid "Number of Visitors"
-msgstr ""
-
-msgid "Number of Page Views"
-msgstr ""
-
-msgid "Visitors and Page Views (%s)"
-msgstr ""
-
-msgid "Time Line"
-msgstr ""
-
-msgid "Local Data"
-msgstr ""
-
-msgid "According to Local Data, here is the number of visits and the number of page views."
-msgstr ""
-
-msgid "Visits Count"
-msgstr ""
-
-msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
-msgstr ""
-
-msgid "Browser name"
-msgstr ""
-
-msgid "Number of visitors"
-msgstr ""
-
-msgid "Browser distribution (%s)"
-msgstr ""
-
-msgid "OS name"
-msgstr ""
-
-msgid "Operating System distribution (%s)"
-msgstr ""
-
-msgid "According to Local Data, here is the distribution of browser types and OS."
-msgstr ""
-
-msgid "Browser and OS Statistics"
-msgstr ""
-
-msgid "Time"
-msgstr ""
-
-msgid "IP Address"
-msgstr ""
-
-msgid "Viewed Page"
-msgstr ""
-
-msgid "Browser"
-msgstr ""
-
-msgid "OS"
-msgstr ""
-
-msgid "Referer"
-msgstr ""
-
-msgid "Time spent"
-msgstr ""
-
-msgid "If the entry is displayed for the first time, the time field will be in bold characters."
-msgstr ""
-
-msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
-msgstr ""
-
-msgid "Searched keywords are been stripped : the search is performed from the secured google website (i.e. with https)."
-msgstr ""
-
-msgid "Plugin: %s"
-msgstr ""
-
-msgid "Plugin: %s, website: %s"
-msgstr ""
-
-msgid "No data for now... Please wait until someone visits your website"
-msgstr ""
-
-msgid "Details on the Last %s Viewed Pages"
-msgstr ""
-
-msgid "You have configured no graph... Please go on the parameters tab to configure them."
-msgstr ""
 
 msgid "Web Statistics"
 msgstr "Webstatistiken"
 
 msgid "Parameters"
-msgstr "Paramater"
+msgstr "Parameter"
 
 msgid "Manage translations"
-msgstr "Verwalte Übersetzungen"
+msgstr "Übersetzungen verwalten"
 
 msgid "Give feedback"
-msgstr "Gib Feeback"
+msgstr "Feedback"
 
 msgid "Other plugins"
 msgstr "Andere Plugins"
 
-msgid "An unknown error occured during the API request"
-msgstr ""
+msgid "The authentication with Google Analytics have failed... please retry!"
+msgstr "Die Authentifizierung mit Google Analytics ist fehlgeschlagen....bitte versuchen Sie es noch einmal!"
 
-msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
-msgstr ""
+msgid "The Google Analytics's authorization has been revoked as requested"
+msgstr "Die Google Analytic&#039;s Authentifizierung wurde wie gewünscht widerrufen."
 
-msgid "No token provided!"
-msgstr ""
+msgid "Local Web Statistics"
+msgstr "Lokale Webstatistiken"
 
-msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
-msgstr ""
+msgid "Do you want to manage the web statistics locally?"
+msgstr "Möchten Sie die Webstatistiken lokal verwalten?"
 
-msgid "Problem with folder rights on %s"
-msgstr ""
+msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
+msgstr "Wenn ja, werden die Statistiken in der lokalen SQL Datenbank gesichert. Stellen Sie sicher, dass ausreichend Speicherplatz in Ihrer Datenbank vorhanden ist."
+
+msgid "The next compression of the database will occur on %s"
+msgstr "Die nächste Komprimierung der Datenbank wird am %s stattfinden."
+
+msgid "Do you want to display the last viewed pages?"
+msgstr "Möchten Sie die zuletzt aufgerufenen Seiten anzeigen?"
+
+msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
+msgstr "Wenn ja, wird eine Liste der zuletzt aufgerufenen Seiten angezeigt, inklusive Nutzer-IP, der URL der jeweiligen Seite, Uhrzeit, Referrer, Browsername, Betriebssystem, etc."
+
+msgid "How many pages should be displayed?"
+msgstr "Wie viele Seiten sollen angezeigt werden?"
+
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr "Zeige Statistiken über Betriebssystem und Browsertypen Ihrer Besucher?"
+
+msgid "What are the colors for the charts?"
+msgstr "Was sind die Farben für die Tabellen?"
+
+msgid "The default colors are %s."
+msgstr "Die vorgegebenen Farben sind %s."
+
+msgid "Do you want to track the logged user?"
+msgstr "Möchten Sie die eingeloggten Nutzer zurückverfolgen?"
+
+msgid "Google Analytics Web Statistics"
+msgstr "Google Analytics Webstatistik"
+
+msgid "Do you want to manage the web statistics with Google Analytics?"
+msgstr "Möchten Sie die Webstatistiken mit Google Analytics verwalten?"
+
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
+msgstr "Für ergänzende Informationen besuchen Sie bitte die %s Webseite. Ferner können Sie all Ihre authorisierten Zugänge auf dieser Seite %spage%s. einsehen."
+
+msgid "Google Analytics ID:"
+msgstr "Google Analytics ID:"
+
+msgid "Select..."
+msgstr "Wähle..."
+
+msgid "Choose your website in this list"
+msgstr "Wählen Sie Ihre Webseite aus dieser Liste"
+
+msgid "Do you want to compute a Sitemaps file?"
+msgstr "Wollen Sie eine Sitemap Datei erstellen?"
+
+msgid "You have configured no graph... Please go on the parameters tab to configure them."
+msgstr "Sie haben keinen Graph konfiguriert...Bitte gehen Sie auf den Parameter Tab und konfigurieren Sie sie."
 

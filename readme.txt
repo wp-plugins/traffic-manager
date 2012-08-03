@@ -31,10 +31,12 @@ This plugin is compatible with multisite installation.
 
 = Localization =
 
+* German (Germany) translation provided by xmee.de, Textdrache
 * English (United States), default language
 * French (France) translation provided by SedLex
+* Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
-* Russian (Russia) translation provided by rad96
+* Russian (Russia) translation provided by rad96, AnatoliyNovyk
 
 = Features of the framework =
 
@@ -65,6 +67,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.0.5 =
+* Fix a bug
+
 = 1.0.3 =
 * Fix a bug with local data
 * Add text synthesis above the graphs.
@@ -83,4 +88,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:cb7519bc92c37a862c93ef1aac81471b
+InfoVersion:83060b7ed9bf5f49c6b4e07530db3b33

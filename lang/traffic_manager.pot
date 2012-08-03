@@ -502,33 +502,33 @@ msgstr ""
 msgid "Other plugins"
 msgstr ""
 
-#: traffic-manager.php:1423
-#: traffic-manager.php:1531
-#: traffic-manager.php:1788
-#: traffic-manager.php:1798
-#: traffic-manager.php:1808
+#: traffic-manager.php:1422
+#: traffic-manager.php:1530
+#: traffic-manager.php:1787
+#: traffic-manager.php:1797
+#: traffic-manager.php:1807
 #@ traffic_manager
 msgid "An unknown error occured during the API request"
 msgstr ""
 
-#: traffic-manager.php:1427
-#: traffic-manager.php:1535
+#: traffic-manager.php:1426
+#: traffic-manager.php:1534
 #@ traffic_manager
 msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
 msgstr ""
 
-#: traffic-manager.php:1466
-#: traffic-manager.php:1518
+#: traffic-manager.php:1465
+#: traffic-manager.php:1517
 #@ traffic_manager
 msgid "No token provided!"
 msgstr ""
 
-#: traffic-manager.php:1760
+#: traffic-manager.php:1759
 #@ traffic_manager
 msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
 msgstr ""
 
-#: traffic-manager.php:1761
+#: traffic-manager.php:1760
 #@ traffic_manager
 msgid "Problem with folder rights on %s"
 msgstr ""
