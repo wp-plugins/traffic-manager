@@ -67,6 +67,12 @@ Have fun !
 
 == Changelog ==
 
+= 1.0.7 =
+* Google change its API :(
+
+= 1.0.6 =
+* If there is a forged X-Forwarded For
+
 = 1.0.5 =
 * Fix a bug
 
@@ -88,4 +94,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:83060b7ed9bf5f49c6b4e07530db3b33
+InfoVersion:10a33a393bb063a99559b1fcae71c9ba
