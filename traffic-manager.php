@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.0.7
+Version: 1.0.8
 
 Framework: SL_Framework
 Author: SedLex
@@ -154,6 +154,7 @@ class traffic_manager extends pluginSedLex {
 			case 'googlewebstat_list' 		: return array("")		; break ; 
 			case 'googlewebstat_auth' 		: return false 		; break ; 
 			case 'googlewebstat_auth_token' 		: return "" 		; break ; 
+			case 'google_api_key'		: return "" ; break ; 
 			case 'google_show_visits'		: return false ; break ; 
 			case 'google_show_type'		: return false ; break ; 
 			case 'google_track_user'		: return true ; break ; 
@@ -388,7 +389,7 @@ class traffic_manager extends pluginSedLex {
 			
 			
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
-			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user')) ; 
+			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
 			
 			if (!$this->get_param('googlewebstat_auth')) {
@@ -439,6 +440,7 @@ class traffic_manager extends pluginSedLex {
 				} else {
 					echo "<div class='error fade'><p>".$account['error']."</p></div>" ; 
 				}
+				
 				if (($this->get_param('googlewebstat_acc_id')=="")&&($acc_id!="")) {
 					$this->set_param('googlewebstat_acc_id', $acc_id) ; 
 				}
@@ -450,6 +452,10 @@ class traffic_manager extends pluginSedLex {
 				} else {
 					$params->add_comment(__("No Google Analytics ID configured for now.", $this->pluginID)) ; 			
 				}
+				$params->add_param('google_api_key', __('What is the API key?', $this->pluginID)) ; 
+				$params->add_comment(__("This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google", $this->pluginID)) ; 
+				$params->add_comment(sprintf(__("To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s", $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>", "'<i>Key for browser apps</i>'")) ; 
+				
 				$params->add_param('google_show_visits', __('Show statistics on number of visits and viewed pages?', $this->pluginID)) ; 
 				$params->add_param('google_show_type', __('Show statistics on the OS and browser types of your visitors?', $this->pluginID)) ; 
 				$params->add_param('google_color', __('What are the colors for the charts?', $this->pluginID)) ; 
@@ -671,6 +677,12 @@ class traffic_manager extends pluginSedLex {
 								<p><?php echo __('NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different.', $this->pluginID)?></p>
 								<?php
 							}
+							
+							$colors = $this->get_param('google_color') ; 
+							if ($this->get_param('google_color')=="") {
+								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
+							}
+							
 							?>
 							<div id="google_visits_count" style="margin: 0px auto; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 							<script  type="text/javascript">
@@ -686,7 +698,7 @@ class traffic_manager extends pluginSedLex {
 									var options = {
 										width: <?php echo $width ; ?>, 
 										height: <?php echo $height ; ?>,
-										colors:<?php echo $this->get_param('google_color')?>,
+										colors:<?php echo $colors ?>,
 										title: '<?php echo sprintf(__("Visitors and Page Views (%s)", $this->pluginID), $ptd) ?>',
 										hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
 									};
@@ -749,6 +761,12 @@ class traffic_manager extends pluginSedLex {
 							}
 							$width = "900" ; 
 							$height = "400" ; 
+							
+							$colors = $this->get_param('local_color') ; 
+							if ($this->get_param('local_color')=="") {
+								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
+							}
+							
 							?>
 							<h3><?php echo __('Local Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Local Data, here is the number of visits and the number of page views.', $this->pluginID)?></p>
@@ -773,7 +791,7 @@ class traffic_manager extends pluginSedLex {
 									var options = {
 									  	width: <?php echo $width ; ?>, 
 									 	height: <?php echo $height ; ?>,
-									  	colors:<?php echo $this->get_param('local_color')?>,
+									  	colors:<?php echo $colors?>,
 									  	title: '<?php echo sprintf(__("Visitors and Page Views (%s)", $this->pluginID), $ptd_local) ?>',
 									  	hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
 									};
@@ -802,6 +820,12 @@ class traffic_manager extends pluginSedLex {
 							$google_show = true ; 
 							$width = 450 ; 
 							$height = 300 ; 
+							
+							$colors = $this->get_param('google_color') ; 
+							if ($this->get_param('google_color')=="") {
+								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
+							}
+							
 							?>
 							<h3><?php echo __('Google Analytics Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Google Analytics Data, here is the distribution of browser types and OS.', $this->pluginID)?></p>
@@ -825,7 +849,7 @@ class traffic_manager extends pluginSedLex {
 										]);
 										var options = {
 											title: '<?php echo sprintf(__("Browser distribution (%s)", $this->pluginID), $ptd) ?>',
-											colors:<?php echo $this->get_param('google_color')?>,
+											colors:<?php echo $colors ?>,
 											width: <?php echo $width ; ?>, 
 									 		height: <?php echo $height ; ?>
 										};
@@ -852,7 +876,7 @@ class traffic_manager extends pluginSedLex {
 										]);
 										var options = {
 											title: '<?php echo sprintf(__("Operating System distribution (%s)", $this->pluginID), $ptd) ?>',
-											colors:<?php echo $this->get_param('google_color')?>,
+											colors:<?php echo $colors?>,
 											width: <?php echo $width ; ?>, 
 									 		height: <?php echo $height ; ?>	
 										};
@@ -868,6 +892,12 @@ class traffic_manager extends pluginSedLex {
 							$google_show = true ; 
 							$width = 450 ; 
 							$height = 300 ; 
+							
+							$colors = $this->get_param('local_color') ; 
+							if ($this->get_param('local_color')=="") {
+								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
+							}
+							
 							?>
 							<h3><?php echo __('Local Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Local Data, here is the distribution of browser types and OS.', $this->pluginID)?></p>
@@ -891,7 +921,7 @@ class traffic_manager extends pluginSedLex {
 										]);
 										var options = {
 											title: '<?php echo sprintf(__("Browser distribution (%s)", $this->pluginID), $ptd_local) ?>',
-											colors:<?php echo $this->get_param('local_color')?>,
+											colors:<?php echo $colors ; ?>,
 											width: <?php echo $width ; ?>, 
 									 		height: <?php echo $height ; ?>
 										};
@@ -918,7 +948,7 @@ class traffic_manager extends pluginSedLex {
 										]);
 										var options = {
 											title: '<?php echo sprintf(__("Operating System distribution (%s)", $this->pluginID), $ptd_local) ?>',
-											colors:<?php echo $this->get_param('local_color')?>,
+											colors:<?php echo $colors ;?>,
 											width: <?php echo $width ; ?>, 
 									 		height: <?php echo $height ; ?>	
 										};
@@ -975,10 +1005,21 @@ class traffic_manager extends pluginSedLex {
 								}
 								$cel1 =  new adminCell($time) ;
 								$ip = $l->ip ; 
-								if ($l->uniq_visit>0) {
-									$ip = "<b>".$l->ip."</b>" ; 
+								$ips = explode (",", $ip) ; 
+								$content_ip = "" ; 
+								for ($i=0; $i<count($ips) ; $i++) {
+									if ($i!=count($ips)-1) {
+										$content_ip .= "<small>".$ips[$i]."</small> via " ; 
+									} else {
+										if ($l->uniq_visit>0) {
+											$content_ip .= "<b>".$ips[$i]."</b>" ; 
+										} else {
+											$content_ip .= $ips[$i] ; 
+										}
+									}
 								}
-								$cel2 =  new adminCell($ip);
+								
+								$cel2 =  new adminCell($content_ip);
 								$idpage =  url_to_postid( $l->page ) ; 
 								// Si on a trouve
 								if ($idpage!=0) {
@@ -997,10 +1038,14 @@ class traffic_manager extends pluginSedLex {
 									$source = "google" ; 
 									$type_referer = "words" ;
 									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[2]))) ; 
+								} else if ( (preg_match("/^http:\/\/www\.google(.*)imgres(.*)imgurl=([^&|^#]+)/i", $referer, $matches)) ) {
+									$source = "google_image" ; 
+									$type_referer = "img" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
 								} else if ( (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=([&#]+)/i", $referer, $matches)) || (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=$/i", $referer, $matches)) ) {
 									$source = "google" ; 
 									$type_referer = "stripped_words" ;
-									$referer = __('Searched keywords are been stripped by Google.', $this->pluginID) ; 
+									$referer = __('Unknown keywords.', $this->pluginID) ; 
 								} else if (preg_match("/^http:\/\/www\.bing(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
 									$source = "bing" ; 
 									$type_referer = "words" ;
@@ -1021,12 +1066,22 @@ class traffic_manager extends pluginSedLex {
 									$source = "wordpress_local" ; 
 									$type_referer = "words" ;
 									$referer = sprintf(__('Plugin: %s, website: %s', $this->pluginID),strip_tags($matches[2]), "<a href='http://".strip_tags($matches[1])."'>http://".strip_tags($matches[1])."</a>") ; 
+								} else if (preg_match("/^http:\/\/search\.babylon(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "babylon" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[2]))) ; 
+								} else if ( (preg_match("/^http:\/\/search\.free(.*)/i", $referer, $matches)) ) {
+									$source = "free" ; 
+									$type_referer = "stripped_words" ;
+									$referer = __('Unknown keywords.', $this->pluginID) ; 
 								}
 								$content_referer = "" ; 
 								if ($type_referer == "words") {
 									$content_referer = "<a href='".strip_tags($l->referer)."'><img style='border:0' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt='".$source."'></a> ".ucfirst(strtolower($referer)) ;
 								} else if ($type_referer == "stripped_words") {
 									$content_referer = "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source."_masqued.png"."' alt='".ucfirst(strtolower($source))."'> <span style='color:#BBBBBB'>".$referer."</span>" ;
+								} else if ($type_referer == "img") {
+									$content_referer = "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt=''> <img src='$referer' alt='' width='100px'/>" ;
 								} else if ($type_referer == "link") {
 									$length = 50 ; 
 									$refererDisplay = substr($referer, 0, $length);
@@ -1123,25 +1178,14 @@ class traffic_manager extends pluginSedLex {
 	*/
 
 	function ip_is_private($ip) {
-		$pri_addrs = array(
-		  '10.0.0.0|10.255.255.255',
-		  '172.16.0.0|172.31.255.255',
-		  '192.168.0.0|192.168.255.255',
-		  '169.254.0.0|169.254.255.255',
-		  '127.0.0.0|127.255.255.255'
-		 );
-
-		$long_ip = ip2long($ip);
-		if($long_ip != -1) {
-			foreach($pri_addrs AS $pri_addr) {
-				list($start, $end) = explode('|', $pri_addr);
-				// IF IS PRIVATE
-				if($long_ip >= ip2long($start) && $long_ip <= ip2long($end)) {
-					return TRUE;
-				}
-			}
+		if ($ip=="unknown") {
+			return true ; 
 		}
-		return FALSE;
+			
+		if (function_exists('filter_var')){
+			return !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+		}
+		return false ; 
 	}
 	/** ====================================================================================================================================================
 	* Get the Remote address (support of proxy)
@@ -1152,57 +1196,51 @@ class traffic_manager extends pluginSedLex {
 	function getRemoteAddress() {
 		$hostname = $_SERVER['REMOTE_ADDR'];
 		
-		$arh = array();
+		// GET the header of the HTTP request
+		
+		$headers = array();
 		$rx_http = '/\AHTTP_/';
 		foreach($_SERVER as $key => $val) {
 			if( preg_match($rx_http, $key) ) {
-				$arh_key = preg_replace($rx_http, '', $key);
+				$headers_key = preg_replace($rx_http, '', $key);
 				$rx_matches = array();
 				// do some nasty string manipulations to restore the original letter case
 				// this should work in most cases
-				$rx_matches = explode('_', $arh_key);
-				if (count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
+				$rx_matches = explode('_', $headers_key);
+				if (count($rx_matches) > 0 and strlen($headers_key) > 2 ) {
 					foreach($rx_matches as $ak_key => $ak_val) {
 						$rx_matches[$ak_key] = ucfirst($ak_val);
 					}
-					$arh_key = implode('-', $rx_matches);
+					$headers_key = implode('-', $rx_matches);
 				}	
-				$arh[$arh_key] = $val;
+				$headers[$headers_key] = $val;
 			}
 		}
 		
-		$headers = $arh;
-		$real_ip = $hostname ;  
-		$last_ip = $hostname ; 
+		// Get the list of proxy
+		
+		$list_proxy = array() ; 
+		$list_proxy[] = $hostname ; 
 		
 		foreach($headers as $k => $v) {
 			if(strcasecmp($k, "x-forwarded-for"))
 				continue;
-
-			$hostnames = explode(",", $v);
-			$first = true ; 
-			$hostname = "" ; 
-			foreach ($hostnames as $h) {
+			$list_proxy_temp = explode(",", $v);
+			foreach ($list_proxy_temp as $h) {
 				if ($this->ip_is_private($h)) {
 					continue ; 
 				}
-				
-				if (!$first) {
-					$hostname .= " via " ; 
-				}
-				
-				$hostname .= trim($h);
-				$last_ip = $h ;
-				$first=false ; 
+				$list_proxy[] = $h ;
 			}
 			break;
 		}
 		
-		if (trim($last_ip)!=trim($real_ip)) {
-			$hostname .= " via ".$real_ip ; 
-		}
+		
+		
+		// We remove duplicate and reverse it )
+		$list_proxy = implode(",", array_unique($list_proxy)) ; 
 
-		return $hostname;
+		return $list_proxy ;
 	}
 	/** ====================================================================================================================================================
 	* Callback updating the SQL table with browser info
@@ -1406,7 +1444,7 @@ class traffic_manager extends pluginSedLex {
 	}
 	
 	/** ====================================================================================================================================================
-	* Rovoke the session token 
+	* Revoke the session token 
 	*
 	* @return void
 	*/
@@ -1418,6 +1456,28 @@ class traffic_manager extends pluginSedLex {
 	}
 	
 	/** ====================================================================================================================================================
+	* Get the correct Google error message
+	*
+	* @return void
+	*/
+
+	function get_google_error($resp) {
+		$orig_resp = $resp ; 
+		$resp = str_replace("<","&lt;",$resp) ; 
+		$resp = str_replace(">","&gt;",$resp) ; 
+		$resp = str_replace("\n","<br/>",$resp) ; 
+		$resp = str_replace(" ","&nbsp;",$resp) ; 
+		
+		if (preg_match("/userRateLimitExceededUnreg/", $orig_resp)) {
+			return array('error' => __('Google states that the User Rate Limit has been exceeded!',  $this->pluginID)."<br/>".__('In order to avoid User Rate Limit, you should get an API key.',  $this->pluginID)."<br/>".sprintf(__("To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s", $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>", "'<i>Key for browser apps</i>'")."<br/><br/><img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/api_access_key.jpg'><br/><br/>".__('Once a key generated, please configure it in the configuration tab.',  $this->pluginID)."<br/><br/><b>".__('If you have just saved the API key in the parameters, please reload the page and it shoud work.',  $this->pluginID)."</b>");
+		}
+
+		return array('error' => __('The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!',  $this->pluginID)."<br/>".$resp);
+	}
+	
+		
+	
+	/** ====================================================================================================================================================
 	* Checks if the WordPress API is a valid method for selecting an account
 	*
 	* @return array list of accounts if available, if there is an error the array contain an 'error' field
@@ -1425,18 +1485,26 @@ class traffic_manager extends pluginSedLex {
 
 	function get_analytics_accounts(){
 		$accounts = array();
-
+		
+		if (!$this->get_param('googlewebstat')) 
+			return array();
+		
+		$api_key = "" ; 
+		if ($this->get_param('google_api_key')!="") {
+			$api_key = "?key=".$this->get_param('google_api_key') ; 
+		}
+		
 		if ( $this->get_param('googlewebstat_auth_token') != "" ) {
 			$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
 			$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
-			$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/management/accounts/~all/webproperties/~all/profiles", $args);
+			$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/management/accounts/~all/webproperties/~all/profiles".$api_key, $args);
 			// Check for WordPress error
 			if ( is_wp_error($response) ) {
 				return array('error' => __('An unknown error occured during the API request',  $this->pluginID));
 			}
 			// Get the response code
 			if ($response['response']['code']!="200") {
-				return array('error' => __('The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!',  $this->pluginID));
+				return $this->get_google_error($response['body']) ; 
 			}
 			
 			$doc = new DOMDocument();
@@ -1486,68 +1554,79 @@ class traffic_manager extends pluginSedLex {
 
 	function get_analytics_data($date, $pas){
 		$accounts = array();
-
+		
+		$api_key = "" ; 
+		if ($this->get_param('google_api_key')!="") {
+			$api_key = "&key=".$this->get_param('google_api_key') ; 
+		}
+		
 		if ( $this->get_param('googlewebstat_auth_token') != "" ) {
-			$result = array() ; 
-			$errorGoogle = "" ; 
-			if ($this->get_param('google_show_visits')) {
-			
-				// GET THE VISIT COUNT
-				//==========================
-				$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
-				$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
-				$dimensions = $pas ; 
-				$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits,ga:pageviews&dimensions=".$dimensions, $args);
-
-				$result['visits'] = $this->parseGoogleResponse($response) ; 
+			if ($this->get_param('googlewebstat_acc_id') != "") {
+				$result = array() ; 
+				$errorGoogle = "" ; 
+				if ($this->get_param('google_show_visits')) {
 				
-				if (isset($result['visits']['error'])) {
-					$errorGoogle .=  "<p>".$result['visits']['error']."</p>" ; 
-					$result['visits'] = array() ; 
-				}
-			}
+					// GET THE VISIT COUNT
+					//==========================
+					$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
+					$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
+					$dimensions = $pas ; 
+					$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits,ga:pageviews&dimensions=".$dimensions.$api_key, $args);
 
-			if ($this->get_param('google_show_type')) {
-				// GET THE TYPE OF THE BROWSER
-				//========================================
-				$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
-				$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
-				$dimensions = "ga:browser" ; 
-				$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits&dimensions=".$dimensions, $args);
-				
-				$result['browser'] = $this->parseGoogleResponse($response) ; 
-				if (isset($result['browser']['error'])) {
-					if (strpos($errorGoogle ,$result['browser']['error'] )===FALSE) {
-						$errorGoogle .= "<p>".$result['browser']['error']."</p>" ; 
+					$result['visits'] = $this->parseGoogleResponse($response) ; 
+					
+					if (isset($result['visits']['error'])) {
+						$errorGoogle .=  "<p>".$result['visits']['error']."</p>" ; 
+						$result['visits'] = array() ; 
 					}
-					$result['browser'] = array() ; 
 				}
-				
-				// GET THE TYPE OF THE OS
-				//========================================
-				$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
-				$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
-				$dimensions = "ga:operatingSystem" ; 
-				$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits&dimensions=".$dimensions, $args);
-				
-				$result['os'] = $this->parseGoogleResponse($response) ; 
-				if (isset($result['os']['error'])) {
-					if (strpos($errorGoogle , $result['os']['error'])===FALSE) {
-						$errorGoogle .= "<p>".$result['os']['error']."</p>" ; 
-					}
-					$result['os'] = array() ; 
-				}
-			}
-			
-			if ($errorGoogle!="") {
-				echo "<div class='error fade'>$errorGoogle</div>" ; 
-			}
-			
-			return $result ; 
 
+				if ($this->get_param('google_show_type')) {
+					// GET THE TYPE OF THE BROWSER
+					//========================================
+					$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
+					$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
+					$dimensions = "ga:browser" ; 
+					$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits&dimensions=".$dimensions.$api_key, $args);
+					
+					$result['browser'] = $this->parseGoogleResponse($response) ; 
+					if (isset($result['browser']['error'])) {
+						if (strpos($errorGoogle ,$result['browser']['error'] )===FALSE) {
+							$errorGoogle .= "<p>".$result['browser']['error']."</p>" ; 
+						}
+						$result['browser'] = array() ; 
+					}
+					
+					// GET THE TYPE OF THE OS
+					//========================================
+					$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
+					$args['headers']['Authorization'] = 'AuthSub token="' . $this->get_param('googlewebstat_auth_token')  . '"';
+					$dimensions = "ga:operatingSystem" ; 
+					$response = wp_remote_get("https://www.googleapis.com/analytics/v2.4/data?ids=".$this->get_param('googlewebstat_acc_id')."&".$date."&metrics=ga:visits&dimensions=".$dimensions.$api_key, $args);
+					
+					$result['os'] = $this->parseGoogleResponse($response) ; 
+					if (isset($result['os']['error'])) {
+						if (strpos($errorGoogle , $result['os']['error'])===FALSE) {
+							$errorGoogle .= "<p>".$result['os']['error']."</p>" ; 
+						}
+						$result['os'] = array() ; 
+					}
+				}
+				
+				if ($errorGoogle!="") {
+					echo "<div class='error fade'>$errorGoogle</div>" ; 
+				}
+				
+				return $result ; 
+			} else {
+				echo "<div class='error fade'><p>".__('No website selected for Google statistics (see the parameter tab)!',  $this->pluginID)."</p></div>" ; 
+				return array('error' => __('No website selected!',  $this->pluginID));
+			}
 		} else {
 			return array('error' => __('No token provided!',  $this->pluginID));
 		}
+	
+	
 	}
 	
 	/** ====================================================================================================================================================
@@ -1563,10 +1642,7 @@ class traffic_manager extends pluginSedLex {
 		}
 		// Get the response code
 		if ($response['response']['code']!="200") {
-			if (preg_match("/userRateLimitExceededUnreg/", $response['body'])) {
-				return array('error' => sprintf(__('Google states that the User Rate Limit has been exceeded ! Please sign up in %s',  $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>"));
-			}
-			return array('error' => __('The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!',  $this->pluginID));
+			return $this->get_google_error($response['body']) ; 
 		}
 		
 		$aResult = array();

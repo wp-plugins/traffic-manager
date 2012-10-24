@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/extend/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.4
+Tested up to: 3.4.2
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -67,6 +67,10 @@ Have fun !
 
 == Changelog ==
 
+= 1.0.8 =
+* Add API key features for quota issue
+* add default color for graphs
+
 = 1.0.7 =
 * Google change its API :(
 
@@ -94,4 +98,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:10a33a393bb063a99559b1fcae71c9ba
+InfoVersion:42a8adbdfaf9cf4faa098b3f6b3b7f74

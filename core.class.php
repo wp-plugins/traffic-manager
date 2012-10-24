@@ -67,7 +67,6 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_set_translation', array('translationSL','set_translation')) ; 
 			add_action('wp_ajax_update_languages_wp_init', array('translationSL','update_languages_wp_init')) ; 
 			add_action('wp_ajax_update_languages_wp_list', array('translationSL','update_languages_wp_list')) ; 
-			add_action('wp_ajax_importTranslation', array('translationSL','importTranslation')) ; 
 			add_action('wp_ajax_seeTranslation', array('translationSL','seeTranslation')) ; 
 			add_action('wp_ajax_deleteTranslation', array('translationSL','deleteTranslation')) ; 
 			add_action('wp_ajax_mergeTranslationDifferences', array('translationSL','mergeTranslationDifferences')) ; 
@@ -89,6 +88,9 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_svn_put_file_in_repo', array('svnAdmin','svn_put_file_in_repo')) ; 
 			add_action('wp_ajax_svn_put_folder_in_repo', array('svnAdmin','svn_put_folder_in_repo')) ; 
 			add_action('wp_ajax_svn_delete_in_repo', array('svnAdmin','svn_delete_in_repo')) ; 
+			
+			// We add an ajax call for Todo Change
+			add_action('wp_ajax_saveTodo', array($this,'saveTodo')) ; 
 												
 			// We add ajax call for enhancing the performance of the information page
 			add_action('wp_ajax_pluginInfo', array($this,'pluginInfo')) ; 
@@ -454,7 +456,7 @@ if (!class_exists('pluginSedLex')) {
 					if (count($this->add_tinymce_buttons())>0) {
 						if ( get_user_option('rich_editing') == 'true') {
 							add_filter('mce_external_plugins', array($this, 'add_custom_button'));
-							add_filter('mce_buttons', array($this, 'register_custom_button'));
+							add_filter('mce_buttons', array($this, 'register_custom_button'), 999 );
 							add_filter('tiny_mce_version', array($this, 'my_refresh_mce'));
 						}
 					}
@@ -481,7 +483,7 @@ if (!class_exists('pluginSedLex')) {
 		function add_custom_button($plugin_array) {
 			if (is_callable( array($this, 'add_tinymce_buttons') ) ) {
 				if (count($this->add_tinymce_buttons())>0) {
-					$plugin_array["customPluginButtons_".$this->pluginID] = plugin_dir_url(__FILE__)."show?output_js_tinymce=customPluginButtons_".$this->pluginID ; 
+					$plugin_array["customPluginButtons_".$this->pluginID] = site_url()."/?output_js_tinymce=customPluginButtons_".$this->pluginID ; 
 				}
 			}
 			return $plugin_array;
@@ -1376,10 +1378,39 @@ if (!class_exists('pluginSedLex')) {
 			
 			$toBePrint .=  "<p style='".$styleComment."'><a href='#' onclick='coreInfo(\"".$md5."\", \"".$url."\", \"".$plugin_name."\", \"".$current_core_used."\", \"".$current_fingerprint_core_used."\", \"".$author."\", \"".$src_wait."\", \"".$msg_wait."\"); return false ; '>".__('Refresh', 'SL_framework')."</a></p>" ; 
 
+			// Display the TODO zone for developers
+			$toBePrint .=  "<p><textarea id='txt_savetodo_".md5($url)."' style='font:80% courier; width:100%' rows='5'>".stripslashes(htmlentities(utf8_decode(@file_get_contents(WP_PLUGIN_DIR."/".$plugin_name."/core/data/todo.txt")), ENT_QUOTES, "UTF-8"))."</textarea></p>" ; 
+			$toBePrint .=  "<p><input onclick='saveTodo(\"".md5($url)."\", \"".$plugin_name."\") ; return false ; ' type='submit' name='submit' class='button-primary validButton' value='".__('Save Todo List', 'SL_framework')."' />" ; 
+			$toBePrint .= "<img id='wait_savetodo_".md5($url)."' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/ajax-loader.gif' style='display:none;'>" ; 
+			$toBePrint .= "<span id='savedtodo_".md5($url)."' style='display:none;'>".__("Todo list saved!", "SL_framework")."</span>" ; 
+			$toBePrint .= "<span id='errortodo_".md5($url)."'></span>" ; 
+			$toBePrint .= "</p>" ; 
+
 			echo $toBePrint  ; 
 
 			die() ; 
 		}
+		
+		/** ====================================================================================================================================================
+		* Callback to saving todo changes
+		* 
+		* @access private
+		* @return void
+		*/
+		
+		function saveTodo() {
+			// get the arguments
+			$plugin = $_POST['plugin'] ;
+			$todo = $_POST['textTodo'] ;
+			
+			if (file_put_contents(WP_PLUGIN_DIR."/".$plugin."/core/data/todo.txt", utf8_encode($todo))!==FALSE) {
+				echo "ok" ; 
+			} else {
+				echo "problem" ; 
+			}
+			
+			die() ; 
+		}		
 		/** ====================================================================================================================================================
 		* Callback to get plugin Info
 		* 
