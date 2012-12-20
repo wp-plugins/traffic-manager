@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.0.8
+Version: 1.0.9
 
 Framework: SL_Framework
 Author: SedLex
@@ -324,6 +324,7 @@ class traffic_manager extends pluginSedLex {
 		global $wpdb;
 		global $_GET ; 
 		global $_POST ; 
+		global $blog_id ; 
 		
 
 		// On concatene si besoin pour economiser de la place dans la bdd
@@ -474,6 +475,11 @@ class traffic_manager extends pluginSedLex {
 				$params->add_comment(sprintf(__("An error occured on the next sitemap generation : %s.", $this->pluginID), $this->get_param('sitemaps_date'))) ; 
 			} else {
 				$params->add_comment(sprintf(__("The last sitemap has been generated on %s.", $this->pluginID), $this->get_param('sitemaps_date'))) ; 
+				$filename = "sitemap" ; 
+				if (is_multisite()) {
+					$filename = $filename.$blog_id;
+				} 
+				$params->add_comment(sprintf(__("You may see your sitemap at %s.", $this->pluginID), "<a href='".get_site_url()."/".$filename.".xml'>".get_site_url()."/".$filename.".xml</a>")) ; 
 			}
 			$params->add_param('sitemaps_nb', __('How many posts and pages will be included in this file?', $this->pluginID)) ; 
 			$params->add_comment(__("If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included.", $this->pluginID)) ; 
@@ -515,8 +521,7 @@ class traffic_manager extends pluginSedLex {
 		$parameters = ob_get_clean() ; 
 		
 		if ($this->get_param('sitemaps')) {
-			$nameFile = "sitemap.xml" ; 
-			$resu = $this->generateSitemaps($nameFile) ; 
+			$resu = $this->generateSitemaps("sitemap") ; 
 			// If an error occurred
 			if (isset($resu['error'])) {
 				echo "<div class='error fade'><p>".$resu['error']."</p></div>" ; 				
@@ -1800,7 +1805,7 @@ class traffic_manager extends pluginSedLex {
 	*/
 
 	function create_sitemap_upon_save () {
-		$this->generateSitemaps("sitemap.xml", true) ; 
+		$this->generateSitemaps("sitemap", true) ; 
 	}
 
 	/** ====================================================================================================================================================
@@ -1810,11 +1815,20 @@ class traffic_manager extends pluginSedLex {
 	*/
 
 	function add_sitemap_head () {
+		global $blog_id ; 
+		
 		if ($this->get_param('sitemaps')) {
-			if (is_file(ABSPATH . "sitemap.xml.gz"))
-				echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml.gz" />'."\n" ; 
-			if (is_file(ABSPATH . "sitemap.xml"))
-				echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />'."\n" ; 
+			if (is_multisite()) {
+				if (is_file(ABSPATH . "sitemap".$blog_id.".xml.gz"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml.gz" />'."\n" ; 
+				if (is_file(ABSPATH . "sitemap".$blog_id.".xml"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml" />'."\n" ; 
+			} else {
+				if (is_file(ABSPATH . "sitemap.xml.gz"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml.gz" />'."\n" ; 
+				if (is_file(ABSPATH . "sitemap.xml"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml" />'."\n" ; 
+			}
 		}
 	}	
 			
@@ -1828,8 +1842,13 @@ class traffic_manager extends pluginSedLex {
 	*/
 
 	function generateSitemaps($filename, $force=false) {
+		global $blog_id;
+		
+		if (is_multisite()) {
+			$filename = $filename.$blog_id;
+		} 
 	
-		if (is_file(ABSPATH . $filename) && !$force) {
+		if (is_file(ABSPATH . $filename.".xml") && !$force) {
 			return array('info'=>'sitemaps already exists') ; 
 		}
 	
@@ -1838,17 +1857,21 @@ class traffic_manager extends pluginSedLex {
 			$nb=-1 ; 
 		
 	 	$postsForSitemap = get_posts(array(
-    		'numberposts' => $nb,
-    		'orderby' => 'modified',
-    		'post_type'  => array('post','page'),
-    		'order'    => 'DESC'
+			'numberposts' => $nb,
+			'orderby' => 'modified',
+			'post_type'  => array('post','page'),
+			'order'    => 'DESC'
   		));
 
 		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 		$sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 		
 		$sitemap .= "\t".'<url>'."\n" ; 
-  		$sitemap .= "\t\t".'<loc>'. get_site_url() .'</loc>'."\n" ; 
+  		if (!is_multisite()) {
+			$sitemap .= "\t\t".'<loc>'. get_home_url() .'</loc>'."\n" ; 
+		} else {
+			$sitemap .= "\t\t".'<loc>'. get_home_url($blog_id) .'</loc>'."\n" ; 
+		}
   		$sitemap .= "\t\t".'<lastmod>'. date_i18n("Y-m-d") .'</lastmod>'."\n" ; 
   		$sitemap .= "\t\t".'<changefreq>daily</changefreq>'."\n" ; 
   		$sitemap .= "\t\t".'<priority>1.0</priority>'."\n" ; 
@@ -1866,16 +1889,16 @@ class traffic_manager extends pluginSedLex {
 
   		$sitemap .= '</urlset>'."\n";
 
-  		if (@file_put_contents(ABSPATH . $filename, $sitemap)===FALSE) {
-			return array('error'=>sprintf(__('The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s', $this->pluginID), "<code>".$filename."</code>", "<code>".ABSPATH."</code>")) ; 
+  		if (@file_put_contents(ABSPATH . $filename.".xml", $sitemap)===FALSE) {
+			return array('error'=>sprintf(__('The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s', $this->pluginID), "<code>".$filename.".xml"."</code>", "<code>".ABSPATH."</code>")) ; 
 			$this->set_param("sitemaps_date", sprintf(__('Problem with folder rights on %s',  $this->pluginID), "<code>".ABSPATH."</code>"));
 		} else {
 			if (function_exists('gzencode')) {
 				$gz = gzencode($sitemap, 9);
-				@file_put_contents(ABSPATH . $filename.".gz", $gz) ; 
+				@file_put_contents(ABSPATH . $filename.".xml.gz", $gz) ; 
 			}
 			$this->set_param("sitemaps_date",  date_i18n("Y-m-d H:i:s"));
-			$this->notifyCrawlers(get_site_url()."/".$filename) ; 
+			$this->notifyCrawlers(get_site_url()."/".$filename.'.xml') ; 
 			return array('info'=>'sitemaps saved') ; 
 		}
 		

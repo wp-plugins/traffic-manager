@@ -1,4 +1,4 @@
-jQuery().ready(function(){
+/*jQuery().ready(function(){
 	jQuery.ajaxSetup({
 		error:function(x,e) {
 			if(x.status==0) {
@@ -16,4 +16,4 @@ jQuery().ready(function(){
 			}
 		}
 	});
-});
+});*/

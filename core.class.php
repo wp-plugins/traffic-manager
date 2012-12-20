@@ -37,6 +37,11 @@ if (!class_exists('pluginSedLex')) {
 				$this->_init();
 			}
 			
+			// If debug
+			if ($this->get_param('wp_debug')) {
+				define('WP_DEBUG', true);
+			}
+			
 			//Button for tinyMCE
 			add_action('init', array( $this, '_button_editor'));
 			add_action('parse_request', array($this,'create_js_for_tinymce') , 1);
@@ -97,7 +102,12 @@ if (!class_exists('pluginSedLex')) {
 			add_action('wp_ajax_coreInfo', array($this,'coreInfo')) ; 
 			add_action('wp_ajax_coreUpdate', array($this,'coreUpdate')) ; 
 			
-			// We remove some functionnalities
+			// Enable the modification of the content and of the excerpt
+			add_filter('the_content', array($this,'the_content_SL'), 1000);
+			add_filter('get_the_excerpt', array( $this, 'the_excerpt_SL'),1000000);
+			add_filter('get_the_excerpt', array( $this, 'the_excerpt_ante_SL'),2);
+			
+			// We remove some functionalities
 			remove_action('wp_head', 'feed_links_extra', 3); // Displays the links to the extra feeds such as category feeds
 			remove_action('wp_head', 'feed_links', 2); // Displays the links to the general feeds: Post and Comment Feed
 			remove_action('wp_head', 'rsd_link'); // Displays the link to the Really Simple Discovery service endpoint, EditURI link
@@ -112,6 +122,9 @@ if (!class_exists('pluginSedLex')) {
 			$this->signature = '<p style="text-align:right;font-size:75%;">&copy; SedLex - <a href="http://www.sedlex.fr/">http://www.sedlex.fr/</a></p>' ; 
 			
 			$this->frmk = new coreSLframework() ;
+			$this->excerpt_called_SL = false ; 
+			
+			
 		}
 		
 		/** ====================================================================================================================================================
@@ -943,6 +956,9 @@ if (!class_exists('pluginSedLex')) {
 				$params->add_param ("adv_trans_pass", __('IMAP Password:','SL_framework')) ; 
 				$params->add_param ("adv_trans_server", __('IMAP Server:','SL_framework')) ; 
 				$params->add_comment (sprintf(__('Should be something like %s','SL_framework'), "<code>{imap.domain.fr:143}INBOX</code>")) ; 
+
+				$params->add_title (__('WP Debug','SL_framework')) ; 
+				$params->add_param ("wp_debug", __('Do you want to activate the debug function of Wordpress?','SL_framework')) ; 
 	
 				echo $params->flush() ; 
 				$paramSave = ob_get_clean() ; 
@@ -1379,7 +1395,7 @@ if (!class_exists('pluginSedLex')) {
 			$toBePrint .=  "<p style='".$styleComment."'><a href='#' onclick='coreInfo(\"".$md5."\", \"".$url."\", \"".$plugin_name."\", \"".$current_core_used."\", \"".$current_fingerprint_core_used."\", \"".$author."\", \"".$src_wait."\", \"".$msg_wait."\"); return false ; '>".__('Refresh', 'SL_framework')."</a></p>" ; 
 
 			// Display the TODO zone for developers
-			$toBePrint .=  "<p><textarea id='txt_savetodo_".md5($url)."' style='font:80% courier; width:100%' rows='5'>".stripslashes(htmlentities(utf8_decode(@file_get_contents(WP_PLUGIN_DIR."/".$plugin_name."/core/data/todo.txt")), ENT_QUOTES, "UTF-8"))."</textarea></p>" ; 
+			$toBePrint .=  "<p><textarea id='txt_savetodo_".md5($url)."' style='font:80% courier; width:100%' rows='5'>".stripslashes(htmlentities(utf8_decode(@file_get_contents(WP_PLUGIN_DIR."/".$plugin_name."/todo.txt")), ENT_QUOTES, "UTF-8"))."</textarea></p>" ; 
 			$toBePrint .=  "<p><input onclick='saveTodo(\"".md5($url)."\", \"".$plugin_name."\") ; return false ; ' type='submit' name='submit' class='button-primary validButton' value='".__('Save Todo List', 'SL_framework')."' />" ; 
 			$toBePrint .= "<img id='wait_savetodo_".md5($url)."' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/ajax-loader.gif' style='display:none;'>" ; 
 			$toBePrint .= "<span id='savedtodo_".md5($url)."' style='display:none;'>".__("Todo list saved!", "SL_framework")."</span>" ; 
@@ -1403,7 +1419,7 @@ if (!class_exists('pluginSedLex')) {
 			$plugin = $_POST['plugin'] ;
 			$todo = $_POST['textTodo'] ;
 			
-			if (file_put_contents(WP_PLUGIN_DIR."/".$plugin."/core/data/todo.txt", utf8_encode($todo))!==FALSE) {
+			if (file_put_contents(WP_PLUGIN_DIR."/".$plugin."/todo.txt", utf8_encode($todo))!==FALSE) {
 				echo "ok" ; 
 			} else {
 				echo "problem" ; 
@@ -1918,6 +1934,60 @@ if (!class_exists('pluginSedLex')) {
 				echo "<div class='error fade'><p>".__('There are some issues with folders rights. Please corret them as soon as possible as they could induce bugs and instabilities.','SL_framework')."</p><p>".__('Please see below:','SL_framework')."</p>".$result."</div>" ; 
 			}
 		}
+		
+		/** ====================================================================================================================================================
+		* Get the displayed content
+		* 
+		* @return void
+		*/
+	
+		function the_content_SL($content) {
+			global $post ; 
+			// If it is the loop and an the_except is called, we leave
+			if (!is_single()) {
+				// If page 
+				if (is_page()) {
+					if (method_exists($this,'_modify_content')) {
+						return $this->_modify_content($content, 'page', false) ; 
+					}
+					return $content; 	
+				// else
+				} else {
+					// si excerpt
+					if ( (method_exists($this,'_modify_content')) && (!$this->excerpt_called_SL)) {
+						return $this->_modify_content($content, get_post_type($post->ID), true) ; 
+					}
+					return $content ; 
+				}
+			} else {
+	
+				if ( (method_exists($this,'_modify_content')) && (!$this->excerpt_called_SL)) {
+					return $this->_modify_content($content, get_post_type($post->ID), false) ; 
+				}
+				return $content ; 
+			}
+		}
+		
+		/** ====================================================================================================================================================
+		* Get the excerpt content
+		* 
+		* @return void
+		*/
+		function the_excerpt_ante_SL($content) {
+			$this->excerpt_called_SL=true ; 
+			return $content ; 
+		}
+		
+		function the_excerpt_SL($content) {
+			global $post ; 
+			$this->excerpt_called_SL = false ; 
+			
+			if ( (method_exists($this,'_modify_content')) && (!$this->excerpt_called_SL)) {
+				return $this->_modify_content($content, get_post_type($post->ID), true) ; 
+			}
+			
+			return $content ; 
+		}
 	}
 	
 	/** =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -1952,6 +2022,7 @@ if (!class_exists('pluginSedLex')) {
 		public function get_default_option($option) {
 			switch ($option) {
 				// Alternative default return values (Please modify)
+				case 'wp_debug' 		: return false 		; break ; 
 				case 'adv_param' 		: return false 		; break ; 
 				case 'adv_doc' 			: return false 		; break ; 
 				case 'adv_svn_login' 	: return "" 		; break ; 

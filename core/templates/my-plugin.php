@@ -153,7 +153,19 @@ class my_plugin extends pluginSedLex {
 		return ; 
 	}
 
+	/** ====================================================================================================================================================
+	* Called when the content is displayed
+	*
+	* @param string $content the content which will be displayed
+	* @param string $type the type of the article (e.g. post, page, custom_type1, etc.)
+	* @param boolean $excerpt if the display is performed during the loop
+	* @return string the new content
+	*/
 	
+	function _modify_content($content, $type, $excerpt) {	
+		return $content; 
+	}
+		
 	/** ====================================================================================================================================================
 	* Add a button in the TinyMCE Editor
 	*

@@ -24,7 +24,7 @@ if (!class_exists("foldDiff")) {
 		function foldDiff() {
 			$this->folder = array() ; 
 			$this->folder_show = array() ; 
-			$this->maxnbfile = 30 ; 
+			$this->maxnbfile = 20 ; 
 			$this->nbfile = 0 ; 
 		}
 		

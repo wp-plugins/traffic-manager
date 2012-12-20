@@ -344,8 +344,9 @@ if (!class_exists("translationSL")) {
 		* $param array $content_po array of line of the file .po
 		* $param array $content_pot array of line of the file .pot
 		* @access private
-		* @return void
+		* @return array
 		*/
+
 		function get_info($content_po, $content_pot) {
 			// We search in the pot file to check if all sentences are translated
 			$count = 0 ; 
@@ -1007,7 +1008,7 @@ if (!class_exists("translationSL")) {
 			$plugin = preg_replace("/[^a-zA-Z0-9_-]/","",$_POST['plugin']) ; 
 			$lang = preg_replace("/[^a-zA-Z_]/","",$_POST['lang']) ; 
 			$name = preg_replace("/[^a-zA-Z0-9_.-]/","",$_POST['name']) ; 
-			$email = preg_replace("/[^:\/a-z0-9@A-Z_.-=&?!]/","",$_POST['email']) ; 
+			$email = preg_replace("/[^:\/a-z0-9@A-Z_.-=&?!-]/","",$_POST['email']) ; 
 			$isFramework = $_POST['isFramework'] ; 
 			
 			$plugin_lien = $plugin ; 
@@ -1847,7 +1848,10 @@ if (!class_exists("translationSL")) {
 					
 					// We check if the present author have modify a translation here
 					if ($f=="en_US") {
-						$info = __("This is the default language of the plugin. It cannot be modified.", "SL_framework") ; 
+						$info['total'] = 0 ; 
+						$info['translated'] = __("This is the default language of the plugin. It cannot be modified.", "SL_framework") ; 
+						$info['close'] = 0 ; 
+						$info['translators'] = "##" ; 
 					} else {
 						$info = translationSL::get_info(file($path."/lang/".$domain."-".$f.".po"), file($path."/lang/".$domain.".pot")) ; 
 					}
@@ -1866,7 +1870,7 @@ if (!class_exists("translationSL")) {
 						if ($f!="en_US") {
 							$signature_files .= $domain."-".$f.".mo".filesize($path."/lang/".$domain."-".$f.".mo");
 							$cel_lang->add_action(__('Modify','SL_framework'), "modify_trans('".$plugin_lien."','".$domain."', 'false', '".$f."')" ) ; 
-							if (($isEmailAuthor=="true") && (strlen($nameTranslator)>3) && (strpos($info, $nameTranslator)>0)) {
+							if (($isEmailAuthor=="true") && (strlen($nameTranslator)>3) && (strpos($info['translators'], $nameTranslator)>0)) {
 								$cel_lang->add_action(__('Send to the author of the plugin','SL_framework'), "send_trans(\"".$plugin_lien."\",\"".$domain."\", \"false\", \"".$f."\")") ; 
 							}
 						}
@@ -1878,7 +1882,7 @@ if (!class_exists("translationSL")) {
 							}
 							$cel_tran = new adminCell($info['translators']) ;
 						} else {
-							$cel_pour = new adminCell("<p style='color:#CCCCCC'>".$info."</p>") ;
+							$cel_pour = new adminCell("<p style='color:#CCCCCC'>".$info['translated']."</p>") ;
 							$cel_tran = new adminCell("") ;				
 						}
 						$table->add_line(array($cel_lang, $cel_pour, $cel_tran), $f) ; 
@@ -2010,7 +2014,7 @@ if (!class_exists("translationSL")) {
 				foreach($lines as $l) {
 					$i++ ; 
 					$match_array = array("@__[ ]*\([ ]*\\\"([^\\\"]*)\\\"([^)]*)SL_framework([^)]*)\)@", 
-										 "@__[ ]*\([ ]*'([^']*)'([^)]*)SL_framework([^)]*)\)@")  ; 
+									"@__[ ]*\([ ]*'([^']*)'([^)]*)SL_framework([^)]*)\)@")  ; 
 					foreach ($match_array as $reg) {
 						if (preg_match_all($reg,$l, $match,PREG_SET_ORDER)) {
 							foreach($match as $m) {
@@ -2151,7 +2155,10 @@ if (!class_exists("translationSL")) {
 					
 					// We check if the present author have modify a translation here
 					if ($f=="en_US") {
-						$info = __("This is the default language of the plugin framework. It cannot be modified.", "SL_framework") ; 
+						$info['total'] = 0 ; 
+						$info['translated'] = __("This is the default language of the plugin. It cannot be modified.", "SL_framework") ; 
+						$info['close'] = 0 ; 
+						$info['translators'] = "##" ; 
 					} else {
 						$info = translationSL::get_info(file($path."/core/lang/SL_framework-".$f.".po"), file($path."/core/lang/SL_framework.pot")) ; 
 					}
@@ -2170,7 +2177,7 @@ if (!class_exists("translationSL")) {
 						if ($f!="en_US") {
 							$signature_files .= "SL_framework-".$f.".mo".filesize($path."/core/lang/SL_framework-".$f.".mo") ; 
 							$cel_lang->add_action(__('Modify','SL_framework'), "modify_trans('".$plugin_lien."','".$domain."', '".$plugin_frame."', '".$f."')" ) ; 
-							if (($isEmailAuthor=="true") && (strlen($nameTranslator)>3) && (strpos($info, $nameTranslator)>0)) {
+							if (($isEmailAuthor=="true") && (strlen($nameTranslator)>3) && (strpos($info['translators'], $nameTranslator)>0)) {
 								$cel_lang->add_action(__('Send to the author of the framework','SL_framework'), "send_trans('".$plugin_lien."','".$domain."', '".$plugin_frame."' , \"".$f."\")") ; 
 							}
 						}

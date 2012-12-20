@@ -3,7 +3,7 @@
 					<div class="postbox">
 						<h3 class="hndle"><span>pluginSedLex<span class='desc_phpDoc'>[CLASSE]</span></span></h3>
 						<div class="inside" style="padding: 5px 10px 5px 20px;">
-							<p>This PHP class aims at simplifying the developement of new plugin for Wordpress and especially if you do not know how to develop it.</p><p>Therefore, your plugin class should inherit from this class. Please refer to the HOW TO manual to learn more.</p><p>Voici les méthodes de la classe:</p><ul><li class='li_class'><b><a href='#pluginSedLex_getPluginID'>pluginSedLex::getPluginID</a></b>: Get the plugin ID</li><li class='li_class'><b><a href='#pluginSedLex_get_param'>pluginSedLex::get_param</a></b>: Get the value of an option of the plugin</li><li class='li_class'><b><a href='#pluginSedLex_set_param'>pluginSedLex::set_param</a></b>: Set the option of the plugin</li><li class='li_class'><b><a href='#pluginSedLex_add_js'>pluginSedLex::add_js</a></b>: Add a javascript file in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_inline_js'>pluginSedLex::add_inline_js</a></b>: Add inline javascript in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_css'>pluginSedLex::add_css</a></b>: Add a CSS file in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_inline_css'>pluginSedLex::add_inline_css</a></b>: Add inline CSS in the header</li><li class='li_class'><b><a href='#pluginSedLex_get_plugins_data'>pluginSedLex::get_plugins_data</a></b>: Get information on the plugin</li><li class='li_class'><b><a href='#pluginSedLex_check_folder_rights'>pluginSedLex::check_folder_rights</a></b>: Ensure that the needed folders are writable by the webserver.</li></ul>					<table class="widefat fixed" cellspacing="0">
+							<p>This PHP class aims at simplifying the developement of new plugin for Wordpress and especially if you do not know how to develop it.</p><p>Therefore, your plugin class should inherit from this class. Please refer to the HOW TO manual to learn more.</p><p>Voici les méthodes de la classe:</p><ul><li class='li_class'><b><a href='#pluginSedLex_getPluginID'>pluginSedLex::getPluginID</a></b>: Get the plugin ID</li><li class='li_class'><b><a href='#pluginSedLex_get_param'>pluginSedLex::get_param</a></b>: Get the value of an option of the plugin</li><li class='li_class'><b><a href='#pluginSedLex_set_param'>pluginSedLex::set_param</a></b>: Set the option of the plugin</li><li class='li_class'><b><a href='#pluginSedLex_add_js'>pluginSedLex::add_js</a></b>: Add a javascript file in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_inline_js'>pluginSedLex::add_inline_js</a></b>: Add inline javascript in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_css'>pluginSedLex::add_css</a></b>: Add a CSS file in the header</li><li class='li_class'><b><a href='#pluginSedLex_add_inline_css'>pluginSedLex::add_inline_css</a></b>: Add inline CSS in the header</li><li class='li_class'><b><a href='#pluginSedLex_get_plugins_data'>pluginSedLex::get_plugins_data</a></b>: Get information on the plugin</li><li class='li_class'><b><a href='#pluginSedLex_check_folder_rights'>pluginSedLex::check_folder_rights</a></b>: Ensure that the needed folders are writable by the webserver.</li><li class='li_class'><b><a href='#pluginSedLex_the_content_SL'>pluginSedLex::the_content_SL</a></b>: Get the displayed content</li><li class='li_class'><b><a href='#pluginSedLex_the_excerpt_ante_SL'>pluginSedLex::the_excerpt_ante_SL</a></b>: Get the excerpt content</li></ul>					<table class="widefat fixed" cellspacing="0">
 						<thead>
 							<tr>
 								<tr>
@@ -91,6 +91,22 @@
 								</td>
 								<td class="column-columnname">
 									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$folders</b> (<i>array</i>) list of array with a first element (the complete path of the folder to check) and a second element (the needed rights &quot;r&quot;, &quot;w&quot; [or a combination of those])</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void check_folder_rights ($folders) ; </code></p></span>
+								</td>
+							</tr> 
+							<tr class="" valign="top" id="ligne1"> 
+								<td class="column-columnname">
+									<span id="cell_1_1" ><a name='pluginSedLex_the_content_SL'><p><b>the_content_SL</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Get the displayed content</p></span>
+								</td>
+								<td class="column-columnname">
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$content</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void the_content_SL ($content) ; </code></p></span>
+								</td>
+							</tr> 
+							<tr class="alternate" valign="top" id="ligne1"> 
+								<td class="column-columnname">
+									<span id="cell_1_1" ><a name='pluginSedLex_the_excerpt_ante_SL'><p><b>the_excerpt_ante_SL</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Get the excerpt content</p></span>
+								</td>
+								<td class="column-columnname">
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$content</b> (<i>??</i>) ??</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void the_excerpt_ante_SL ($content) ; </code></p></span>
 								</td>
 							</tr> 
 						</tbody>
@@ -986,7 +1002,7 @@
 									<span id="cell_1_1" ><a name='textDiff_diff'><p><b>diff</b><span class='desc_phpDoc'>[METHODE]</span></p><p>Identify the added part</p></span>
 								</td>
 								<td class="column-columnname">
-									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$text1</b> (<i>string</i>) the reference text</p><p style='padding-left:30px;'><b>$text2</b> (<i>string</i>) the text to compare with</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>array</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>array diff ($text1, $text2) ; </code></p></span>
+									<span id="cell_1_2" ><p><b>Paramètres :</b></p><p style='padding-left:30px;'><b>$text1</b> (<i>string</i>) the reference text</p><p style='padding-left:30px;'><b>$text2</b> (<i>string</i>) the text to compare with</p><p><b>Valeur de retour :</b></p><p style='padding-left:30px;'><b>void</b> </p><p><b>Exemple d&#039;appel :</b></p><p style='padding-left:30px;'><code>void diff ($text1, $text2) ; </code></p></span>
 								</td>
 							</tr> 
 						</tbody>

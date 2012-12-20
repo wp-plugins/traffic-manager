@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/extend/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -33,9 +33,11 @@ This plugin is compatible with multisite installation.
 
 * German (Germany) translation provided by xmee.de, Textdrache
 * English (United States), default language
+* Spanish (Mexico) translation provided by 
 * French (France) translation provided by SedLex
 * Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
+* Polish (Poland) translation provided by Rafatokarro666
 * Russian (Russia) translation provided by rad96, AnatoliyNovyk
 
 = Features of the framework =
@@ -66,6 +68,9 @@ Have fun !
 3. Details on connections
 
 == Changelog ==
+
+= 1.0.9 =
+* Remi points out an issue when the root of the website is not at the root of the folders
 
 = 1.0.8 =
 * Add API key features for quota issue
@@ -98,4 +103,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:42a8adbdfaf9cf4faa098b3f6b3b7f74
+InfoVersion:ed26804415b98cf34024c432d1a016c3

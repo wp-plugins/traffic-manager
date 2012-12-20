@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Generated: SL Framework (http://www.sedlex.fr)\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-11-29T19:23:16+00:00\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"
+"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+
+msgid "3 Year"
+msgstr "6 Anos"
+
+msgid "1 Year"
+msgstr "1 Ano"
+
+msgid "6 Month"
+msgstr "6 Meces"
+
+msgid "1 Month"
+msgstr "1 Mes"
+
+msgid "2 Week"
+msgstr "2 Semanas"
+
+msgid "1 Week"
+msgstr "1 Semana"
+
+msgid "The authentication with Google Analytics is successful"
+msgstr "La autenticación con Google Analytics es correcta"
+
+msgid "The authentication with Google Analytics have failed... please retry!"
+msgstr "La autenticación con Google Analytics han fracasado... Vuelva a intentarlo!"
+
+msgid "The Google Analytics's authorization has been revoked as requested"
+msgstr "La autorización de Google Analytics ha sido revocada como solicitado"
+
+msgid "Local Web Statistics"
+msgstr "Estadísticas de Web local"
+
+msgid "Do you want to manage the web statistics locally?"
+msgstr "¿Desea gestionar las estadísticas web localmente?"
+
+msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
+msgstr "Si es así, estadísticas se almacenará en la base de datos local de SQL. Asegúrese de que dispone de espacio libre en su base de datos Audio Microsoft Translator"
+
+msgid "The next compression of the database will occur on %s"
+msgstr "Se producirá la próxima compresión de la base de datos en %s"
+
+msgid "Do you want to display the last viewed pages?"
+msgstr "¿Desea mostrar las últimas páginas vistas?"
+
+msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
+msgstr "Si así, ver una lista de las últimas páginas se mostrarán incluyendo IP del usuario, la dirección url de la página, el tiempo, los sitios de referencia, el nombre de navegador, el nombre de SO, etc.."
+
+msgid "How many pages should be displayed?"
+msgstr "¿Deben mostrar cuántas páginas?"
+
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr "¿Mostrar las estadísticas sobre el número de visitas y páginas vistas? Audio Microsoft Translator"
+
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr "¿Mostrar las estadísticas sobre los tipos de sistema operativo y navegador de sus visitantes?"
+
+msgid "What are the colors for the charts?"
+msgstr "¿Cuáles son los colores para las cartas?"
+
+msgid "The default colors are %s."
+msgstr "Los colores por defecto son % s."
+
