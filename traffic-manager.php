@@ -3,7 +3,8 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.0.9
+Version: 1.1.0
+
 
 Framework: SL_Framework
 Author: SedLex
@@ -61,7 +62,6 @@ class traffic_manager extends pluginSedLex {
 		add_action( 'wp_print_scripts', array( $this, 'javascript_UserWebStat'));
 		
 		add_action("save_post", array( $this, "create_sitemap_upon_save"));
-		add_action( 'wp_print_scripts', array( $this, 'add_sitemap_head'));
 		
 		// Important variables initialisation (Do not modify)
 		$this->path = __FILE__ ; 
@@ -70,7 +70,38 @@ class traffic_manager extends pluginSedLex {
 		// activation and deactivation functions (Do not modify)
 		register_activation_hook(__FILE__, array($this,'install'));
 		register_deactivation_hook(__FILE__, array($this,'deactivate'));
-		register_uninstall_hook(__FILE__, array($this,'uninstall_removedata'));
+		register_uninstall_hook(__FILE__, array('traffic_manager','uninstall_removedata'));
+	}
+	
+	/** ====================================================================================================================================================
+	* In order to uninstall the plugin, few things are to be done ... 
+	* (do not modify this function)
+	* 
+	* @return void
+	*/
+	
+	public function uninstall_removedata () {
+		global $wpdb ;
+		// DELETE OPTIONS
+		delete_option('traffic_manager'.'_options') ;
+		if (is_multisite()) {
+			delete_site_option('traffic_manager'.'_options') ;
+		}
+		
+		// DELETE SQL
+		if (function_exists('is_multisite') && is_multisite()){
+			$old_blog = $wpdb->blogid;
+			$old_prefix = $wpdb->prefix ; 
+			// Get all blog ids
+			$blogids = $wpdb->get_col($wpdb->prepare("SELECT blog_id FROM ".$wpdb->blogs));
+			foreach ($blogids as $blog_id) {
+				switch_to_blog($blog_id);
+				$wpdb->query("DROP TABLE ".str_replace($old_prefix, $wpdb->prefix, $wpdb->prefix . "pluginSL_" . 'traffic_manager')) ; 
+			}
+			switch_to_blog($old_blog);
+		} else {
+			$wpdb->query("DROP TABLE ".$wpdb->prefix . "pluginSL_" . 'traffic_manager' ) ; 
+		}
 	}
 
 	/**====================================================================================================================================================
@@ -176,17 +207,47 @@ class traffic_manager extends pluginSedLex {
 	}
 
 	/** ====================================================================================================================================================
-	* Javascript for calling the web stat engine
+	* Init css for the frontend side
+	* If you want to load a style sheet, please type :
+	*	<code>$this->add_inline_css($css_text);</code>
+	*	<code>$this->add_css($css_url_file);</code>
 	*
 	* @return void
 	*/
 	
-	function javascript_UserWebStat() {	
+	function _front_css_load() {	
+		global $blog_id ; 
 		
-		// Si on est dans la partie d'administration, on ne log rien
-		if (is_admin()) {
-			return ; 
+		// Add sitemap declaration
+		
+		if ($this->get_param('sitemaps')) {
+			if (is_multisite()) {
+				if (is_file(ABSPATH . "sitemap".$blog_id.".xml.gz"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml.gz" />'."\n" ; 
+				if (is_file(ABSPATH . "sitemap".$blog_id.".xml"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml" />'."\n" ; 
+			} else {
+				if (is_file(ABSPATH . "sitemap.xml.gz"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml.gz" />'."\n" ; 
+				if (is_file(ABSPATH . "sitemap.xml"))
+					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml" />'."\n" ; 
+			}
 		}
+	}	
+	
+	/** ====================================================================================================================================================
+	* Init javascript for the public side
+	* If you want to load a script, please type :
+	* 	<code>wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');</code> or 
+	*	<code>wp_enqueue_script('my_plugin_script', plugins_url('/script.js', __FILE__));</code>
+	*	<code>$this->add_inline_js($js_text);</code>
+	*	<code>$this->add_js($js_url_file);</code>
+	*
+	* @return void
+	*/
+	
+	function _public_js_load() {	
+		
 		// On charge le jquery si ce n'est deja fait
 		wp_enqueue_script("jquery") ; 
 		
@@ -1806,32 +1867,7 @@ class traffic_manager extends pluginSedLex {
 
 	function create_sitemap_upon_save () {
 		$this->generateSitemaps("sitemap", true) ; 
-	}
-
-	/** ====================================================================================================================================================
-	* Callback to add the rel sitemap in the header
-	* 
-	* @return 
-	*/
-
-	function add_sitemap_head () {
-		global $blog_id ; 
-		
-		if ($this->get_param('sitemaps')) {
-			if (is_multisite()) {
-				if (is_file(ABSPATH . "sitemap".$blog_id.".xml.gz"))
-					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml.gz" />'."\n" ; 
-				if (is_file(ABSPATH . "sitemap".$blog_id.".xml"))
-					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap'.$blog_id.'.xml" />'."\n" ; 
-			} else {
-				if (is_file(ABSPATH . "sitemap.xml.gz"))
-					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml.gz" />'."\n" ; 
-				if (is_file(ABSPATH . "sitemap.xml"))
-					echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="'.get_site_url()."/".'sitemap.xml" />'."\n" ; 
-			}
-		}
-	}	
-			
+	}			
 
 	
 	/** ====================================================================================================================================================

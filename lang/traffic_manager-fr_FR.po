@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-06-24T12:25:15+00:00\n"
+"PO-Revision-Date: 2013-01-02T08:27:08+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
+"Last-Translator: Claude <http://claude-rochet.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +46,7 @@ msgid "The authentication with Google Analytics have failed... please retry!"
 msgstr "L&#039;authentification avec Google Analytics n&#039;a pas réussi... Merci de réessayer !"
 
 msgid "The Google Analytics's authorization has been revoked as requested"
-msgstr "L&#039;authentification avec Google Analytics a été révoquée comme demandé"
+msgstr "L&#039;autorisation de Google Analytics a été révoquée comme demandé"
 
 msgid "Local Web Statistics"
 msgstr "Statistiques Web locales"
@@ -156,7 +157,7 @@ msgid "%s has be notified for the last time on %s."
 msgstr "%s a été notifié la dernière fois le %s."
 
 msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
-msgstr "Vous pouvez voir ici les statistiques de votre site web (locallement ou avec Google Analytics) et améliorer le trafic futur en informant les moteurs de recherches de vos contenus (sitemaps et notifications)."
+msgstr "Vous pouvez voir ici les statistiques de votre site web (localement ou avec Google Analytics) et améliorer le trafic futur en informant les moteurs de recherches de vos contenus (sitemaps et notifications)."
 
 msgid "from %s to %s"
 msgstr "du %s au %s"
@@ -213,7 +214,7 @@ msgid "According to Google Analytics Data, here is the distribution of browser t
 msgstr "Selon les données de Google Analytics, voici la distribution des navigateurs et des systèmes d&#039;exploitation."
 
 msgid "Browser name"
-msgstr "Navigateur"
+msgstr "Nom du navigateur"
 
 msgid "Number of visitors"
 msgstr "Nombre de visiteurs"
@@ -307,4 +308,25 @@ msgstr "Le fichier %s ne peut pas être créé. Merci de vérifier que les droit
 
 msgid "Problem with folder rights on %s"
 msgstr "Problème avec les droits sur le répertoire %s"
+
+msgid "What is the API key?"
+msgstr "Qu&#039;est-ce qu&#039;une clé API?"
+
+msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgstr "Cette clé API est utile pour éviter tout quota de taille. Si vous ne définissez pas cette clé, seul un petit nombre de requête seront permises par Google"
+
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgstr "Pour obtenir cette clé API, visitez %s, créer un projet, autoriser Google analitics, puis aller sur la console API pour obtenir un %s"
+
+msgid "You may see your sitemap at %s."
+msgstr "Regardez votre sitemap a %s"
+
+msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
+msgstr "Notez que l&#039;heure locale courante du serveur est %s. Si ce n&#039;est pas correct, réglez l&#039;installation de WP"
+
+msgid "Unknown keywords."
+msgstr "Mots clés inconnus"
+
+msgid "No website selected!"
+msgstr "Aucun site sélectionné!"
 

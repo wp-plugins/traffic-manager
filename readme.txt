@@ -34,7 +34,7 @@ This plugin is compatible with multisite installation.
 * German (Germany) translation provided by xmee.de, Textdrache
 * English (United States), default language
 * Spanish (Mexico) translation provided by 
-* French (France) translation provided by SedLex
+* French (France) translation provided by SedLex, Claude
 * Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
 * Polish (Poland) translation provided by Rafatokarro666
@@ -69,31 +69,19 @@ Have fun !
 
 == Changelog ==
 
-= 1.0.9 =
-* Remi points out an issue when the root of the website is not at the root of the folders
+= 1.1.0 =
+* Update the core
 
-= 1.0.8 =
+= 1.0.1 -&gt; 1.0.9 =
+* Remi points out an issue when the root of the website is not at the root of the folders
 * Add API key features for quota issue
 * add default color for graphs
-
-= 1.0.7 =
 * Google change its API :(
-
-= 1.0.6 =
 * If there is a forged X-Forwarded For
-
-= 1.0.5 =
-* Fix a bug
-
-= 1.0.3 =
 * Fix a bug with local data
 * Add text synthesis above the graphs.
 * Fix a jquery issue
-
-= 1.0.2 =
 * Add French Translations
-
-= 1.0.1 =
 * First release
 
 == Frequently Asked Questions ==
@@ -103,4 +91,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:ed26804415b98cf34024c432d1a016c3
+InfoVersion:df5057b9879ceb28245ddfe5e459b7b4
