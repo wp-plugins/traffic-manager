@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.1.0
+Version: 1.1.1
 
 
 Framework: SL_Framework
@@ -59,7 +59,6 @@ class traffic_manager extends pluginSedLex {
 		
 		add_action( 'wp_ajax_UserWebStat', array( $this, 'UserWebStat'));
 		add_action( 'wp_ajax_nopriv_UserWebStat', array( $this, 'UserWebStat'));
-		add_action( 'wp_print_scripts', array( $this, 'javascript_UserWebStat'));
 		
 		add_action("save_post", array( $this, "create_sitemap_upon_save"));
 		

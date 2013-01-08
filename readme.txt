@@ -69,6 +69,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.1.1 =
+* Bug for the javascript callback
+
 = 1.1.0 =
 * Update the core
 
@@ -91,4 +94,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:df5057b9879ceb28245ddfe5e459b7b4
+InfoVersion:a01f5f305d18c2b94cc76be90a8a1032
