@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-08-01T14:28:04+00:00\n"
+"PO-Revision-Date: 2013-02-27T16:40:04+00:00\n"
 "Last-Translator: xmee.de <blog.xmee.de>\n"
 "Last-Translator: Textdrache <http://www.textdrache.de>\n"
+"Last-Translator: ziix.de <ziix.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,4 +120,79 @@ msgstr "Wollen Sie eine Sitemap Datei erstellen?"
 
 msgid "You have configured no graph... Please go on the parameters tab to configure them."
 msgstr "Sie haben keinen Graph konfiguriert...Bitte gehen Sie auf den Parameter Tab und konfigurieren Sie sie."
+
+msgid "No Google Analytics ID configured for now."
+msgstr "Keine Google Analytics ID konfiguriert"
+
+msgid "What is the API key?"
+msgstr "Wie lautet der API-Schlüssel"
+
+msgid "Sitemaps Configuration"
+msgstr "Sitemap Konfiguration"
+
+msgid "No sitemap has been generated yet."
+msgstr "Es wurde keine Sitemap generiert"
+
+msgid "from %s to %s"
+msgstr "von %s bis %s"
+
+msgid "Week %s (%s)"
+msgstr "Woche %s"
+
+msgid "Google Analytics Data"
+msgstr "Google Analytics Daten"
+
+msgid "Month"
+msgstr "Monat"
+
+msgid "Number of Visitors"
+msgstr "Anzahl der Besucher"
+
+msgid "Number of Page Views"
+msgstr "Anzahl der Seitenaufrufe"
+
+msgid "Visitors and Page Views (%s)"
+msgstr "Besuche und Seitenaufrufe"
+
+msgid "Time Line"
+msgstr "Zeitlinie"
+
+msgid "Local Data"
+msgstr "Lokale Daten"
+
+msgid "Browser name"
+msgstr "Browsername"
+
+msgid "Number of visitors"
+msgstr "Anzahl der Besucher"
+
+msgid "Browser distribution (%s)"
+msgstr "Browser Verbreitung"
+
+msgid "OS name"
+msgstr "Betriebssystem"
+
+msgid "Time"
+msgstr "Zeit"
+
+msgid "IP Address"
+msgstr "IP Adresse"
+
+msgid "Viewed Page"
+msgstr "Seitenaufrufe"
+
+msgid "Browser"
+msgstr "Browser"
+
+msgid "OS"
+msgstr "Betriebssystem"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Time spent"
+msgstr "Zeit verbracht"
+
+msgid "Plugin: %s"
+msgstr "Plugin: %s"
 

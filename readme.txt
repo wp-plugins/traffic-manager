@@ -31,13 +31,15 @@ This plugin is compatible with multisite installation.
 
 = Localization =
 
-* German (Germany) translation provided by xmee.de, Textdrache
+* German (Germany) translation provided by xmee.de, Textdrache, ziix.de
 * English (United States), default language
+* Spanish (Spain) translation provided by Verto, Verto Producciones
 * Spanish (Mexico) translation provided by 
 * French (France) translation provided by SedLex, Claude
 * Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
 * Polish (Poland) translation provided by Rafatokarro666
+* Portuguese (Brazil) translation provided by CristianoLagame
 * Russian (Russia) translation provided by rad96, AnatoliyNovyk
 
 = Features of the framework =
@@ -55,7 +57,7 @@ Have fun !
 
 == Installation ==
 
-1. Upload this folder to your plugin directory (for instance '/wp-content/plugins/')
+1. Upload this folder traffic-manager to your plugin directory (for instance '/wp-content/plugins/')
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Navigate to the 'SL plugins' box
 4. All plugins developed with the SL core will be listed in this box
@@ -68,6 +70,9 @@ Have fun !
 3. Details on connections
 
 == Changelog ==
+
+= 1.1.2 =
+* Lighten the plugins and add translations
 
 = 1.1.1 =
 * Bug for the javascript callback
@@ -94,4 +99,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:a01f5f305d18c2b94cc76be90a8a1032
+InfoVersion:7e883ab784f67bd678a0436c14c27103
