@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-03-14T21:47:09+00:00\n"
+"PO-Revision-Date: 2013-04-07T16:15:54+00:00\n"
 "Last-Translator: Verto <vertofotografia.es>\n"
 "Last-Translator: Verto Producciones <vertoproducciones@gmail.com>\n"
 "Language-Team: \n"
@@ -79,7 +79,7 @@ msgid "What are the colors for the charts?"
 msgstr "¿Cuáles son los colores para los gráficos?"
 
 msgid "The default colors are %s."
-msgstr "Los colores por defecto son % s."
+msgstr "Los colores por defecto son %s."
 
 msgid "What are the period for which charts should be provided?"
 msgstr "¿Qué periodo debe mostrarse en los gráficos?"
@@ -94,7 +94,7 @@ msgid "Do you want to manage the web statistics with Google Analytics?"
 msgstr "¿Quieres gestionar las estadísticas web con Google Analytics?"
 
 msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
-msgstr "Para obtener información adicional, por favor visite el sitio web %s. Por otra parte, usted puede ver todos los accesos autorizados para utilizar esta %pagina%s"
+msgstr "Para obtener información adicional, por favor visite el sitio web %s. Por otra parte, usted puede ver todos los accesos autorizados para utilizar esta %spagina%s"
 
 msgid "Google Analytics ID:"
 msgstr "ID de Google Analytics:"
@@ -102,11 +102,23 @@ msgstr "ID de Google Analytics:"
 msgid "The Google Analytics ID is should be similar to %s."
 msgstr "El ID de Google Analytics debe ser similar a %s."
 
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr "Se puede %sautentificar%s con su cuenta de Google y facilitar así el proceso."
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr "De momento esta página se autentifica con sus cuentas de Google Analytics. %sDesaprobar la autentificación%s"
+
 msgid "Select..."
 msgstr "Seleccionar ..."
 
 msgid "Choose your website in this list"
 msgstr "Escoja su sitio web en esta lista"
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr "Por favor, tenga en cuenta que el ID de Google Analytics para %s es %s."
+
+msgid "No Google Analytics ID configured for now."
+msgstr "No hay una ID de Google Analytics configurada por ahora."
 
 msgid "What is the API key?"
 msgstr "¿Cuál es la clave API?"
@@ -114,11 +126,77 @@ msgstr "¿Cuál es la clave API?"
 msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
 msgstr "Esta clave API es útil para evitar límites de cuota. Si no se establece esta clave, Google permite pocas solicitudes"
 
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgstr "Para obtener esta clave API, visite %s, cree un proyecto, permita a Google Analytics, y luego vaya a la consola de la API para obtener un %s"
+
 msgid "Sitemaps Configuration"
 msgstr "Configuración de los Sitemaps"
 
 msgid "Do you want to compute a Sitemaps file?"
 msgstr "¿Quieres calcular el archivo de Sitemaps?"
+
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr "Un Sitemap (mapa delsitio) es un archivo XML que enumera las URL de su sitio web. Este mapa informa a los motores de búsqueda acerca de las URL de su Web que están disponibles para el rastreo."
+
+msgid "No sitemap has been generated yet."
+msgstr "El mapa del sitio no se ha generado todavía."
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr "Se produjo un error en la siguiente generación del mapa del sitio: %s."
+
+msgid "The last sitemap has been generated on %s."
+msgstr "El mapa del sitio se ha generado en %s."
+
+msgid "You may see your sitemap at %s."
+msgstr "Puede ver el mapa del sitio en %s."
+
+msgid "How many posts and pages will be included in this file?"
+msgstr "¿Cuántos mensajes y páginas se incluyen en este archivo?"
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr "Si tiene demasiados mensajes, establezca este número a 1000, por ejemplo, con el fin de evitar cualquier problema de memoria. Si se establece este número en 0, todos los mensajes serán incluidos."
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr "¿Desea notificar a %s, cuando el mapa se actualice?"
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr "%s nunca ha sido notificado todavía. Esperando la próxima actualización."
+
+msgid "An error occured when notifying %s for the last time."
+msgstr "Se produjo un error al notificar a %s por última vez."
+
+msgid "%s has be notified for the last time on %s."
+msgstr "%s se notificará por última vez en %s."
+
+msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
+msgstr "Puede ver aquí las estadísticas de su sitio web (local o con Google Analytics) y mejorar el tráfico en el futuro, informando a los rastreadores web de sus contenidos (sitemaps y notificaciones)."
+
+msgid "from %s to %s"
+msgstr "de %s a %s"
+
+msgid "Week %s (%s)"
+msgstr "Semana %s (%s)"
+
+msgid "%s %s"
+msgstr "%s %s"
+
+msgid "Google Analytics Data"
+msgstr "Datos de Google Analytics"
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr "De acuerdo con los datos de Google Analytics, este es el número de visitas y de páginas vistas."
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr "Hoy, %s personas han visitado su sitio y %s páginas se han visto (%s y %s ayer)."
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr "Esta semana, %s personas han visitado su sitio y %s páginas se han visto (%s y %s la semana pasada)."
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr "Este mes, %s personas han visitado su sitio y %s páginas se han visto (%s y %s el mes pasado)."
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr "NOTA: Google tiene en cuenta que la semana que comienza el domingo no es compatible con la norma ISO 8601 (por lo general comienza el lunes). Así que tenga cuidado al comparar semanas con su calendario: números de la semana puede ser ligeramente diferente."
 
 msgid "Month"
 msgstr "Mes"
@@ -160,7 +238,7 @@ msgid "OS name"
 msgstr "Sistemas operativos"
 
 msgid "Operating System distribution (%s)"
-msgstr "Distribución del sistema operativo"
+msgstr "Distribución del sistema operativo (%s)"
 
 msgid "According to Local Data, here is the distribution of browser types and OS."
 msgstr "De acuerdo a los datos locales, aquí está la distribución de los tipos de navegador y sistema operativo."
@@ -249,6 +327,9 @@ msgstr "La autorización parece haber caducado o ha sido revocada. Por favor, re
 msgid "An unknown error occured during the API request"
 msgstr "Error desconocido durante la solicitud de la API"
 
+msgid "No token provided!"
+msgstr "No se muestra siempre"
+
 msgid "No website selected for Google statistics (see the parameter tab)!"
 msgstr "No hay ningún sitio web seleccionado para las estadísticas de Google (ver la ficha de parámetros)"
 
@@ -260,85 +341,4 @@ msgstr "No se puede crear el archivo %s . Por favor, asegúrese de configurar lo
 
 msgid "Problem with folder rights on %s"
 msgstr "Problema con los permisos de carpeta en %s"
-
-msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
-msgstr "Se puede %sautentificar%s con su cuenta de Google y facilitar así el proceso."
-
-msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
-msgstr "De momento esta página se autentifica con sus cuentas de Google Analytics. %sDesaprobar la autentificación%s"
-
-msgid "Please note that the Google Analytics ID for %s is %s."
-msgstr "Por favor, tenga en cuenta que el ID de Google Analytics para %s es %s."
-
-msgid "No Google Analytics ID configured for now."
-msgstr "No hay una ID de Google Analytics configurada por ahora."
-
-msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
-msgstr "Para obtener esta clave API, visite %s, cree un proyecto, permita a Google Analytics, y luego vaya a la consola de la API para obtener un %s"
-
-msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
-msgstr "Un Sitemap (mapa delsitio) es un archivo XML que enumera las URL de su sitio web. Este mapa informa a los motores de búsqueda acerca de las URL de su Web que están disponibles para el rastreo."
-
-msgid "No sitemap has been generated yet."
-msgstr "El mapa del sitio no se ha generado todavía."
-
-msgid "An error occured on the next sitemap generation : %s."
-msgstr "Se produjo un error en la siguiente generación del mapa del sitio: %s."
-
-msgid "The last sitemap has been generated on %s."
-msgstr "El mapa del sitio se ha generado en %s."
-
-msgid "You may see your sitemap at %s."
-msgstr "Puede ver el mapa del sitio en %s."
-
-msgid "How many posts and pages will be included in this file?"
-msgstr "¿Cuántos mensajes y páginas se incluyen en este archivo?"
-
-msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
-msgstr "Si tiene demasiados mensajes, establezca este número a 1000, por ejemplo, con el fin de evitar cualquier problema de memoria. Si se establece este número en 0, todos los mensajes serán incluidos."
-
-msgid "Do you want to notify %s when the sitemap is updated?"
-msgstr "¿Desea notificar a % s, cuando el mapa se actualice?"
-
-msgid "%s has never been notified yet. Waiting for the next update."
-msgstr "%s nunca ha sido notificado todavía. Esperando la próxima actualización."
-
-msgid "An error occured when notifying %s for the last time."
-msgstr "Se produjo un error al notificar a %s por última vez."
-
-msgid "%s has be notified for the last time on %s."
-msgstr "%s se notificará por última vez en %s."
-
-msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
-msgstr "Puede ver aquí las estadísticas de su sitio web (local o con Google Analytics) y mejorar el tráfico en el futuro, informando a los rastreadores web de sus contenidos (sitemaps y notificaciones)."
-
-msgid "from %s to %s"
-msgstr "de %s a %s"
-
-msgid "Week %s (%s)"
-msgstr "Semana %s (%s)"
-
-msgid "%s %s"
-msgstr "%s %s"
-
-msgid "Google Analytics Data"
-msgstr "Datos de Google Analytics"
-
-msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
-msgstr "De acuerdo con los datos de Google Analytics, este es el número de visitas y de páginas vistas."
-
-msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
-msgstr "Hoy, %s personas han visitado su sitio y %s páginas se han visto (%s y %s ayer)."
-
-msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
-msgstr "Esta semana, %s personas han visitado su sitio y %s páginas se han visto (%s y %s la semana pasada)."
-
-msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
-msgstr "Este mes, %s personas han visitado su sitio y %s páginas se han visto (%s y %s el mes pasado)."
-
-msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
-msgstr "NOTA: Google tiene en cuenta que la semana que comienza el domingo no es compatible con la norma ISO 8601 (por lo general comienza el lunes). Así que tenga cuidado al comparar semanas con su calendario: números de la semana puede ser ligeramente diferente."
-
-msgid "No token provided!"
-msgstr "No se muestra siempre"
 

@@ -71,6 +71,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.1.3 =
+* Update the core
+
 = 1.1.2 =
 * Lighten the plugins and add translations
 
@@ -99,4 +102,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:7e883ab784f67bd678a0436c14c27103
+InfoVersion:64baf40f91eb874111902899650e9cb0
