@@ -71,16 +71,13 @@ Have fun !
 
 == Changelog ==
 
-= 1.1.3 =
+= 1.2.0 =
+* Metatag may be included in the page to enhance the SEO
+
+= 1.1.0 -&gt; 1.1.3 =
 * Update the core
-
-= 1.1.2 =
 * Lighten the plugins and add translations
-
-= 1.1.1 =
 * Bug for the javascript callback
-
-= 1.1.0 =
 * Update the core
 
 = 1.0.1 -&gt; 1.0.9 =
@@ -102,4 +99,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:64baf40f91eb874111902899650e9cb0
+InfoVersion:3827f3dc8eeadb59eabb8231881080ae

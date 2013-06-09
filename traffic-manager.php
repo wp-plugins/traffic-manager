@@ -3,7 +3,8 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.1.3
+Version: 1.2.0
+
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -57,6 +58,8 @@ class traffic_manager extends pluginSedLex {
 		
 		add_action( 'wp_ajax_UserWebStat', array( $this, 'UserWebStat'));
 		add_action( 'wp_ajax_nopriv_UserWebStat', array( $this, 'UserWebStat'));
+		
+		add_action('wp_head', array( $this, 'add_meta_tags'));
 		
 		add_action("save_post", array( $this, "create_sitemap_upon_save"));
 		
@@ -124,6 +127,185 @@ class traffic_manager extends pluginSedLex {
 	
 	function _admin_js_load() {	
 		wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');
+		return ; 
+	}
+	
+	/** ====================================================================================================================================================
+	* Top load the metadata
+	*
+	* @return void
+	*/
+	
+	function add_meta_tags() {	
+		global $post ; 
+		$og = "" ; 
+		$norm = "" ; 
+		$dc = "" ; 
+		
+		if ($this->get_param('metatag')) {
+			$norm .= '<meta name="robots" content="index,follow"/>'."\n" ; 
+			$norm .= '<meta name="googlebot" content="index,follow"/>'."\n" ; 
+			$dc .='<meta name="DC.format" content="text/html"/>'."\n" ; 
+			if (is_single()) {
+				$og .= '<meta property="og:type" content="article"/>'."\n" ; 
+				$og .= '<meta property="og:url" content="'.get_permalink().'"/>'."\n" ; 
+			} else {
+				$og .= '<meta property="og:url" content="'.home_url().'"/>'."\n" ; 
+			}
+			// TITLE
+			if ($this->get_param('metatag_title')) {
+				if (is_single()) {
+					$dc .= '<meta name="DC.title" content="'.$post->post_title.'"/>'."\n" ; 
+					$og .= '<meta property="og:title" content="'.$post->post_title.'"/>'."\n" ; 
+				} else {
+					$dc .= '<meta name="DC.title" content="'.get_bloginfo("title").'"/>'."\n" ; 
+					$og .= '<meta property="og:title" content="'.get_bloginfo("title").'"/>'."\n" ; 
+				}
+				$og .= '<meta property="og:site_name" content="'.get_bloginfo("title").'"/>'."\n" ; 
+			}
+			// DESCRIPTION	
+			if ($this->get_param('metatag_description')) {
+				if (is_single()) {
+					$shortcontent = trim(preg_replace ('/\[[^\]]*?\]/', '', wp_trim_words($post->post_content)));
+					$norm .= '<meta name="description" content="'.$shortcontent.'"/>'."\n" ; 
+					$dc .= '<meta name="DC.description" content="'.$shortcontent.'"/>'."\n" ; 
+					$dc .= '<meta name="DC.description.abstract" content="'.$shortcontent.'"/>'."\n" ; 
+					$og .= '<meta property="og:description" content="'.$shortcontent.'"/>'."\n" ; 
+				} else {
+					$norm .= '<meta name="description" content="'.get_bloginfo("description").'"/>'."\n" ; 
+					$dc .= '<meta name="DC.description" content="'.get_bloginfo("description").'"/>'."\n" ; 
+					$dc .= '<meta name="DC.description.abstract" content="'.get_bloginfo("description").'"/>'."\n" ; 
+					$og .= '<meta property="og:description" content="'.get_bloginfo("description").'"/>'."\n" ; 
+				}
+			}
+			// COPYRIGHT	
+			if ($this->get_param('metatag_copyright')) {
+				if ($this->get_param('metatag_copyright_override')!="") {
+					$dc .= '<meta name="DC.right" content="'.$this->get_param('metatag_copyright_override').'"/>'."\n" ; 
+				} else {
+					$dc .= '<meta name="DC.right" content="Copyright - '.get_bloginfo('name').' - '.get_bloginfo('url').' - All right reserved"/>'."\n" ; 
+				}
+			}
+			// DATE	
+			if ($this->get_param('metatag_date')) {
+				$formatdate = "Y-m-d\TH:i:sO" ;
+				if (is_single()) {
+					$dc .= '<meta name="DC.date" content="'.date($formatdate,strtotime($post->post_date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.created" content="'.date($formatdate,strtotime($post->post_date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.available" content="'.date($formatdate,strtotime($post->post_date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.modified" content="'.date($formatdate,strtotime($post->post_modified)).'"/>'."\n" ; 
+					$og .= '<meta property="og:article:published_time" content="'.date($formatdate,strtotime($post->post_date)).'"/>'."\n" ; 
+					$og .= '<meta property="og:article:modified_time" content="'.date($formatdate,strtotime($post->post_modified)).'"/>'."\n" ; 
+				} else {
+				 	$args=array(
+					  'orderby'=> 'modified',
+					  'order' => 'DESC',
+					  'post_type' => 'any',
+					  'post_status' => 'publish',
+					  'posts_per_page' => 1,
+					);
+					$myposts = get_posts($args);
+					$date = "1970-1-1 00:00:00" ; 
+					$modified_date = "1970-1-1 00:00:00" ; 
+					foreach( $myposts as $p ) {
+						$date = $p->post_date ; 
+						$modified_date = $p->post_modified ; 
+					}	
+					$dc .= '<meta name="DC.date" content="'.date($formatdate, strtotime($date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.created" content="'.date($formatdate, strtotime($date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.available" content="'.date($formatdate, strtotime($date)).'"/>'."\n" ; 
+					$dc .= '<meta name="DC.date.modified" content="'.date($formatdate, strtotime($modified_date)).'"/>'."\n" ; 
+					$og .= '<meta property="og:article:published_time" content="'.date($formatdate, strtotime($date)).'"/>'."\n" ; 
+					$og .= '<meta property="og:article:modified_time" content="'.date($formatdate, strtotime($modified_date)).'"/>'."\n" ; 
+				}
+			}
+			// AUTHOR	
+			if ($this->get_param('metatag_author')) {
+				$dc .= '<meta name="DC.publisher" content="'.get_bloginfo('name').' - '.get_bloginfo('url').'"/>'."\n" ; 
+				if ($this->get_param('metatag_author_override')!="") {
+					$dc .= '<meta name="DC.creator" content="'.$this->get_param('metatag_author_override').'"/>'."\n" ; 
+				} else {
+					if (is_single()) {
+						$user_p = get_userdata($post->post_author) ; 
+						$dc .= '<meta name="DC.creator" content="'.trim($user_p->user_firstname.' '.$user_p->user_lastname).'"/>'."\n" ; 
+					} else {
+						// pas d'auteur sur ces pages 
+					}
+				}
+			}
+			
+			// KEYWORDS	
+			if ($this->get_param('metatag_keywords')) {
+				if (is_single()) {
+					$kw = "" ; 
+					//category
+					$cat_array = get_the_category() ; 
+					if (is_array($cat_array)) {
+						foreach($cat_array as $category) { 
+							if ($kw != "") {
+								$kw .= "; " ; 
+							} 
+							$kw .= $category->cat_name ; 
+							$og .= '<meta property="og:article:section" content="'.$category->cat_name.'"/>'."\n" ; 
+
+						}
+					}
+					//keywords
+					$tag_array = get_the_tags() ; 
+					if (is_array($tag_array)) {
+						foreach($tag_array as $tag) { 
+							if ($kw != "") {
+								$kw .= "; " ; 
+							} 
+							$kw .= $tag->name ; 
+							$og .= '<meta property="og:article:tag" content="'.$tag->name.'"/>'."\n" ; 
+
+						}
+					}
+					$dc .= '<meta name="DC.subject" content="'.$kw.'"/>'."\n" ; 
+				} else {
+					// pas de mots clefs pour ces pages
+				}
+			}
+			
+			// TABLE OF CONTENT	
+			if ($this->get_param('metatag_toc')) {
+				if (is_single()) {
+					$content = $post->post_content ; 
+					$toc = "" ; 
+					preg_match_all("#<h([1-6])>(.*?)</h[1-6]>#iu", $content, $matches, PREG_SET_ORDER) ;
+					foreach($matches as $m) {
+						if ($toc != "") {
+							$toc .= " --- " ; 
+						}	
+						$toc .= $m[2] ; 
+					} 
+					
+					$dc .= '<meta name="DC.description.tableOfContents" content="'.$toc.'"/>'."\n" ; 
+				} else {
+					// pas de mots clefs pour ces pages
+				}
+			}
+			// IMAGES	
+			if ($this->get_param('metatag_image')) {
+				if (is_single()) {
+					$files = get_children("post_parent=".$post->ID."&post_type=attachment&post_mime_type=image");
+					foreach($files as $ai => $f) {
+						$image = wp_get_attachment_image_src($ai, 'full');
+						$og .= '<meta property="og:image" content="'.$image[0].'"/>'."\n" ; 
+						$og .= '<meta property="og:image:width" content="'.$image[1].'"/>'."\n" ; 
+						$og .= '<meta property="og:image:height" content="'.$image[2].'"/>'."\n" ; 
+					}
+				} else {
+					// pas de mots clefs pour ces pages
+				}
+			}
+			
+			echo $norm ; 
+			echo $og ; 
+			echo $dc ; 
+		}
+		
 		return ; 
 	}
 	
@@ -198,7 +380,18 @@ class traffic_manager extends pluginSedLex {
 			case 'sitemaps_notify_bing_date'		: return "" ; break ; 
 			case 'sitemaps_notify_ask'		: return false ; break ; 
 			case 'sitemaps_notify_ask_date'		: return "" ; break ; 
-
+			
+			case 'metatag'		: return false ; break ; 
+			case 'metatag_title'		: return true ; break ; 
+			case 'metatag_description'		: return true ; break ; 
+			case 'metatag_copyright'		: return true ; break ; 
+			case 'metatag_copyright_override'		: return "" ; break ; 
+			case 'metatag_date'		: return true ; break ; 
+			case 'metatag_keywords'		: return true ; break ; 
+			case 'metatag_author'		: return true ; break ; 
+			case 'metatag_author_override'		: return "" ; break ; 
+			case 'metatag_toc'		: return true ; break ; 
+			case 'metatag_image'		: return true ; break ; 
 		}
 		return null ;
 	}
@@ -444,9 +637,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_comment(sprintf(__("The default colors are %s.", $this->pluginID), "<code>['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']</code>")) ; 
 			$params->add_param('local_period', __('What are the period for which charts should be provided?', $this->pluginID)) ; 
 			$params->add_param('local_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
-			
-			
-			
+						
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
 			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
@@ -574,7 +765,22 @@ class traffic_manager extends pluginSedLex {
 			} else {
 				$params->add_comment(sprintf(__("%s has be notified for the last time on %s.", $this->pluginID), $name_crawler, $this->get_param('sitemaps_notify_'.$name_crawler_s.'_date'))) ; 
 			}
-
+			
+			$params->add_title(__("Improve your SEO with metatags", $this->pluginID)) ; 
+			$params->add_param('metatag', __('Do you want to add metatag to your page/post', $this->pluginID), "", "", array('metatag_title', 'metatag_description', 'metatag_copyright', 'metatag_copyright_override', 'metatag_keywords', 'metatag_author', 'metatag_author_override')) ; 
+			$params->add_comment(__("Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website.", $this->pluginID)) ; 
+			$params->add_param('metatag_title', __('Add meta title', $this->pluginID)) ; 
+			$params->add_param('metatag_description', __('Add meta description', $this->pluginID)) ; 
+			$params->add_param('metatag_copyright', __('Add meta copyright', $this->pluginID)) ; 
+			$params->add_comment(sprintf(__("It will be by default: %s.", $this->pluginID), "<code>Copyright - ".get_bloginfo('name')." - ".get_bloginfo('url')." - All right reserved"."</code>")) ; 
+			$params->add_param('metatag_copyright_override', __('Override the copyright of the website:', $this->pluginID)) ; 
+			$params->add_param('metatag_author', __('Add meta author', $this->pluginID)) ; 
+			$params->add_param('metatag_author_override', __('Override the author name', $this->pluginID)) ; 
+			$params->add_param('metatag_date', __('Add meta date (publication date, modification date, etc.)', $this->pluginID)) ;
+			$params->add_param('metatag_keywords', __('Add meta keywords (category, keywords, etc.)', $this->pluginID)) ;
+			$params->add_param('metatag_toc', __('Add meta table of content', $this->pluginID)) ;
+			$params->add_param('metatag_toc', __('Add meta images', $this->pluginID)) ;
+			 
 			$params->flush() ; 
 		$parameters = ob_get_clean() ; 
 		
