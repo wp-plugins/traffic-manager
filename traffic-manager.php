@@ -3,7 +3,8 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.2.0
+Version: 1.2.1
+
 
 Framework: SL_Framework
 Author: SedLex
@@ -365,6 +366,7 @@ class traffic_manager extends pluginSedLex {
 			case 'googlewebstat_auth' 		: return false 		; break ; 
 			case 'googlewebstat_auth_token' 		: return "" 		; break ; 
 			case 'google_api_key'		: return "" ; break ; 
+			case 'google_double_click'		: return false ; break ; 
 			case 'google_show_visits'		: return false ; break ; 
 			case 'google_show_type'		: return false ; break ; 
 			case 'google_track_user'		: return true ; break ; 
@@ -551,7 +553,11 @@ class traffic_manager extends pluginSedLex {
 	
 						(function() {
 							var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+							<?php if (!$this->get_param("google_double_click")) {?>
 							ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+							<?php } else {?>
+							ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+							<?php } ?>
 							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 						})();
 									
@@ -639,7 +645,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('local_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
 						
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
-			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key')) ; 
+			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
 			
 			if (!$this->get_param('googlewebstat_auth')) {
@@ -711,8 +717,11 @@ class traffic_manager extends pluginSedLex {
 				$params->add_param('google_color', __('What are the colors for the charts?', $this->pluginID)) ; 
 				$params->add_comment(sprintf(__("The default colors are %s.", $this->pluginID), "<code>['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']</code>")) ; 
 				$params->add_param('google_period', __('What are the period for which charts should be provided?', $this->pluginID)) ; 
+	
 			}
 			$params->add_param('google_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
+			$params->add_param('google_double_click', __('Support Display Advertising for Google?', $this->pluginID)) ; 
+			$params->add_comment(__("This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.", $this->pluginID)) ; 
 
 			
 			$params->add_title(__("Sitemaps Configuration", $this->pluginID)) ; 
@@ -1346,11 +1355,11 @@ class traffic_manager extends pluginSedLex {
 								}
 								$content_referer = "" ; 
 								if ($type_referer == "words") {
-									$content_referer = "<a href='".strip_tags($l->referer)."'><img style='border:0' src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt='".$source."'></a> ".ucfirst(strtolower($referer)) ;
+									$content_referer = "<a href='".strip_tags($l->referer)."'><img style='border:0' src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt='".$source."'></a> ".ucfirst(strtolower($referer)) ;
 								} else if ($type_referer == "stripped_words") {
-									$content_referer = "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source."_masqued.png"."' alt='".ucfirst(strtolower($source))."'> <span style='color:#BBBBBB'>".$referer."</span>" ;
+									$content_referer = "<img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source."_masqued.png"."' alt='".ucfirst(strtolower($source))."'> <span style='color:#BBBBBB'>".$referer."</span>" ;
 								} else if ($type_referer == "img") {
-									$content_referer = "<img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt=''> <img src='$referer' alt='' width='100px'/>" ;
+									$content_referer = "<img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt=''> <img src='$referer' alt='' width='100px'/>" ;
 								} else if ($type_referer == "link") {
 									$length = 50 ; 
 									$refererDisplay = substr($referer, 0, $length);
@@ -1405,19 +1414,19 @@ class traffic_manager extends pluginSedLex {
 				
 			$tabs->add_tab(__('Web Statistics',  $this->pluginID), ob_get_clean()) ; 	
 				
-			$tabs->add_tab(__('Parameters',  $this->pluginID), $parameters , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
+			$tabs->add_tab(__('Parameters',  $this->pluginID), $parameters , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
 			
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
 				$trans = new translationSL($this->pluginID, $plugin) ; 
 				$trans->enable_translation() ; 
-			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_trad.png") ; 	
+			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_trad.png") ; 	
 
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
 				$trans = new feedbackSL($plugin, $this->pluginID) ; 
 				$trans->enable_feedback() ; 
-			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_mail.png") ; 	
+			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_mail.png") ; 	
 			
 			ob_start() ; 
 				// A liste of plugin slug to be excluded
@@ -1425,7 +1434,7 @@ class traffic_manager extends pluginSedLex {
 				// Replace sedLex by your own author name
 				$trans = new otherPlugins("sedLex", $exlude) ; 
 				$trans->list_plugins() ; 
-			$tabs->add_tab(__('Other plugins',  $this->pluginID), ob_get_clean() , WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_plug.png") ; 	
+			$tabs->add_tab(__('Other plugins',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_plug.png") ; 	
 			
 			echo $tabs->flush() ; 
 			
@@ -1738,7 +1747,7 @@ class traffic_manager extends pluginSedLex {
 		$resp = str_replace(" ","&nbsp;",$resp) ; 
 		
 		if (preg_match("/userRateLimitExceededUnreg/", $orig_resp)) {
-			return array('error' => __('Google states that the User Rate Limit has been exceeded!',  $this->pluginID)."<br/>".__('In order to avoid User Rate Limit, you should get an API key.',  $this->pluginID)."<br/>".sprintf(__("To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s", $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>", "'<i>Key for browser apps</i>'")."<br/><br/><img src='".WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/api_access_key.jpg'><br/><br/>".__('Once a key generated, please configure it in the configuration tab.',  $this->pluginID)."<br/><br/><b>".__('If you have just saved the API key in the parameters, please reload the page and it shoud work.',  $this->pluginID)."</b>");
+			return array('error' => __('Google states that the User Rate Limit has been exceeded!',  $this->pluginID)."<br/>".__('In order to avoid User Rate Limit, you should get an API key.',  $this->pluginID)."<br/>".sprintf(__("To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s", $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>", "'<i>Key for browser apps</i>'")."<br/><br/><img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/api_access_key.jpg'><br/><br/>".__('Once a key generated, please configure it in the configuration tab.',  $this->pluginID)."<br/><br/><b>".__('If you have just saved the API key in the parameters, please reload the page and it shoud work.',  $this->pluginID)."</b>");
 		}
 
 		return array('error' => __('The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!',  $this->pluginID)."<br/>".$resp);

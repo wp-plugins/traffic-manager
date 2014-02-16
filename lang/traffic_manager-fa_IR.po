@@ -1,0 +1,386 @@
+msgid ""
+msgstr ""
+"Generated: SL Framework (http://www.sedlex.fr)\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-08-09T21:13:26+00:00\n"
+"Last-Translator: 7eshop.ir <ahmad.wayfarer@yahoo.com>\n"
+"Last-Translator: AhmadWayfarer <http://7eshop.ir>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Farsi\n"
+"X-Poedit-Country: Iran\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes\n"
+
+msgid "3 Year"
+msgstr "3 سال"
+
+msgid "1 Year"
+msgstr "ا سال"
+
+msgid "6 Month"
+msgstr "6 ماه"
+
+msgid "1 Month"
+msgstr "1 ماه"
+
+msgid "2 Week"
+msgstr "2 هفته"
+
+msgid "1 Week"
+msgstr "1 هفته"
+
+msgid "The authentication with Google Analytics is successful"
+msgstr "اتصال به Google Analytics با موفقیت صورت گرفت"
+
+msgid "The authentication with Google Analytics have failed... please retry!"
+msgstr "اتصال به Google Analytics با صورت نگرفت... لطفا دوباره تلاش کنید!"
+
+msgid "The Google Analytics's authorization has been revoked as requested"
+msgstr "طبق درخواست اجازه اتصال به Google Analytics بازگردانده شد"
+
+msgid "Local Web Statistics"
+msgstr "آمار وب محلی"
+
+msgid "Do you want to manage the web statistics locally?"
+msgstr "آیا مایل به مدیریت آمار وب به صورت محلی هستید؟"
+
+msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
+msgstr ""
+
+msgid "The next compression of the database will occur on %s"
+msgstr "فشرده سازی بعدی پایگاه داده در %s اتفاق می افتد"
+
+msgid "Do you want to display the last viewed pages?"
+msgstr "آیا مایل به نمایش آخرین برگه های بازدید شده هستید؟"
+
+msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
+msgstr ""
+
+msgid "How many pages should be displayed?"
+msgstr "چند برگه باید نمایش داده شود؟"
+
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr "آیا آمار طبق تعداد بازدیدها و برگه های بازدید شده نمایش داده شود؟"
+
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr "آیا آمار طبق سیستم عامل و نوع مرورگر بازدید کنندگان نمایش داده شود؟"
+
+msgid "What are the colors for the charts?"
+msgstr "نمودارها چه رنگ هایی دارند؟"
+
+msgid "The default colors are %s."
+msgstr "رنگ های پیش فرض %s هستند."
+
+msgid "What are the period for which charts should be provided?"
+msgstr "دوره ایجاد نمودار های جدید به چه صورت است؟"
+
+msgid "Do you want to track the logged user?"
+msgstr "آیا مایل به ردیابی کاربر ثبت شده هستید؟"
+
+msgid "Google Analytics Web Statistics"
+msgstr "آمار وب Google Analytics"
+
+msgid "Do you want to manage the web statistics with Google Analytics?"
+msgstr "آیا مایل به مدیریت آمار وب با Google Analytics هستید؟"
+
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
+msgstr ""
+
+msgid "Google Analytics ID:"
+msgstr "شناسه Google Analytics:"
+
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr "شناسه Google Analytics باید مشابه %s باشد."
+
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr ""
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr ""
+
+msgid "Select..."
+msgstr "انتخاب..."
+
+msgid "Choose your website in this list"
+msgstr "وب سایت خود را در این لیست انتخاب نمایید"
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr "لطفا توجه داشته باشید که شناسه Google Analytics برای %s ، %s می باشد."
+
+msgid "No Google Analytics ID configured for now."
+msgstr "هیچ شناسه Google Analytics شناخته نشد."
+
+msgid "What is the API key?"
+msgstr "کلید API را وارد نمایید!"
+
+msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgstr ""
+
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgstr ""
+
+msgid "Sitemaps Configuration"
+msgstr "تایید نقشه های سایت"
+
+msgid "Do you want to compute a Sitemaps file?"
+msgstr "آیا مایل به محاسبه یک فایل نقشه سایت هستید؟"
+
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr ""
+
+msgid "No sitemap has been generated yet."
+msgstr "تا کنون هیچ نقشه سایتی فراهم نشده است."
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr "خطایی در ایجاد نقشه سایت رخ داد: %s."
+
+msgid "The last sitemap has been generated on %s."
+msgstr "آخرین نقشه سایت در %s ایجاد شد."
+
+msgid "You may see your sitemap at %s."
+msgstr "نقشه سایت خود را می توانید در %s ببینید."
+
+msgid "How many posts and pages will be included in this file?"
+msgstr "چه تعداد نوشته و برگه در این فایل وجود خواهد داشت؟"
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr ""
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr "آیا مایل به اطلاع رسانی به %s به هنگام به روز رسانی نقشه سایت هستید؟"
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr "هنوز به %s اطلاع داده نشده است. در انتظار به روزرسانی بعدی..."
+
+msgid "An error occured when notifying %s for the last time."
+msgstr "در آخرین اطلاع رسانی به %s خطایی رخداد."
+
+msgid "%s has be notified for the last time on %s."
+msgstr "آخرین بار به %s در %s اطلاع رسانی شد."
+
+msgid "Improve your SEO with metatags"
+msgstr "با متاتگ ها سئو خود را بهبود ببخشید"
+
+msgid "Do you want to add metatag to your page/post"
+msgstr "آیا مایل به اضافه کردن متاتگ به برگه/نوشته خور هستید؟"
+
+msgid "Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website."
+msgstr ""
+
+msgid "Add meta title"
+msgstr "اضافه کردن عنوان متا"
+
+msgid "Add meta description"
+msgstr "اضافه کردن توضیح متا"
+
+msgid "Add meta copyright"
+msgstr "اضافه کردن کپی رایت متا"
+
+msgid "It will be by default: %s."
+msgstr "به طور پیش فرض %s خواهد بود."
+
+msgid "Override the copyright of the website:"
+msgstr "جایگزینی کپی رایت وب سایت:"
+
+msgid "Add meta author"
+msgstr "اضافه کردن نویسنده متا"
+
+msgid "Override the author name"
+msgstr "جایگزینی نام نویسنده"
+
+msgid "Add meta date (publication date, modification date, etc.)"
+msgstr "اضافه کردن تاریخ متا (تاریخ انتشار، تاریخ تغییر...)"
+
+msgid "Add meta keywords (category, keywords, etc.)"
+msgstr "اضافه کردن کلمات کلیدی متا (گروه بندی، کلمات کلیدی...)"
+
+msgid "Add meta table of content"
+msgstr "اضافه کردن جدول محتوای متا"
+
+msgid "Add meta images"
+msgstr "اضافه کردن تصاویر متا"
+
+msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
+msgstr ""
+
+msgid "from %s to %s"
+msgstr "از %s تا %s"
+
+msgid "Week %s (%s)"
+msgstr "هفته %s (%s)"
+
+msgid "%s %s"
+msgstr "%s %s"
+
+msgid "Google Analytics Data"
+msgstr "داده های Google Analytics"
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr ""
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr ""
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr ""
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr ""
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr ""
+
+msgid "Month"
+msgstr "ماه"
+
+msgid "Number of Visitors"
+msgstr "تعداد بازدیدکنندگان"
+
+msgid "Number of Page Views"
+msgstr "تعداد بازدید صفحه"
+
+msgid "Visitors and Page Views (%s)"
+msgstr "بازدیدکنندگان و بازدید صفحه (%s)"
+
+msgid "Time Line"
+msgstr "Time Line"
+
+msgid "Local Data"
+msgstr "داده های محلی"
+
+msgid "According to Local Data, here is the number of visits and the number of page views."
+msgstr "طبق داده های محلی این قسمت مربوط به تعداد بازدیدها و تعداد صفحه های بازدید شده می شود."
+
+msgid "Visits Count"
+msgstr "تعداد بازدید"
+
+msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
+msgstr "طبق داده های Google Analytics این قسمت مربوط به تقسیمات نوع مرورگر و سیستم عامل می شود."
+
+msgid "Browser name"
+msgstr "نام مرورگر"
+
+msgid "Number of visitors"
+msgstr "تعداد بازدیدکنندگان"
+
+msgid "Browser distribution (%s)"
+msgstr "تقسیمات مرورگر (%s)"
+
+msgid "OS name"
+msgstr "نام سیستم عامل"
+
+msgid "Operating System distribution (%s)"
+msgstr "تقسیمات سیستم عامل (%s)"
+
+msgid "According to Local Data, here is the distribution of browser types and OS."
+msgstr "طبق داده های محلی این قسمت مربوط به تقسیمات نوع مرورگر و سیستم عامل می شود."
+
+msgid "Browser and OS Statistics"
+msgstr "آمار مرورگر و سیستم عامل"
+
+msgid "Time"
+msgstr "زمان"
+
+msgid "IP Address"
+msgstr "آدرس IP"
+
+msgid "Viewed Page"
+msgstr "صفحه بازدید شده"
+
+msgid "Browser"
+msgstr "مرورگر"
+
+msgid "OS"
+msgstr "سیستم عامل"
+
+msgid "Referer"
+msgstr "ارجاع دهنده"
+
+msgid "Time spent"
+msgstr "زمان سپری شده"
+
+msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
+msgstr "لطفا توجه داشته باشید که زمان محلی کنونی سرور %s می باشد. اگر اشتباه است لطفا تنظیمات وردپرس را درست کنید."
+
+msgid "If the entry is displayed for the first time, the time field will be in bold characters."
+msgstr "اگر ورودی برای اولین بار نمایش داده می شود، فیلد زمان با حروف برجسته خواهد بود."
+
+msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
+msgstr "اگر کاربر برای اولین بار وارد سایت شما شود، فیلد IP با حروف برجسته خواهد بود."
+
+msgid "Unknown keywords."
+msgstr "کلمات کلیدی ناشناخته."
+
+msgid "Plugin: %s"
+msgstr "پلاگین: %s"
+
+msgid "Plugin: %s, website: %s"
+msgstr "وب سایت پلاگین %s:%s"
+
+msgid "No data for now... Please wait until someone visits your website"
+msgstr "در حال حاضر داده ای وجود ندارد... لطفا تا زمان بازدید از سایتتان منتظر بمانید"
+
+msgid "Details on the Last %s Viewed Pages"
+msgstr "جزئیات %s  صفحه بازدید شده آخر"
+
+msgid "You have configured no graph... Please go on the parameters tab to configure them."
+msgstr ""
+
+msgid "Web Statistics"
+msgstr "آمار وب سایت"
+
+msgid "Parameters"
+msgstr "پارامترها"
+
+msgid "Manage translations"
+msgstr "مدیریت ترجمه ها"
+
+msgid "Give feedback"
+msgstr "ارسال بازخورد (feedback)"
+
+msgid "Other plugins"
+msgstr "پلاگین های دیگر"
+
+msgid "Google states that the User Rate Limit has been exceeded!"
+msgstr "گوگل از حد مجاز گذشتن نرخ کاربر را اعلام کرده است!"
+
+msgid "In order to avoid User Rate Limit, you should get an API key."
+msgstr "به منظور نادیده گرفتن نرخ کاربر مجاز باید کلید API تهیه نمایید."
+
+msgid "Once a key generated, please configure it in the configuration tab."
+msgstr "زمانی که کلید را تهیه نمودید آن را در تب تنظیمات وارد نمایید."
+
+msgid "If you have just saved the API key in the parameters, please reload the page and it shoud work."
+msgstr ""
+
+msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
+msgstr ""
+
+msgid "An unknown error occured during the API request"
+msgstr "خطای نا شناخته ای طی درخواست API اتفاق افتاد."
+
+msgid "No token provided!"
+msgstr ""
+
+msgid "No website selected for Google statistics (see the parameter tab)!"
+msgstr ""
+
+msgid "No website selected!"
+msgstr "وب سایتی انتخاب نشده است!"
+
+msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
+msgstr ""
+
+msgid "Problem with folder rights on %s"
+msgstr "مشکل با مجوزهای پوشه در %s"
+

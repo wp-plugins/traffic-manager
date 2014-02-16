@@ -3,10 +3,10 @@
 Author: SedLex
 Contributors: SedLex
 Author URI: http://www.sedlex.fr/
-Plugin URI: http://wordpress.org/extend/plugins/traffic-manager/
+Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.5
+Tested up to: 3.8.1
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -35,7 +35,8 @@ This plugin is compatible with multisite installation.
 * English (United States), default language
 * Spanish (Spain) translation provided by Verto, Verto Producciones
 * Spanish (Mexico) translation provided by 
-* French (France) translation provided by SedLex, Claude
+* Farsi (Iran) translation provided by 7eshop.ir, AhmadWayfarer
+* French (France) translation provided by SedLex, Claude, Froozeify, NEPLES
 * Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
 * Polish (Poland) translation provided by Rafatokarro666
@@ -71,6 +72,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.2.1 =
+* NEW: Support for Display Advertising for Google. This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.
+
 = 1.2.0 =
 * Metatag may be included in the page to enhance the SEO
 
@@ -99,4 +103,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:3827f3dc8eeadb59eabb8231881080ae
+InfoVersion:ed66405d87a5d6c7609c2f829e4131f2
