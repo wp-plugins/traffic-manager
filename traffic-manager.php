@@ -3,7 +3,8 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.2.1
+Version: 1.2.2
+
 
 
 Framework: SL_Framework
@@ -59,6 +60,8 @@ class traffic_manager extends pluginSedLex {
 		
 		add_action( 'wp_ajax_UserWebStat', array( $this, 'UserWebStat'));
 		add_action( 'wp_ajax_nopriv_UserWebStat', array( $this, 'UserWebStat'));
+		
+		add_action( 'wp_ajax_updateCurrentUser', array( $this, 'update_current_user'));
 		
 		add_action('wp_head', array( $this, 'add_meta_tags'));
 		
@@ -128,6 +131,33 @@ class traffic_manager extends pluginSedLex {
 	
 	function _admin_js_load() {	
 		wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');
+		
+		if (($this->get_param('localwebstat'))&&($this->get_param('local_current_user'))) {
+			ob_start() ; 
+			?>
+		
+			function update_current_user() {
+				var arguments = {
+					action: 'updateCurrentUser'
+				} ;
+	
+				//POST the data and append the results to the results div
+				jQuery.post(ajaxurl, arguments, function(response) {
+						jQuery("#nb_current_user").html(response);
+						var t=setTimeout("update_current_user()",2000);
+				}); }
+
+			// We launch the callback
+			if (window.attachEvent) {window.attachEvent('onload', update_current_user);}
+			else if (window.addEventListener) {window.addEventListener('load', update_current_user, false);}
+			else {document.addEventListener('load', update_current_user, false);} 
+			
+			<?php
+			$java = ob_get_clean() ; 
+			$this->add_inline_js($java) ; 
+		}
+
+
 		return ; 
 	}
 	
@@ -358,7 +388,12 @@ class traffic_manager extends pluginSedLex {
 			case 'local_show_type'		: return false ; break ; 
 			case 'local_color'		: return "*['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; break ; 
 			case 'local_cron_concat'		: return "" ; break ; 
-			
+			case 'local_current_user'		: return true ; break ; 
+			case 'local_cnil_compatible'		: return false ; break ; 			
+			case 'local_cnil_compatible_html'		: return  "*<div id='infoLocalCookies' style='z-index:1000; border:1px solid black; opacity:0.9;background-color:#999999;width:100%;position:fixed;bottom:0px;color:#EEEEEE;'>
+   <p style='text-align:center'>This site uses cookies for anonymous statistics. These statistics are used for local use only. If you prefer, you may refuse these cookies. %accept% or %refuse%</p>
+</div>" ; 
+
 			case 'googlewebstat' 		: return false 		; break ; 
 			case 'googlewebstat_user' 		: return "" 		; break ; 
 			case 'googlewebstat_acc_id' 		: return "" 		; break ; 
@@ -372,6 +407,10 @@ class traffic_manager extends pluginSedLex {
 			case 'google_track_user'		: return true ; break ; 
 			case 'google_color'		: return "*['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; break ; 
 			case 'google_period'		: return array(array(__('3 Year', $this->pluginID), "a3"), array(__('1 Year', $this->pluginID), "a1"), array(__('6 Month', $this->pluginID), "m6"), array("*".__('1 Month', $this->pluginID), "m1"), array(__('2 Week', $this->pluginID), "w2"), array(__('1 Week', $this->pluginID), "w1")) ; break ; 
+			case 'google_cnil_compatible'		: return false ; break ; 			
+			case 'google_cnil_compatible_html'		: return  "*<div id='infoGoogleCookies' style='z-index:1000; border:1px solid black; opacity:0.9;background-color:#999999;width:100%;position:fixed;top:0px;color:#EEEEEE;'>
+   <p style='text-align:center'>This site may uses cookies for statistics with Google Analytics. Do you accept such cookies? %accept% or %refuse%</p>
+</div>" ; 
 
 			case 'sitemaps'		: return false ; break ; 
 			case 'sitemaps_date'		: return "" ; break ; 
@@ -448,15 +487,7 @@ class traffic_manager extends pluginSedLex {
 			if ( (($this->get_param('local_track_user')) && (0 != $current_user->ID))  || (0 == $current_user->ID) ) {
 				ob_start() ; 
 					?>
-					var isActiveSL;
 
-					//window.onfocus = function () { 
-					//  isActiveSL = true; 
-					//}; 
-					
-					//window.onblur = function () { 
-					//  isActiveSL = false; 
-					//}; 
 					
 					function UserWebStat_sC(name,value,days) {
 						if (days) {
@@ -470,7 +501,7 @@ class traffic_manager extends pluginSedLex {
 			
 					function UserWebStat_gC(name) {
 						var nameEQ = name + "=";
-						var ca = document.cookie.split(';');
+						var ca = document.cookie.split<?php $a='avoid problem with deprecated function';?>(';');
 						for(var i=0; i < ca.length;i++) {
 							var c = ca[i];
 							while (c.charAt(0)==' ') c = c.substring(1,c.length);
@@ -478,62 +509,114 @@ class traffic_manager extends pluginSedLex {
 						}
 						return null;
 					}
-			
+					
+					function whatChoiceForLocalCookies() {
+						var choix = UserWebStat_gC("whatChoiceForLocalCookies") ; 
+						if (choix==null) {
+							return "NO_CHOICE" ; 
+						}
+						return choix ; 
+					}
+					
+					function acceptLocalCookies() {
+						UserWebStat_sC("whatChoiceForLocalCookies","ACCEPT_COOKIE",30) ; 
+						jQuery('#infoLocalCookies').remove() ;
+					}
+					function refusLocalCookies() {
+						UserWebStat_sC("whatChoiceForLocalCookies","REFUS_COOKIE",30) ; 
+						jQuery('#infoLocalCookies').remove() ;
+						UserWebStat_sC('sC', null) ; 
+						UserWebStat_sC('rN', null) ; 
+					}
+					
 					function UserWebStat() {
-						//if (!isActiveSL) {
-						//	window.setTimeout("UserWebStat()", 1000);
-						//	return ; 
-						//}
-						if (UserWebStat_gC('sC')!=null) {
-							var sC = UserWebStat_gC('sC') ; 
-						} else {
-							var sC = "" ; 
-						}
-						if (UserWebStat_gC('rN')!=null) {
-							var rN = UserWebStat_gC('rN') ; 
-						} else {
-							var rN = 0 ; 
-						}
+					
+						<?php if ($this->get_param('local_cnil_compatible')) {	?>
+						if (whatChoiceForLocalCookies()!="REFUS_COOKIE") {
+						<?php } ?>
 						
-						var arguments = {
-							action: 'UserWebStat', 
-							browserName : navigator.appName, 
-							browserVersion : navigator.appVersion, 
-							platform : navigator.platform, 
-							browserUserAgent: navigator.userAgent,
-							cookieEnabled: navigator.cookieEnabled,
-							singleCookie: sC,
-							refreshNumber: rN,
-							referer : document.referrer,
-							page: window.location.pathname
-						} 
-						
-						
-						var ajaxurl2 = "<?php echo admin_url()."admin-ajax.php"?>" ; 
-						jQuery.post(ajaxurl2, arguments, function(response) {
-							//We put the return values in cookie and we relaunch
-							if (response+""=="0") {
-								UserWebStat_sC('rN', 0) ; 
+							if (UserWebStat_gC('sC')!=null) {
+								var sC = UserWebStat_gC('sC') ; 
 							} else {
-								var val = (response+"").split(",") ; 
-								if (val.length==2) {
-									UserWebStat_sC('sC', val[0], 365) ; 
-									UserWebStat_sC('rN', val[1]) ; 
-									var t=setTimeout("UserWebStat()",10000);
-								}
+								var sC = "" ; 
 							}
-						});    
+							if (UserWebStat_gC('rN')!=null) {
+								var rN = UserWebStat_gC('rN') ; 
+							} else {
+								var rN = 0 ; 
+							}
+						
+							var arguments = {
+								action: 'UserWebStat', 
+								browserName : navigator.appName, 
+								browserVersion : navigator.appVersion, 
+								platform : navigator.platform, 
+								browserUserAgent: navigator.userAgent,
+								cookieEnabled: navigator.cookieEnabled,
+								singleCookie: sC,
+								refreshNumber: rN,
+								referer : document.referrer,
+								page: window.location.pathname
+							} 
+						
+							var ajaxurl2 = "<?php echo admin_url()."admin-ajax.php"?>" ; 
+							jQuery.post(ajaxurl2, arguments, function(response) {
+								//We put the return values in cookie and we relaunch
+								if (response+""=="0") {
+									UserWebStat_sC('rN', 0) ; 
+								} else {
+									var val = (response+"").split<?php $a='avoid problem with deprecated function';?>(",") ; 
+									if (val.length==2) {
+										UserWebStat_sC('sC', val[0], 365) ; 
+										UserWebStat_sC('rN', val[1]) ; 
+										var t=setTimeout("UserWebStat()",10000);
+									}
+								}
+							});    
+						
+						<?php if ($this->get_param('local_cnil_compatible')) {	?>
+						}
+						<?php } ?>
 					}
 					
-					// We launch the callback when jQuery is loaded or at least when the page is loaded
-					if (typeof(jQuery) == 'function') {
-						UserWebStat() ; 			
-					} else { 
-						if (window.attachEvent) {window.attachEvent('onload', UserWebStat);}
-						else if (window.addEventListener) {window.addEventListener('load', UserWebStat, false);}
-						else {document.addEventListener('load', UserWebStat, false);} 
-					}
+					<?php if ($this->get_param('local_cnil_compatible')) {	?>
+					if (whatChoiceForLocalCookies()!="REFUS_COOKIE") {
+					<?php } ?>
 					
+						// We launch the callback when jQuery is loaded or at least when the page is loaded
+						if (typeof(jQuery) == 'function') {
+							UserWebStat() ; 			
+						} else { 
+							if (window.attachEvent) {window.attachEvent('onload', UserWebStat);}
+							else if (window.addEventListener) {window.addEventListener('load', UserWebStat, false);}
+							else {document.addEventListener('load', UserWebStat, false);} 
+						}
+					
+					<?php if ($this->get_param('local_cnil_compatible')) {	?>
+					}
+					<?php } ?>
+					
+					<?php if ($this->get_param('local_cnil_compatible')) {	?>
+					
+					function show_optOut(){
+						<?php 
+						$text = $this->get_param('local_cnil_compatible_html') ; 
+												
+						$text = str_replace("\r","", $text);
+						$text = str_replace("\n","", $text);
+						$text = str_replace("%accept%","<input type='button' onclick='acceptLocalCookies()' value='".str_replace("'","",__('Accept',$this->pluginID))."' />", $text);
+						$text = str_replace("%refuse%","<input type='button' onclick='refusLocalCookies()' value='".str_replace("'","",__('Refuse',$this->pluginID))."' />", $text);
+						?>
+
+						jQuery("<?php echo $text ?>").appendTo( "body" );						             
+					}
+					if (whatChoiceForLocalCookies()=="NO_CHOICE") {
+						if (window.attachEvent) {window.attachEvent('onload', show_optOut);}
+						else if (window.addEventListener) {window.addEventListener('load', show_optOut, false);}
+						else {document.addEventListener('load', show_optOut, false);} 
+					}					
+					<?php }	?>
+											
 					<?php 
 				
 				$java = ob_get_clean() ; 
@@ -546,6 +629,11 @@ class traffic_manager extends pluginSedLex {
 				if ( (($this->get_param('google_track_user')) && (0 != $current_user->ID)) || (0 == $current_user->ID) ) {
 					ob_start() ; 
 					?>
+					<?php if ($this->get_param('google_cnil_compatible')) {	?>
+					if (whatChoiceForLocalCookies()=="ACCEPT_COOKIE") {
+					<?php }	?>
+
+
 						var _gaq = _gaq || [];
 						_gaq.push(['_setAccount', '<?php echo $this->get_param('googlewebstat_user') ; ?>']);
 						_gaq.push(['_trackPageview']);
@@ -560,7 +648,51 @@ class traffic_manager extends pluginSedLex {
 							<?php } ?>
 							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 						})();
+					
+					<?php if ($this->get_param('google_cnil_compatible')) {	?>
+					}
+					<?php }	?>
+														
+					function acceptGoogleCookies() {
+						UserWebStat_sC("whatChoiceForGoogleCookies","ACCEPT_COOKIE",30) ; 
+						jQuery('#infoGoogleCookies').remove() ;
+					}
+					
+					function refusGoogleCookies() {
+						UserWebStat_sC("whatChoiceForGoogleCookies","REFUS_COOKIE",30) ; 
+						jQuery('#infoGoogleCookies').remove() ;
+					}
+					
+					function whatChoiceForGoogleCookies() {
+						var choix = UserWebStat_gC("whatChoiceForGoogleCookies") ; 
+						if (choix==null) {
+							return "NO_CHOICE" ; 
+						}
+						return choix ; 
+					}
+					
+					function show_optIn(){
+						<?php 
+						$text = $this->get_param('google_cnil_compatible_html') ; 
+												
+						$text = str_replace("\r","", $text);
+						$text = str_replace("\n","", $text);
+						$text = str_replace("%accept%","<input type='button' onclick='acceptGoogleCookies()' value='".str_replace("'","",__('Accept',$this->pluginID))."' />", $text);
+						$text = str_replace("%refuse%","<input type='button' onclick='refusGoogleCookies()' value='".str_replace("'","",__('Refuse',$this->pluginID))."' />", $text);
+						?>
+
+						jQuery("<?php echo $text ?>").appendTo( "body" );						             
+					}
+					
+					<?php if ($this->get_param('google_cnil_compatible')) {	?>
+					
+					if (whatChoiceForGoogleCookies()=="NO_CHOICE") {
+						if (window.attachEvent) {window.attachEvent('onload', show_optIn);}
+						else if (window.addEventListener) {window.addEventListener('load', show_optIn, false);}
+						else {document.addEventListener('load', show_optIn, false);} 
+					}	
 									
+					<?php }	?>
 					<?php 
 					$java = ob_get_clean() ; 
 					$this->add_inline_js($java) ;
@@ -643,7 +775,11 @@ class traffic_manager extends pluginSedLex {
 			$params->add_comment(sprintf(__("The default colors are %s.", $this->pluginID), "<code>['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']</code>")) ; 
 			$params->add_param('local_period', __('What are the period for which charts should be provided?', $this->pluginID)) ; 
 			$params->add_param('local_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
-						
+			$params->add_param('local_current_user', __('Show the number of current connected users on your website', $this->pluginID)) ; 
+			$params->add_param('local_cnil_compatible', __("Configure the local statistics to be compatible with French CNIL's recommandations", $this->pluginID), "", "", array('local_cnil_compatible_html')) ; 
+			$params->add_comment(__("The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side.", $this->pluginID)) ; 
+			$params->add_param('local_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
+					
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
 			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
@@ -722,6 +858,9 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('google_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
 			$params->add_param('google_double_click', __('Support Display Advertising for Google?', $this->pluginID)) ; 
 			$params->add_comment(__("This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.", $this->pluginID)) ; 
+			$params->add_param('google_cnil_compatible', __("Configure the Google Analytics statistics to be compatible with French CNIL's recommandations", $this->pluginID), "", "", array('google_cnil_compatible_html')) ; 
+			$params->add_comment(__("A small banner will be displayed to allow cookies (by default, no cookie will be used)", $this->pluginID)) ; 
+			$params->add_param('google_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
 
 			
 			$params->add_title(__("Sitemaps Configuration", $this->pluginID)) ; 
@@ -802,27 +941,27 @@ class traffic_manager extends pluginSedLex {
 		}
 	
 		?>
-		
-
-		<div class="wrap">
-			<div id="icon-themes" class="icon32"><br></div>
+		<div class="plugin-titleSL">
 			<h2><?php echo $this->pluginName ?></h2>
 		</div>
-		<div style="padding:20px;">			
+		
+		<div class="plugin-contentSL">		
+			<?php echo $this->signature ; ?>
+						
 			<?php
 			//===============================================================================================
 			// After this comment, you may modify whatever you want
 		
 			?>
-			<p><? echo __("You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications).", $this->pluginID) ;?></p>
+			<p><?php echo __("You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications).", $this->pluginID) ;?></p>
 			<?php
 			
 			// We check rights
 			$this->check_folder_rights( array(array(WP_CONTENT_DIR."/sedlex/test/", "rwx")) ) ;
 			
 			$tabs = new adminTabs() ; 
-			
-			ob_start() ; 
+				
+				ob_start() ; 
 			
 				if ($this->get_param('googlewebstat')) {
 				
@@ -880,6 +1019,18 @@ class traffic_manager extends pluginSedLex {
 				}
 				
 				if ( $this->get_param('googlewebstat') || $this->get_param('localwebstat') ) {
+				
+					ob_start() ; 
+						if ($this->get_param('local_current_user')) {
+							echo "<p>".sprintf(__("The number of current user is %s", $this->pluginID), "<span id='nb_current_user'>0</span>")."</p>" ; 
+							echo "<script></script>" ; 
+						}	
+					$content_graph = ob_get_clean() ; 
+					if (strlen($content_graph)>0) {
+						$box = new boxAdmin (__("Current users", $this->pluginID), $content_graph) ; 
+						echo $box->flush() ; 
+					}
+				
 								
 					// Creating the graph for the Google
 					// Analytics visits count
@@ -1513,13 +1664,44 @@ class traffic_manager extends pluginSedLex {
 			break;
 		}
 		
-		
+		// We remove the two last bytes if need to be compliant with CNIL
+		if ($this->get_param('local_cnil_compatible')) {
+			for ($i=0 ; $i<count($list_proxy) ; $i++) {
+				$ip = $list_proxy[$i] ;
+				$ipv4 = explode(".", $list_proxy[$i]) ;
+				if (count($ipv4)==4) {
+					$list_proxy[$i] = $ipv4[0].".".$ipv4[1].".xxx.xxx" ; 
+				}
+				$ipv6 = explode(":", $list_proxy[$i]) ;
+				if (count($ipv6)==8) {
+					$list_proxy[$i] = $ipv6[0].":".$ipv6[1].":".$ipv6[2].":".$ipv6[3].":".$ipv6[4].":".$ipv6[5].":".$ipv6[6].":xxxx" ; 
+				}
+			}
+		}	
 		
 		// We remove duplicate and reverse it )
 		$list_proxy = implode(",", array_unique($list_proxy)) ; 
 
 		return $list_proxy ;
 	}
+	
+	/** ====================================================================================================================================================
+	* Get the number of current user ... (i.e. those that has connected less then 20sec)
+	*
+	* @return void
+	*/
+	
+	function update_current_user() {
+		global $wpdb ; 
+		$nb = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE type='single' AND time > DATE_SUB('".date_i18n('Y-m-d H:i:s')."',INTERVAL 20 SECOND) GROUP BY singleCookie;")  ; 
+		if ($nb.""=="") {
+			$nb=0 ; 
+		}
+		echo $nb ; 
+		die() ; 
+	}
+	
+	
 	/** ====================================================================================================================================================
 	* Callback updating the SQL table with browser info
 	*
@@ -2111,7 +2293,7 @@ class traffic_manager extends pluginSedLex {
 			'order'    => 'DESC'
   		));
 
-		$sitemap = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+		$sitemap = '<'.'?xml version="1.0" encoding="UTF-8"?>'."\n";
 		$sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 		
 		$sitemap .= "\t".'<url>'."\n" ; 

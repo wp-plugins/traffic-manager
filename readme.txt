@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.8.1
+Tested up to: 3.8.2
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -21,7 +21,10 @@ You may:
 * see statistics on web crawler;
 * inform Google, Bing, etc. when your site is updated;
 * configure Google Analytics;
-* add sitemap.xml information on your website;
+* inform the users that some cookies are used;
+* add create sitemap.xml information on your website.
+
+This plugin may be configured to be compliant with CNIL's recommandations (French Data Protection Agency).
 
 This plugin is under GPL licence
 
@@ -42,6 +45,7 @@ This plugin is compatible with multisite installation.
 * Polish (Poland) translation provided by Rafatokarro666
 * Portuguese (Brazil) translation provided by CristianoLagame
 * Russian (Russia) translation provided by rad96, AnatoliyNovyk
+* Swedish (Sweden) translation provided by Arvidvinblad
 
 = Features of the framework =
 
@@ -71,6 +75,11 @@ Have fun !
 3. Details on connections
 
 == Changelog ==
+
+= 1.2.2 =
+* IMPROVE: Enhance the look of the plugin
+* NEW: You could now see the current number of user
+* NEW: If you want, you may warn your user of the use of the cookie (French CNIL compliant : National French Agency for Data Protection)
 
 = 1.2.1 =
 * NEW: Support for Display Advertising for Google. This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.
@@ -103,4 +112,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:211f758ba3060e0ec7e1dafb803d75a4
+InfoVersion:3d6fca23e07da1eb955e4fb80942ee55
