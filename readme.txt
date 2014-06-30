@@ -68,6 +68,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.3.1 =
+* BUG: typo error
+
 = 1.3.0 =
 * NEW: list the pages that users connected are viewing.
 * NEW: add some search engines
@@ -107,4 +110,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:b1d4959eccb696d9c62ab629d673652a65ffae52
+InfoVersion:0f97ee5b937cdf4934cebbefeba54bf9da28c40e

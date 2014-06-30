@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.0
+Version: 1.3.1
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -773,7 +773,7 @@ class traffic_manager extends pluginSedLex {
 				}
 			}
 			
-			$params = new SLFramework_ParametersSedLex($this, "tab-parameters") ; 
+			$params = new SLFramework_Parameters($this, "tab-parameters") ; 
 			$params->add_title(__("Local Web Statistics", $this->pluginID)) ; 
 			$params->add_param('localwebstat', __('Do you want to manage the web statistics locally?', $this->pluginID),"", "", array('local_track_user', 'local_detail', 'local_detail_nb', 'local_show_visits', 'local_show_type', 'local_color', 'local_period')) ; 
 			$params->add_comment(__("If so, stats will be stored in the local SQL database. Be sure that you have free space into your database", $this->pluginID)) ; 
@@ -1534,6 +1534,10 @@ class traffic_manager extends pluginSedLex {
 									$type_referer = "stripped_words" ;
 									$referer = __('Unknown keywords.', $this->pluginID) ; 
 								} else if (preg_match("/^http:\/\/(.*)\.ask\.(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "ask" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.ask\.(.*)[?|&|#]searchfor=([^&|^#]+)/i", $referer, $matches)) {
 									$source = "ask" ; 
 									$type_referer = "words" ;
 									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
