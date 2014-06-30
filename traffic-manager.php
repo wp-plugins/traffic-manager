@@ -3,10 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.2.2
-
-
-
+Version: 1.3.0
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -394,7 +391,8 @@ class traffic_manager extends pluginSedLex {
    <p style='text-align:center'>This site uses cookies for anonymous statistics. These statistics are used for local use only. If you prefer, you may refuse these cookies. %accept% or %refuse%</p>
 </div>" ; 
 
-			case 'googlewebstat' 		: return false 		; break ; 
+			case 'googlewebstat' 		: return false 		; break ;
+			case 'googlewebstat_universal_analytics' 		: return false 		; break ;
 			case 'googlewebstat_user' 		: return "" 		; break ; 
 			case 'googlewebstat_acc_id' 		: return "" 		; break ; 
 			case 'googlewebstat_list' 		: return array("")		; break ; 
@@ -568,8 +566,11 @@ class traffic_manager extends pluginSedLex {
 									var val = (response+"").split<?php $a='avoid problem with deprecated function';?>(",") ; 
 									if (val.length==2) {
 										UserWebStat_sC('sC', val[0], 365) ; 
-										UserWebStat_sC('rN', val[1]) ; 
-										var t=setTimeout("UserWebStat()",10000);
+										UserWebStat_sC('rN', val[1]) ;
+										// if the browser does not accept cookie, we do not iterate
+										if (UserWebStat_gC('rN')+""==val[1]+"") {
+											var t=setTimeout("UserWebStat()",10000);
+										}
 									}
 								}
 							});    
@@ -594,10 +595,7 @@ class traffic_manager extends pluginSedLex {
 					
 					<?php if ($this->get_param('local_cnil_compatible')) {	?>
 					}
-					<?php } ?>
-					
-					<?php if ($this->get_param('local_cnil_compatible')) {	?>
-					
+				
 					function show_optOut(){
 						<?php 
 						$text = $this->get_param('local_cnil_compatible_html') ; 
@@ -631,7 +629,9 @@ class traffic_manager extends pluginSedLex {
 					?>
 					<?php if ($this->get_param('google_cnil_compatible')) {	?>
 					if (whatChoiceForLocalCookies()=="ACCEPT_COOKIE") {
-					<?php }	?>
+					<?php }	
+						if (!$this->get_param('googlewebstat_universal_analytics')) {
+						?>
 
 
 						var _gaq = _gaq || [];
@@ -648,8 +648,23 @@ class traffic_manager extends pluginSedLex {
 							<?php } ?>
 							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 						})();
+						
+					<?php } else {?>
 					
-					<?php if ($this->get_param('google_cnil_compatible')) {	?>
+						<!-- Google Universal Analytics -->
+						
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+						ga('create', '<?php echo $this->get_param('googlewebstat_user') ; ?>', 'auto');  // Replace with your property ID.
+						ga('send', 'pageview');
+
+					<?php 
+					}
+					
+					if ($this->get_param('google_cnil_compatible')) {	?>
 					}
 					<?php }	?>
 														
@@ -758,7 +773,7 @@ class traffic_manager extends pluginSedLex {
 				}
 			}
 			
-			$params = new parametersSedLex($this, "tab-parameters") ; 
+			$params = new SLFramework_ParametersSedLex($this, "tab-parameters") ; 
 			$params->add_title(__("Local Web Statistics", $this->pluginID)) ; 
 			$params->add_param('localwebstat', __('Do you want to manage the web statistics locally?', $this->pluginID),"", "", array('local_track_user', 'local_detail', 'local_detail_nb', 'local_show_visits', 'local_show_type', 'local_color', 'local_period')) ; 
 			$params->add_comment(__("If so, stats will be stored in the local SQL database. Be sure that you have free space into your database", $this->pluginID)) ; 
@@ -781,7 +796,7 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('local_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
 					
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
-			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click')) ; 
+			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click', 'googlewebstat_universal_analytics')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
 			
 			if (!$this->get_param('googlewebstat_auth')) {
@@ -804,7 +819,7 @@ class traffic_manager extends pluginSedLex {
 					$selected = $_POST['googlewebstat_list'] ; 
 					
 					foreach ($account as $a) {
-						if ($selected == Utils::create_identifier($a['title'])) {
+						if ($selected == SLFramework_Utils::create_identifier($a['title'])) {
 							$acc_id = $a['tableId'] ; 
 							$id = $a['webPropertyId'] ; 
 							$name = $a['title'] ; 
@@ -844,6 +859,9 @@ class traffic_manager extends pluginSedLex {
 				} else {
 					$params->add_comment(__("No Google Analytics ID configured for now.", $this->pluginID)) ; 			
 				}
+				
+				$params->add_param('googlewebstat_universal_analytics', sprintf(__('Do you want to use the %s?', $this->pluginID), "<code><a href='https://support.google.com/analytics/answer/2790010'>Universal Analytics</a></code>")) ; 
+
 				$params->add_param('google_api_key', __('What is the API key?', $this->pluginID)) ; 
 				$params->add_comment(__("This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google", $this->pluginID)) ; 
 				$params->add_comment(sprintf(__("To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s", $this->pluginID), "<a href='https://code.google.com/apis/console'>https://code.google.com/apis/console</a>", "'<i>Key for browser apps</i>'")) ; 
@@ -856,7 +874,7 @@ class traffic_manager extends pluginSedLex {
 	
 			}
 			$params->add_param('google_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
-			$params->add_param('google_double_click', __('Support Display Advertising for Google?', $this->pluginID)) ; 
+			$params->add_param('google_double_click', __('Support Display Advertising for Google (only if Universal Analytics is not activated)?', $this->pluginID)) ; 
 			$params->add_comment(__("This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.", $this->pluginID)) ; 
 			$params->add_param('google_cnil_compatible', __("Configure the Google Analytics statistics to be compatible with French CNIL's recommandations", $this->pluginID), "", "", array('google_cnil_compatible_html')) ; 
 			$params->add_comment(__("A small banner will be displayed to allow cookies (by default, no cookie will be used)", $this->pluginID)) ; 
@@ -951,15 +969,11 @@ class traffic_manager extends pluginSedLex {
 			<?php
 			//===============================================================================================
 			// After this comment, you may modify whatever you want
-		
-			?>
-			<p><?php echo __("You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications).", $this->pluginID) ;?></p>
-			<?php
-			
+					
 			// We check rights
 			$this->check_folder_rights( array(array(WP_CONTENT_DIR."/sedlex/test/", "rwx")) ) ;
 			
-			$tabs = new adminTabs() ; 
+			$tabs = new SLFramework_Tabs() ; 
 				
 				ob_start() ; 
 			
@@ -1022,12 +1036,12 @@ class traffic_manager extends pluginSedLex {
 				
 					ob_start() ; 
 						if ($this->get_param('local_current_user')) {
-							echo "<p>".sprintf(__("The number of current user is %s", $this->pluginID), "<span id='nb_current_user'>0</span>")."</p>" ; 
+							echo "<p>".sprintf(__("The number of current user is %s", $this->pluginID), "<span id='nb_current_user'>? <img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/ajax-loader.gif'></span>")."</p>" ; 
 							echo "<script></script>" ; 
 						}	
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
-						$box = new boxAdmin (__("Current users", $this->pluginID), $content_graph) ; 
+						$box = new SLFramework_Box (__("Current users", $this->pluginID), $content_graph) ; 
 						echo $box->flush() ; 
 					}
 				
@@ -1236,7 +1250,7 @@ class traffic_manager extends pluginSedLex {
 						
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
-						$box = new boxAdmin (__("Visits Count", $this->pluginID), $content_graph) ; 
+						$box = new SLFramework_Box (__("Visits Count", $this->pluginID), $content_graph) ; 
 						echo $box->flush() ; 
 					}
 					
@@ -1391,7 +1405,7 @@ class traffic_manager extends pluginSedLex {
 						
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
-						$box = new boxAdmin (__("Browser and OS Statistics", $this->pluginID), $content_graph) ; 
+						$box = new SLFramework_Box (__("Browser and OS Statistics", $this->pluginID), $content_graph) ; 
 						echo $box->flush() ; 
 					}
 					
@@ -1419,7 +1433,7 @@ class traffic_manager extends pluginSedLex {
 							$results = $wpdb->get_results($sql_select) ; 
 
 							$nb_result = 0 ; 
-							$table = new adminTable() ;
+							$table = new SLFramework_Table() ;
 							$table->title(array(__("Time", $this->pluginID),__("IP Address", $this->pluginID), __("Viewed Page", $this->pluginID), __("Browser", $this->pluginID), __("OS", $this->pluginID) , __("Referer", $this->pluginID), __("Time spent", $this->pluginID) )) ;
 							?>
 							
@@ -1471,7 +1485,7 @@ class traffic_manager extends pluginSedLex {
 									$source = "google_image" ; 
 									$type_referer = "img" ;
 									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
-								} else if ( (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=([&#]+)/i", $referer, $matches)) || (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=$/i", $referer, $matches)) ) {
+								} else if ( (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=([&#]+)/i", $referer, $matches)) || (preg_match("/^http:\/\/www\.google(.*)[?|&|#]q=$/i", $referer, $matches)) || (preg_match("/^http[s]*:\/\/www\.google\.(.*)$/i", $referer, $matches)) ) {
 									$source = "google" ; 
 									$type_referer = "stripped_words" ;
 									$referer = __('Unknown keywords.', $this->pluginID) ; 
@@ -1483,8 +1497,24 @@ class traffic_manager extends pluginSedLex {
 									$source = "yahoo" ; 
 									$type_referer = "words" ;
 									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.search\.yahoo\.(.*)/i", $referer, $matches)) {
+									$source = "yahoo" ; 
+									$type_referer = "stripped_words" ;
+									$referer = __('Unknown keywords.', $this->pluginID) ; 
 								} else if (preg_match("/^http:\/\/(.*)\.aol\.(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
 									$source = "aol" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.search\.sweetim\.(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "sweetim" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.mysearchresults\.com\/search(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "mysearchresults" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.search-results\.com\/(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "search-results" ; 
 									$type_referer = "words" ;
 									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
 								} else if (preg_match("#^http://wordpress\.org/extend/plugins/([^/]*)/#i", $referer, $matches)) {
@@ -1503,14 +1533,30 @@ class traffic_manager extends pluginSedLex {
 									$source = "free" ; 
 									$type_referer = "stripped_words" ;
 									$referer = __('Unknown keywords.', $this->pluginID) ; 
+								} else if (preg_match("/^http:\/\/(.*)\.ask\.(.*)[?|&|#]q=([^&|^#]+)/i", $referer, $matches)) {
+									$source = "ask" ; 
+									$type_referer = "words" ;
+									$referer = str_replace("\'", "'", strip_tags(urldecode($matches[3]))) ; 
+								} else if (strpos($referer, get_site_url())!==false) {
+									if (url_to_postid($referer)!=0) {
+										$source = "internal" ; 
+										$type_referer = "local" ;
+										$referer = get_the_title(url_to_postid($referer)) ; 
+									} else if ((trim(str_replace(get_site_url(), "", $referer))=="")||(trim(str_replace(get_site_url(), "", $referer))=="/")) {
+										$source = "internal" ; 
+										$type_referer = "local" ;
+										$referer = get_bloginfo('name') ; 									
+									}
+								
 								}
+								
 								$content_referer = "" ; 
 								if ($type_referer == "words") {
 									$content_referer = "<a href='".strip_tags($l->referer)."'><img style='border:0' src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt='".$source."'></a> ".ucfirst(strtolower($referer)) ;
 								} else if ($type_referer == "stripped_words") {
-									$content_referer = "<img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source."_masqued.png"."' alt='".ucfirst(strtolower($source))."'> <span style='color:#BBBBBB'>".$referer."</span>" ;
+									$content_referer = "<a href='".strip_tags($l->referer)."'><img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source."_masqued.png"."' alt='".ucfirst(strtolower($source))."'></a> <span style='color:#BBBBBB'>".$referer."</span>" ;
 								} else if ($type_referer == "img") {
-									$content_referer = "<img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt=''> <img src='$referer' alt='' width='100px'/>" ;
+									$content_referer = "<a href='".strip_tags($l->referer)."'><img src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/".$source.".png"."' alt=''></a> <img src='$referer' alt='' width='100px'/>" ;
 								} else if ($type_referer == "link") {
 									$length = 50 ; 
 									$refererDisplay = substr($referer, 0, $length);
@@ -1518,7 +1564,11 @@ class traffic_manager extends pluginSedLex {
 										$refererDisplay .= '...';
 									}
 									$content_referer = "<a href='".$referer."'>".urldecode($refererDisplay)."</a>" ;
+								} else if ($type_referer == "local") {
+									$content_referer = "<a href='".strip_tags($l->referer)."'><img style='border:0' src='".plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."img/local.png"."' alt='".$source."'> <span style='color:#D4DDEE'>".$referer."</span></a>" ;
 								}
+								
+								
 								$cel6 = new adminCell($content_referer) ;
 								$minutes = intval(($l->refreshNumber*10 / 60)); 
 								$hms = str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
@@ -1555,7 +1605,7 @@ class traffic_manager extends pluginSedLex {
 						}
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
-						$box = new boxAdmin (sprintf(__("Details on the Last %s Viewed Pages", $this->pluginID),$nombre), $content_graph) ; 
+						$box = new SLFramework_Box (sprintf(__("Details on the Last %s Viewed Pages", $this->pluginID),$nombre), $content_graph) ; 
 						echo $box->flush() ; 
 					}					
 					
@@ -1567,15 +1617,45 @@ class traffic_manager extends pluginSedLex {
 				
 			$tabs->add_tab(__('Parameters',  $this->pluginID), $parameters , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
 			
+			// HOW To
+			ob_start() ;
+				echo "<p>".__('This plugin enables the improving of your traffic by supervising it and by helping the web crawlers to identify your contents to be indexed.', $this->pluginID)."</p>" ;
+			$howto1 = new SLFramework_Box (__("Purpose of that plugin", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				echo "<p>".sprintf(__('In order to help the web crawlers to identifify the contents you want to share, this plugin creates a file named %s and a compressed file %s that list the different url to be indexed with a weight.', $this->pluginID), "<code>sitemaps.xml</code>", "<code>sitemaps.xml.gz</code>" )."</p>" ;
+				echo "<p>".__('The updates of these files may be notified to the following crawlers:', $this->pluginID)."</p>" ;
+				echo "<ul style='list-style-type: disc;padding-left:40px;'>" ; 
+					echo "<li>Google</li>" ;
+					echo "<li>Yahoo</li>" ; 
+					echo "<li>Bing</li>" ; 
+					echo "<li>Ask</li>" ; 
+				echo "</ul>" ; 
+				echo "<p>".sprintf(__('You also may add some %s to your headers. These tags helps the crawler to understand the page.', $this->pluginID), "<code>metatags</code>")."</p>" ;
+			$howto2 = new SLFramework_Box (__("How to help web crawlers?", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				echo "<p>".sprintf(__('This plugin also enables the creation of a chart that summarize the traffic volume on your server (either thanks to a local database or thanks to %s).', $this->pluginID), '<code>Google Analytics</code>')."</p>" ; 
+			$howto3 = new SLFramework_Box (__("Supervising the traffic", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				echo "<p>".sprintf(__('This plugin may be render compliant with %s recommandation regarding personal data management.', $this->pluginID), '<code>CNIL</code>')."</p>" ; 
+				echo "<p>".__('Then, if you use local database, a warning will be display to indicate that the plugin use some cookies and the two last bytes of the IP address will be masked.', $this->pluginID)."</p>" ; 
+				echo "<p>".sprintf(__('If you use %s, the system will work only for users that accept to explicitely accept this system thanks to a popup system.', $this->pluginID), '<code>Google Analytics</code>')."</p>" ; 
+			$howto4 = new SLFramework_Box (__("Compliance with Personal data management", $this->pluginID), ob_get_clean()) ; 
+			ob_start() ;
+				 echo $howto1->flush() ; 
+				 echo $howto2->flush() ; 
+				 echo $howto3->flush() ; 
+				 echo $howto4->flush() ; 
+			$tabs->add_tab(__('How To',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_how.png") ; 				
+
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
-				$trans = new translationSL($this->pluginID, $plugin) ; 
+				$trans = new SLFramework_Translation($this->pluginID, $plugin) ; 
 				$trans->enable_translation() ; 
 			$tabs->add_tab(__('Manage translations',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_trad.png") ; 	
 
 			ob_start() ; 
 				$plugin = str_replace("/","",str_replace(basename(__FILE__),"",plugin_basename( __FILE__))) ; 
-				$trans = new feedbackSL($plugin, $this->pluginID) ; 
+				$trans = new SLFramework_Feedback($plugin, $this->pluginID) ; 
 				$trans->enable_feedback() ; 
 			$tabs->add_tab(__('Give feedback',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_mail.png") ; 	
 			
@@ -1583,7 +1663,7 @@ class traffic_manager extends pluginSedLex {
 				// A liste of plugin slug to be excluded
 				$exlude = array('wp-pirate-search') ; 
 				// Replace sedLex by your own author name
-				$trans = new otherPlugins("sedLex", $exlude) ; 
+				$trans = new SLFramework_OtherPlugins("sedLex", $exlude) ; 
 				$trans->list_plugins() ; 
 			$tabs->add_tab(__('Other plugins',  $this->pluginID), ob_get_clean() , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_plug.png") ; 	
 			
@@ -1693,11 +1773,55 @@ class traffic_manager extends pluginSedLex {
 	
 	function update_current_user() {
 		global $wpdb ; 
-		$nb = $wpdb->get_var("SELECT COUNT(*) FROM ".$this->table_name." WHERE type='single' AND time > DATE_SUB('".date_i18n('Y-m-d H:i:s')."',INTERVAL 20 SECOND) GROUP BY singleCookie;")  ; 
-		if ($nb.""=="") {
-			$nb=0 ; 
+		$res = $wpdb->get_results("SELECT page, singleCookie FROM ".$this->table_name." WHERE type='single' AND TIMESTAMP(time) > TIMESTAMP(DATE_SUB('".date_i18n("Y-m-d H:i:s")."',INTERVAL 30 SECOND)) ORDER BY time DESC") ; 
+		
+		$resultFinal = array() ;	
+		$pageFinal = array() ; 
+		if ($res) {
+			foreach ($res as $r) {
+				if (!isset($resultFinal[$r->singleCookie])) {
+					$resultFinal[$r->singleCookie] = $r->page ; 
+					if (isset($pageFinal[$r->page])) {
+						$pageFinal[$r->page] ++ ; 
+					} else {
+						$pageFinal[$r->page] = 1 ; 
+					}
+				}
+			}
 		}
+		
+		
+		$nb=count($resultFinal) ; 
 		echo $nb ; 
+		// On affiche les 5 pages les plus visités
+		if ($nb!=0) {
+			echo ":" ; 
+			echo "<ul style='list-style-type: disc;padding-left:40px;'>\r\n" ; 
+			$pageFinal2 = array() ; 
+			foreach ($pageFinal as $p => $n) {
+				$pageFinal2[] = "$n####$p" ; 
+			}
+			$maxnb = 5 ; 
+			arsort($pageFinal2) ; 
+			foreach ($pageFinal2 as $mm) {
+				list($n, $p) = explode("####", $mm) ; 
+				$maxnb -- ; 
+				$idpage =  url_to_postid( $p ) ; 
+				// Si on a trouve
+				if ($idpage!=0) {
+					$page = "<a href='".get_permalink($idpage)."'>".get_the_title($idpage)."</a>" ; 
+				} else {
+					$page = "<a href='".$p."'>".$p."</a>" ; 
+				}
+				echo "<li>(".$n.") ".$page."</li>\r\n" ; 
+				if ($maxnb==0) {
+					break ; 
+				}
+			}
+			echo "</ul>\r\n" ; 
+		} else {
+			echo "." ; 
+		}
 		die() ; 
 	}
 	
@@ -1713,22 +1837,22 @@ class traffic_manager extends pluginSedLex {
 		$wpdb->show_errors(); 
 		
 		// Retrieve Information and Parameters
-		$browserUserAgent = mysql_real_escape_string($_POST['browserUserAgent']) ; 
-		$cookieEnabled = mysql_real_escape_string($_POST['cookieEnabled']) ; 
-		$referer = mysql_real_escape_string($_POST['referer']) ; 
-		$page = mysql_real_escape_string($_POST['page']) ; 
-		$singleCookie = mysql_real_escape_string($_POST['singleCookie']) ; 
-		$refreshNumber = mysql_real_escape_string($_POST['refreshNumber']) ; 
+		$browserUserAgent = esc_sql($_POST['browserUserAgent']) ; 
+		$cookieEnabled = esc_sql($_POST['cookieEnabled']) ; 
+		$referer = esc_sql($_POST['referer']) ; 
+		$page = esc_sql($_POST['page']) ; 
+		$singleCookie = esc_sql($_POST['singleCookie']) ; 
+		$refreshNumber = esc_sql($_POST['refreshNumber']) ; 
 		
 		// DETECTION DE L'OS
-		$brow = new browsersOsDetection($browserUserAgent) ; 
+		$brow = new SLFramework_BrowsersOsDetection($browserUserAgent) ; 
 		$browserName = 	$brow->getBrowserName() ; 
 		$browserVersion = 	$brow->getBrowserVersion() ; 
 		$platformName = 	$brow->getPlatformName() ; 
 		$platformVersion = 	$brow->getPlatformVersion() ; 
 		
 		if ($singleCookie=="") {
-			$singleCookie = md5(microtime()) ; 
+			$singleCookie = sha1(microtime()) ; 
 		} else {
 			// On regarde s'il existe deja une page avec les memes informations il y a moins d'une minute, 
 			// si c'est le cas, on met a jour l'entree 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-06-26T05:50:38+00:00\n"
+"PO-Revision-Date: 2014-06-12T14:23:45+00:00\n"
 "Last-Translator: ollol <lorenzoapra.jimdo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,179 +68,11 @@ msgstr "Se è così, un elenco delle ultime pagine viste verrà visualizzata inc
 msgid "How many pages should be displayed?"
 msgstr "Quante pagine devono essere visualizzate?"
 
-msgid "Show statistics on number of visits and viewed pages?"
-msgstr ""
-
-msgid "Show statistics on the OS and browser types of your visitors?"
-msgstr ""
-
-msgid "What are the colors for the charts?"
-msgstr ""
-
-msgid "The default colors are %s."
-msgstr ""
-
-msgid "What are the period for which charts should be provided?"
-msgstr ""
-
-msgid "Do you want to track the logged user?"
-msgstr ""
-
-msgid "Google Analytics Web Statistics"
-msgstr ""
-
-msgid "Do you want to manage the web statistics with Google Analytics?"
-msgstr ""
-
-msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
-msgstr ""
-
-msgid "Google Analytics ID:"
-msgstr ""
-
-msgid "The Google Analytics ID is should be similar to %s."
-msgstr ""
-
-msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
-msgstr ""
-
-msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
-msgstr ""
-
-msgid "Select..."
-msgstr ""
-
-msgid "Choose your website in this list"
-msgstr ""
-
-msgid "Please note that the Google Analytics ID for %s is %s."
-msgstr ""
-
-msgid "No Google Analytics ID configured for now."
-msgstr ""
-
-msgid "Sitemaps Configuration"
-msgstr ""
-
-msgid "Do you want to compute a Sitemaps file?"
-msgstr ""
-
-msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
-msgstr ""
-
-msgid "No sitemap has been generated yet."
-msgstr ""
-
-msgid "An error occured on the next sitemap generation : %s."
-msgstr ""
-
-msgid "The last sitemap has been generated on %s."
-msgstr ""
-
-msgid "How many posts and pages will be included in this file?"
-msgstr ""
-
-msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
-msgstr ""
-
-msgid "Do you want to notify %s when the sitemap is updated?"
-msgstr ""
-
-msgid "%s has never been notified yet. Waiting for the next update."
-msgstr ""
-
-msgid "An error occured when notifying %s for the last time."
-msgstr ""
-
-msgid "%s has be notified for the last time on %s."
-msgstr ""
-
-msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
-msgstr ""
-
-msgid "from %s to %s"
-msgstr ""
-
-msgid "Week %s (%s)"
-msgstr ""
-
-msgid "%s %s"
-msgstr ""
-
-msgid "Google Analytics Data"
-msgstr ""
-
-msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
-msgstr ""
-
-msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
-msgstr ""
-
-msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
-msgstr ""
-
-msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
-msgstr ""
-
-msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
-msgstr ""
-
-msgid "Month"
-msgstr ""
-
-msgid "Number of Visitors"
-msgstr ""
-
-msgid "Number of Page Views"
-msgstr ""
-
-msgid "Visitors and Page Views (%s)"
-msgstr ""
-
-msgid "Time Line"
-msgstr ""
-
-msgid "Local Data"
-msgstr ""
-
-msgid "According to Local Data, here is the number of visits and the number of page views."
-msgstr ""
-
-msgid "Visits Count"
-msgstr ""
-
-msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
-msgstr ""
-
-msgid "Browser name"
-msgstr ""
-
-msgid "Number of visitors"
-msgstr ""
-
-msgid "Browser distribution (%s)"
-msgstr ""
-
-msgid "OS name"
-msgstr ""
-
-msgid "Operating System distribution (%s)"
-msgstr ""
-
-msgid "According to Local Data, here is the distribution of browser types and OS."
-msgstr ""
-
-msgid "Browser and OS Statistics"
-msgstr ""
-
 msgid "Time"
 msgstr "Ora"
 
 msgid "IP Address"
 msgstr "Indirizzo IP"
-
-msgid "Viewed Page"
-msgstr ""
 
 msgid "Browser"
 msgstr "Browser"
@@ -248,63 +80,66 @@ msgstr "Browser"
 msgid "OS"
 msgstr "OS"
 
-msgid "Referer"
-msgstr ""
-
 msgid "Time spent"
 msgstr "Tempo usato"
-
-msgid "If the entry is displayed for the first time, the time field will be in bold characters."
-msgstr ""
-
-msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
-msgstr ""
-
-msgid "Searched keywords are been stripped : the search is performed from the secured google website (i.e. with https)."
-msgstr ""
-
-msgid "Plugin: %s"
-msgstr ""
-
-msgid "Plugin: %s, website: %s"
-msgstr ""
-
-msgid "No data for now... Please wait until someone visits your website"
-msgstr ""
-
-msgid "Details on the Last %s Viewed Pages"
-msgstr ""
-
-msgid "You have configured no graph... Please go on the parameters tab to configure them."
-msgstr ""
-
-msgid "Web Statistics"
-msgstr ""
-
-msgid "Parameters"
-msgstr ""
-
-msgid "Manage translations"
-msgstr ""
-
-msgid "Give feedback"
-msgstr ""
 
 msgid "Other plugins"
 msgstr "Altri plugins"
 
-msgid "An unknown error occured during the API request"
-msgstr ""
+msgid "Accept"
+msgstr "Accetto"
 
-msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
-msgstr ""
+msgid "Refuse"
+msgstr "Rifiuto"
 
-msgid "No token provided!"
-msgstr ""
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr "Mostra statistiche sul numero di visite e pagine viste?"
 
-msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
-msgstr ""
+msgid "Show statistics on the OS and browser types of your visitors?"
+msgstr "Mostra statistiche sui sistemi operativi e browser tipi di vostri visitatori?"
+
+msgid "What are the colors for the charts?"
+msgstr "Quali sono i colori per i grafici?"
+
+msgid "The default colors are %s."
+msgstr "I colori di default sono %s ."
+
+msgid "What are the period for which charts should be provided?"
+msgstr "Quali è il periodo in cui dovrebbero essere fornite le classifiche?"
+
+msgid "Do you want to track the logged user?"
+msgstr "Vuoi seguire l&#039;utente loggato?"
+
+msgid "Show the number of current connected users on your website"
+msgstr "Mostra il numero di utenti attualmente collegati sul tuo sito"
+
+msgid "Configure the local statistics to be compatible with French CNIL's recommandations"
+msgstr "Configurare le statistiche locali per essere compatibile con raccomandazioni della Libertà francese"
+
+msgid "The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side."
+msgstr "Gli ultimi due byte dell&#039;IP saranno mascherati e un piccolo banner per consentire all&#039;utente di rifiutare i cookie verranno visualizzati sul lato anteriore."
+
+msgid "Number of Visitors"
+msgstr "Numero di visitatori"
+
+msgid "Number of Page Views"
+msgstr "Numero di pagine visualizzate"
+
+msgid "According to Local Data, here is the distribution of browser types and OS."
+msgstr "Secondo i dati locali, ecco la distribuzione dei tipi di browser e sistema operativo."
+
+msgid "Browser and OS Statistics"
+msgstr "Browser e OS Statistics"
+
+msgid "Viewed Page"
+msgstr "Pagine viste"
+
+msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
+msgstr "Si prega di notare che l&#039;ora locale corrente del server è %s . Se non è corretto, impostare l&#039;installazione di Wordpress correttamente."
+
+msgid "If the entry is displayed for the first time, the time field will be in bold characters."
+msgstr "Se la voce viene visualizzato per la prima volta, il campo di tempo sarà in grassetto."
 
 msgid "Problem with folder rights on %s"
-msgstr ""
+msgstr "Problemi con diritti di una cartella su %s"
 
