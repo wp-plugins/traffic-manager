@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.8.2
+Tested up to: 3.9.1
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -21,10 +21,7 @@ You may:
 * see statistics on web crawler;
 * inform Google, Bing, etc. when your site is updated;
 * configure Google Analytics;
-* inform the users that some cookies are used;
-* add create sitemap.xml information on your website.
-
-This plugin may be configured to be compliant with CNIL's recommandations (French Data Protection Agency).
+* add sitemap.xml information on your website;
 
 This plugin is under GPL licence
 
@@ -39,7 +36,7 @@ This plugin is compatible with multisite installation.
 * Spanish (Spain) translation provided by Verto, Verto Producciones
 * Spanish (Mexico) translation provided by 
 * Farsi (Iran) translation provided by 7eshop.ir, AhmadWayfarer
-* French (France) translation provided by SedLex, Claude, Froozeify, NEPLES
+* French (France) translation provided by SedLex, Claude, Froozeify, NEPLES, Drew
 * Italian (Italy) translation provided by ollol
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
 * Polish (Poland) translation provided by Rafatokarro666
@@ -49,14 +46,9 @@ This plugin is compatible with multisite installation.
 
 = Features of the framework =
 
-This plugin uses the SL framework. This framework eases the creation of new plugins by providing incredible tools and frames.
+This plugin uses the SL framework. This framework eases the creation of new plugins by providing tools and frames (see dev-toolbox plugin for more info).
 
-For instance, a new created plugin comes with
-
-* A translation interface to simplify the localization of the text of the plugin ; 
-* An embedded SVN client (subversion) to easily commit/update the plugin in wordpress.org repository ; 
-* A detailled documentation of all available classes and methodes ; 
-* etc.
+You may easily translate the text of the plugin and submit it to the developer, send a feedback, or choose the location of the plugin in the admin panel.
 
 Have fun !
 
@@ -76,15 +68,18 @@ Have fun !
 
 == Changelog ==
 
-= 1.2.2 =
+= 1.3.0 =
+* NEW: list the pages that users connected are viewing.
+* NEW: add some search engines
+* NEW: improve the look of internal page referer
+* NEW: add the Google Universal Analytics
+* BUG: avoid reiteration of the process when the user does not support cookies
+
+= 1.2.0 -&gt; 1.2.2 =
 * IMPROVE: Enhance the look of the plugin
 * NEW: You could now see the current number of user
 * NEW: If you want, you may warn your user of the use of the cookie (French CNIL compliant : National French Agency for Data Protection)
-
-= 1.2.1 =
 * NEW: Support for Display Advertising for Google. This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting.
-
-= 1.2.0 =
 * Metatag may be included in the page to enhance the SEO
 
 = 1.1.0 -&gt; 1.1.3 =
@@ -112,4 +107,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:b1db443c47fe8594128c719d4cbcbbcf
+InfoVersion:b1d4959eccb696d9c62ab629d673652a65ffae52

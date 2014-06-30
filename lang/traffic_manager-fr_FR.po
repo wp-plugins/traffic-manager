@@ -4,11 +4,12 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-12-20T09:53:40+00:00\n"
+"PO-Revision-Date: 2014-05-31T10:50:25+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Last-Translator: Claude <http://claude-rochet.fr>\n"
 "Last-Translator: Froozeify <http://froozeify.x10.mx>\n"
 "Last-Translator: NEPLES <blog-patrimoine-facades.com>\n"
+"Last-Translator: Drew <drewstudio.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -364,4 +365,64 @@ msgstr "Ajouter des meta sommaires"
 
 msgid "Add meta images"
 msgstr "Ajouter des meta images"
+
+msgid "Show the number of current connected users on your website"
+msgstr "Le nombre d&#039;utilisateurs connectés"
+
+msgid "Configure the local statistics to be compatible with French CNIL's recommandations"
+msgstr "Configurer les statistiques locales pour qu&#039;ils soient compatibles avec les recommandations du CNIL Français."
+
+msgid "The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side."
+msgstr "Les deux (2) dernières bytes de l&#039;IP seront masqués et une bannière sera affichée pour permettre aux utilisateurs de refuser les cookies."
+
+msgid "The HTML to be displayed for the banner to be compatible with French CNIL's recommandations."
+msgstr "Le code de la bannière pour la compatibilité avec le CNIL Français :"
+
+msgid "Accept"
+msgstr "Accepter"
+
+msgid "Refuse"
+msgstr "Refuser"
+
+msgid "Support Display Advertising for Google?"
+msgstr "Affichers des publicités pour Google ?"
+
+msgid "This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting."
+msgstr "Cette option est pour activer le Re-marjeting avec Google Analytics ou Google Display network (GDN)"
+
+msgid "Configure the Google Analytics statistics to be compatible with French CNIL's recommandations"
+msgstr "Configurer les statistiques de Google Analytics pour qu&#039;ils soient compatibles avec les recommandations du CNIL Français."
+
+msgid "A small banner will be displayed to allow cookies (by default, no cookie will be used)"
+msgstr "( Une bannière sera affichée pour autoriser les cookies)"
+
+msgid "Improve your SEO with metatags"
+msgstr "Améliorer votre SEO avec les meta tags"
+
+msgid "Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website."
+msgstr "Meta tags sont des bouts de codes dans une page. Ils offrent des informations à propos de cette page de façon invisible à l&#039;utilisateur mais qui pourrait améliorer le SEO de votre site (Optimiser votre site pour les moteurs de recherches)."
+
+msgid "Override the copyright of the website:"
+msgstr "Ne pas tenir compte du copyright du site:"
+
+msgid "Override the author name"
+msgstr "Ne pas tenir compte du nom de l&#039;auteur"
+
+msgid "The number of current user is %s"
+msgstr "Le nombre d&#039;utilisateurs présents est %s"
+
+msgid "Current users"
+msgstr "Utilisateurs présents :"
+
+msgid "Google states that the User Rate Limit has been exceeded!"
+msgstr "Google indique que le taux d&#039;utilisation limite a été dépassée!"
+
+msgid "In order to avoid User Rate Limit, you should get an API key."
+msgstr "Pour éviter la limite sur le taux d&#039;utilisation, vous devriez utiliser une clé API."
+
+msgid "Once a key generated, please configure it in the configuration tab."
+msgstr "Une fois que votre clé générée, vueillez la placer dans l&#039;onglet de configuration."
+
+msgid "If you have just saved the API key in the parameters, please reload the page and it shoud work."
+msgstr "Si vous venez d&#039;enregistrer la clé de l&#039;API dans la configuration, merci de ré-actualiser la page."
 
