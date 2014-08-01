@@ -1,718 +1,796 @@
 Content-Transfer-Encoding: 8bit
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "3 Year"
 msgstr ""
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "1 Year"
 msgstr ""
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "6 Month"
 msgstr ""
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "1 Month"
 msgstr ""
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "2 Week"
 msgstr ""
 
 #: traffic-manager.php:387
-#: traffic-manager.php:409
+#: traffic-manager.php:410
 #@ traffic_manager
 msgid "1 Week"
 msgstr ""
 
-#: traffic-manager.php:607
-#: traffic-manager.php:680
+#: traffic-manager.php:629
+#: traffic-manager.php:740
 #@ traffic_manager
 msgid "Accept"
 msgstr ""
 
-#: traffic-manager.php:608
-#: traffic-manager.php:681
+#: traffic-manager.php:630
+#: traffic-manager.php:741
 #@ traffic_manager
 msgid "Refuse"
 msgstr ""
 
-#: traffic-manager.php:745
+#: traffic-manager.php:805
 #@ traffic_manager
 msgid "The authentication with Google Analytics is successful"
 msgstr ""
 
-#: traffic-manager.php:747
+#: traffic-manager.php:807
 #@ traffic_manager
 msgid "The authentication with Google Analytics have failed... please retry!"
 msgstr ""
 
-#: traffic-manager.php:757
+#: traffic-manager.php:817
 #@ traffic_manager
 msgid "The Google Analytics's authorization has been revoked as requested"
 msgstr ""
 
-#: traffic-manager.php:762
+#: traffic-manager.php:822
 #@ traffic_manager
 msgid "Local Web Statistics"
 msgstr ""
 
-#: traffic-manager.php:763
+#: traffic-manager.php:823
 #@ traffic_manager
 msgid "Do you want to manage the web statistics locally?"
 msgstr ""
 
-#: traffic-manager.php:764
+#: traffic-manager.php:824
 #@ traffic_manager
 msgid "If so, stats will be stored in the local SQL database. Be sure that you have free space into your database"
 msgstr ""
 
-#: traffic-manager.php:766
+#: traffic-manager.php:826
 #@ traffic_manager
 msgid "The next compression of the database will occur on %s"
 msgstr ""
 
-#: traffic-manager.php:769
+#: traffic-manager.php:829
 #@ traffic_manager
 msgid "Do you want to display the last viewed pages?"
 msgstr ""
 
-#: traffic-manager.php:770
+#: traffic-manager.php:830
 #@ traffic_manager
 msgid "If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc."
 msgstr ""
 
-#: traffic-manager.php:771
+#: traffic-manager.php:831
 #@ traffic_manager
 msgid "How many pages should be displayed?"
 msgstr ""
 
-#: traffic-manager.php:772
-#: traffic-manager.php:851
+#: traffic-manager.php:832
+#: traffic-manager.php:916
 #@ traffic_manager
 msgid "Show statistics on number of visits and viewed pages?"
 msgstr ""
 
-#: traffic-manager.php:773
-#: traffic-manager.php:852
+#: traffic-manager.php:833
+#: traffic-manager.php:917
 #@ traffic_manager
 msgid "Show statistics on the OS and browser types of your visitors?"
 msgstr ""
 
-#: traffic-manager.php:774
-#: traffic-manager.php:853
+#: traffic-manager.php:834
+#: traffic-manager.php:918
 #@ traffic_manager
 msgid "What are the colors for the charts?"
 msgstr ""
 
-#: traffic-manager.php:775
-#: traffic-manager.php:854
+#: traffic-manager.php:835
+#: traffic-manager.php:919
 #@ traffic_manager
 msgid "The default colors are %s."
 msgstr ""
 
-#: traffic-manager.php:776
-#: traffic-manager.php:855
+#: traffic-manager.php:836
+#: traffic-manager.php:920
 #@ traffic_manager
 msgid "What are the period for which charts should be provided?"
 msgstr ""
 
-#: traffic-manager.php:777
-#: traffic-manager.php:858
+#: traffic-manager.php:837
+#: traffic-manager.php:923
 #@ traffic_manager
 msgid "Do you want to track the logged user?"
 msgstr ""
 
-#: traffic-manager.php:778
+#: traffic-manager.php:838
 #@ traffic_manager
 msgid "Show the number of current connected users on your website"
 msgstr ""
 
-#: traffic-manager.php:779
+#: traffic-manager.php:839
 #@ traffic_manager
 msgid "Configure the local statistics to be compatible with French CNIL's recommandations"
 msgstr ""
 
-#: traffic-manager.php:780
+#: traffic-manager.php:840
 #@ traffic_manager
 msgid "The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side."
 msgstr ""
 
-#: traffic-manager.php:781
-#: traffic-manager.php:863
+#: traffic-manager.php:841
+#: traffic-manager.php:928
 #@ traffic_manager
 msgid "The HTML to be displayed for the banner to be compatible with French CNIL's recommandations."
 msgstr ""
 
-#: traffic-manager.php:783
+#: traffic-manager.php:842
+#: traffic-manager.php:929
 #@ traffic_manager
-msgid "Google Analytics Web Statistics"
-msgstr ""
-
-#: traffic-manager.php:784
-#@ traffic_manager
-msgid "Do you want to manage the web statistics with Google Analytics?"
-msgstr ""
-
-#: traffic-manager.php:785
-#@ traffic_manager
-msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
-msgstr ""
-
-#: traffic-manager.php:788
-#@ traffic_manager
-msgid "Google Analytics ID:"
-msgstr ""
-
-#: traffic-manager.php:789
-#@ traffic_manager
-msgid "The Google Analytics ID is should be similar to %s."
-msgstr ""
-
-#: traffic-manager.php:790
-#@ traffic_manager
-msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
-msgstr ""
-
-#: traffic-manager.php:792
-#@ traffic_manager
-msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
-msgstr ""
-
-#: traffic-manager.php:797
-#@ traffic_manager
-msgid "Select..."
-msgstr ""
-
-#: traffic-manager.php:841
-#@ traffic_manager
-msgid "Choose your website in this list"
+msgid "The French CNIL recommends to add buttons in a page to inform the users that he can refuse / allow the cookies (in addition of the banner)."
 msgstr ""
 
 #: traffic-manager.php:843
+#: traffic-manager.php:930
 #@ traffic_manager
-msgid "Please note that the Google Analytics ID for %s is %s."
+msgid "You can add these buttons in any posts/pages with this code %s."
 msgstr ""
 
 #: traffic-manager.php:845
 #@ traffic_manager
-msgid "No Google Analytics ID configured for now."
+msgid "Google Analytics Web Statistics"
+msgstr ""
+
+#: traffic-manager.php:846
+#@ traffic_manager
+msgid "Do you want to manage the web statistics with Google Analytics?"
 msgstr ""
 
 #: traffic-manager.php:847
 #@ traffic_manager
-msgid "What is the API key?"
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
 msgstr ""
 
-#: traffic-manager.php:848
+#: traffic-manager.php:850
 #@ traffic_manager
-msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgid "Google Analytics ID:"
 msgstr ""
 
-#: traffic-manager.php:849
-#: traffic-manager.php:1932
+#: traffic-manager.php:851
 #@ traffic_manager
-msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr ""
+
+#: traffic-manager.php:852
+#@ traffic_manager
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr ""
+
+#: traffic-manager.php:854
+#@ traffic_manager
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
 msgstr ""
 
 #: traffic-manager.php:859
 #@ traffic_manager
-msgid "Support Display Advertising for Google?"
+msgid "Select..."
 msgstr ""
 
-#: traffic-manager.php:860
+#: traffic-manager.php:903
 #@ traffic_manager
-msgid "This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting."
+msgid "Choose your website in this list"
 msgstr ""
 
-#: traffic-manager.php:861
+#: traffic-manager.php:905
 #@ traffic_manager
-msgid "Configure the Google Analytics statistics to be compatible with French CNIL's recommandations"
+msgid "Please note that the Google Analytics ID for %s is %s."
 msgstr ""
 
-#: traffic-manager.php:862
+#: traffic-manager.php:907
 #@ traffic_manager
-msgid "A small banner will be displayed to allow cookies (by default, no cookie will be used)"
+msgid "No Google Analytics ID configured for now."
 msgstr ""
 
-#: traffic-manager.php:866
-#@ traffic_manager
-msgid "Sitemaps Configuration"
-msgstr ""
-
-#: traffic-manager.php:867
-#@ traffic_manager
-msgid "Do you want to compute a Sitemaps file?"
-msgstr ""
-
-#: traffic-manager.php:868
-#@ traffic_manager
-msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
-msgstr ""
-
-#: traffic-manager.php:870
-#@ traffic_manager
-msgid "No sitemap has been generated yet."
-msgstr ""
-
-#: traffic-manager.php:872
-#@ traffic_manager
-msgid "An error occured on the next sitemap generation : %s."
-msgstr ""
-
-#: traffic-manager.php:874
-#@ traffic_manager
-msgid "The last sitemap has been generated on %s."
-msgstr ""
-
-#: traffic-manager.php:879
-#@ traffic_manager
-msgid "You may see your sitemap at %s."
-msgstr ""
-
-#: traffic-manager.php:881
-#@ traffic_manager
-msgid "How many posts and pages will be included in this file?"
-msgstr ""
-
-#: traffic-manager.php:882
-#@ traffic_manager
-msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
-msgstr ""
-
-#: traffic-manager.php:886
-#: traffic-manager.php:897
-#: traffic-manager.php:908
-#@ traffic_manager
-msgid "Do you want to notify %s when the sitemap is updated?"
-msgstr ""
-
-#: traffic-manager.php:888
-#: traffic-manager.php:899
 #: traffic-manager.php:910
 #@ traffic_manager
-msgid "%s has never been notified yet. Waiting for the next update."
+msgid "Do you want to use the %s?"
 msgstr ""
 
-#: traffic-manager.php:890
-#: traffic-manager.php:901
 #: traffic-manager.php:912
 #@ traffic_manager
-msgid "An error occured when notifying %s for the last time."
+msgid "What is the API key?"
 msgstr ""
 
-#: traffic-manager.php:892
-#: traffic-manager.php:903
+#: traffic-manager.php:913
+#@ traffic_manager
+msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgstr ""
+
 #: traffic-manager.php:914
+#: traffic-manager.php:2109
 #@ traffic_manager
-msgid "%s has be notified for the last time on %s."
-msgstr ""
-
-#: traffic-manager.php:917
-#@ traffic_manager
-msgid "Improve your SEO with metatags"
-msgstr ""
-
-#: traffic-manager.php:918
-#@ traffic_manager
-msgid "Do you want to add metatag to your page/post"
-msgstr ""
-
-#: traffic-manager.php:919
-#@ traffic_manager
-msgid "Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website."
-msgstr ""
-
-#: traffic-manager.php:920
-#@ traffic_manager
-msgid "Add meta title"
-msgstr ""
-
-#: traffic-manager.php:921
-#@ traffic_manager
-msgid "Add meta description"
-msgstr ""
-
-#: traffic-manager.php:922
-#@ traffic_manager
-msgid "Add meta copyright"
-msgstr ""
-
-#: traffic-manager.php:923
-#@ traffic_manager
-msgid "It will be by default: %s."
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
 msgstr ""
 
 #: traffic-manager.php:924
 #@ traffic_manager
-msgid "Override the copyright of the website:"
+msgid "Support Display Advertising for Google (only if Universal Analytics is not activated)?"
 msgstr ""
 
 #: traffic-manager.php:925
 #@ traffic_manager
-msgid "Add meta author"
+msgid "This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting."
 msgstr ""
 
 #: traffic-manager.php:926
 #@ traffic_manager
-msgid "Override the author name"
+msgid "Configure the Google Analytics statistics to be compatible with French CNIL's recommandations"
 msgstr ""
 
 #: traffic-manager.php:927
 #@ traffic_manager
+msgid "A small banner will be displayed to allow cookies (by default, no cookie will be used)"
+msgstr ""
+
+#: traffic-manager.php:932
+#@ traffic_manager
+msgid "Sitemaps Configuration"
+msgstr ""
+
+#: traffic-manager.php:933
+#@ traffic_manager
+msgid "Do you want to compute a Sitemaps file?"
+msgstr ""
+
+#: traffic-manager.php:934
+#@ traffic_manager
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr ""
+
+#: traffic-manager.php:936
+#@ traffic_manager
+msgid "No sitemap has been generated yet."
+msgstr ""
+
+#: traffic-manager.php:938
+#@ traffic_manager
+msgid "An error occured on the next sitemap generation : %s."
+msgstr ""
+
+#: traffic-manager.php:940
+#@ traffic_manager
+msgid "The last sitemap has been generated on %s."
+msgstr ""
+
+#: traffic-manager.php:945
+#@ traffic_manager
+msgid "You may see your sitemap at %s."
+msgstr ""
+
+#: traffic-manager.php:947
+#@ traffic_manager
+msgid "How many posts and pages will be included in this file?"
+msgstr ""
+
+#: traffic-manager.php:948
+#@ traffic_manager
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr ""
+
+#: traffic-manager.php:952
+#: traffic-manager.php:963
+#: traffic-manager.php:974
+#@ traffic_manager
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr ""
+
+#: traffic-manager.php:954
+#: traffic-manager.php:965
+#: traffic-manager.php:976
+#@ traffic_manager
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr ""
+
+#: traffic-manager.php:956
+#: traffic-manager.php:967
+#: traffic-manager.php:978
+#@ traffic_manager
+msgid "An error occured when notifying %s for the last time."
+msgstr ""
+
+#: traffic-manager.php:958
+#: traffic-manager.php:969
+#: traffic-manager.php:980
+#@ traffic_manager
+msgid "%s has be notified for the last time on %s."
+msgstr ""
+
+#: traffic-manager.php:983
+#@ traffic_manager
+msgid "Improve your SEO with metatags"
+msgstr ""
+
+#: traffic-manager.php:984
+#@ traffic_manager
+msgid "Do you want to add metatag to your page/post"
+msgstr ""
+
+#: traffic-manager.php:985
+#@ traffic_manager
+msgid "Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website."
+msgstr ""
+
+#: traffic-manager.php:986
+#@ traffic_manager
+msgid "Add meta title"
+msgstr ""
+
+#: traffic-manager.php:987
+#@ traffic_manager
+msgid "Add meta description"
+msgstr ""
+
+#: traffic-manager.php:988
+#@ traffic_manager
+msgid "Add meta copyright"
+msgstr ""
+
+#: traffic-manager.php:989
+#@ traffic_manager
+msgid "It will be by default: %s."
+msgstr ""
+
+#: traffic-manager.php:990
+#@ traffic_manager
+msgid "Override the copyright of the website:"
+msgstr ""
+
+#: traffic-manager.php:991
+#@ traffic_manager
+msgid "Add meta author"
+msgstr ""
+
+#: traffic-manager.php:992
+#@ traffic_manager
+msgid "Override the author name"
+msgstr ""
+
+#: traffic-manager.php:993
+#@ traffic_manager
 msgid "Add meta date (publication date, modification date, etc.)"
 msgstr ""
 
-#: traffic-manager.php:928
+#: traffic-manager.php:994
 #@ traffic_manager
 msgid "Add meta keywords (category, keywords, etc.)"
 msgstr ""
 
-#: traffic-manager.php:929
+#: traffic-manager.php:995
 #@ traffic_manager
 msgid "Add meta table of content"
 msgstr ""
 
-#: traffic-manager.php:930
+#: traffic-manager.php:996
 #@ traffic_manager
 msgid "Add meta images"
 msgstr ""
 
-#: traffic-manager.php:956
-#@ traffic_manager
-msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
-msgstr ""
-
-#: traffic-manager.php:975
-#: traffic-manager.php:991
-#: traffic-manager.php:1003
-#: traffic-manager.php:1018
+#: traffic-manager.php:1037
+#: traffic-manager.php:1053
+#: traffic-manager.php:1065
+#: traffic-manager.php:1080
 #@ traffic_manager
 msgid "from %s to %s"
 msgstr ""
 
-#: traffic-manager.php:1025
+#: traffic-manager.php:1087
 #@ traffic_manager
 msgid "The number of current user is %s"
 msgstr ""
 
-#: traffic-manager.php:1030
+#: traffic-manager.php:1092
 #@ traffic_manager
 msgid "Current users"
 msgstr ""
 
-#: traffic-manager.php:1064
-#: traffic-manager.php:1166
+#: traffic-manager.php:1126
+#: traffic-manager.php:1228
 #@ traffic_manager
 msgid "Week %s (%s)"
 msgstr ""
 
-#: traffic-manager.php:1076
-#: traffic-manager.php:1178
+#: traffic-manager.php:1138
+#: traffic-manager.php:1240
 #@ traffic_manager
 msgid "%s %s"
 msgstr ""
 
-#: traffic-manager.php:1092
-#: traffic-manager.php:1259
+#: traffic-manager.php:1154
+#: traffic-manager.php:1321
 #@ traffic_manager
 msgid "Google Analytics Data"
 msgstr ""
 
-#: traffic-manager.php:1093
+#: traffic-manager.php:1155
 #@ traffic_manager
 msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
 msgstr ""
 
-#: traffic-manager.php:1096
-#: traffic-manager.php:1204
+#: traffic-manager.php:1158
+#: traffic-manager.php:1266
 #@ traffic_manager
 msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
 msgstr ""
 
-#: traffic-manager.php:1098
-#: traffic-manager.php:1206
+#: traffic-manager.php:1160
+#: traffic-manager.php:1268
 #@ traffic_manager
 msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
 msgstr ""
 
-#: traffic-manager.php:1100
-#: traffic-manager.php:1208
+#: traffic-manager.php:1162
+#: traffic-manager.php:1270
 #@ traffic_manager
 msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
 msgstr ""
 
-#: traffic-manager.php:1106
+#: traffic-manager.php:1168
 #@ traffic_manager
 msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
 msgstr ""
 
-#: traffic-manager.php:1123
-#: traffic-manager.php:1216
+#: traffic-manager.php:1185
+#: traffic-manager.php:1278
 #@ traffic_manager
 msgid "Month"
 msgstr ""
 
-#: traffic-manager.php:1124
-#: traffic-manager.php:1217
+#: traffic-manager.php:1186
+#: traffic-manager.php:1279
 #@ traffic_manager
 msgid "Number of Visitors"
 msgstr ""
 
-#: traffic-manager.php:1125
-#: traffic-manager.php:1218
+#: traffic-manager.php:1187
+#: traffic-manager.php:1280
 #@ traffic_manager
 msgid "Number of Page Views"
 msgstr ""
 
-#: traffic-manager.php:1131
-#: traffic-manager.php:1224
+#: traffic-manager.php:1193
+#: traffic-manager.php:1286
 #@ traffic_manager
 msgid "Visitors and Page Views (%s)"
 msgstr ""
 
-#: traffic-manager.php:1132
-#: traffic-manager.php:1225
+#: traffic-manager.php:1194
+#: traffic-manager.php:1287
 #@ traffic_manager
 msgid "Time Line"
 msgstr ""
 
-#: traffic-manager.php:1200
-#: traffic-manager.php:1331
+#: traffic-manager.php:1262
+#: traffic-manager.php:1393
 #@ traffic_manager
 msgid "Local Data"
 msgstr ""
 
-#: traffic-manager.php:1201
+#: traffic-manager.php:1263
 #@ traffic_manager
 msgid "According to Local Data, here is the number of visits and the number of page views."
 msgstr ""
 
-#: traffic-manager.php:1239
+#: traffic-manager.php:1301
 #@ traffic_manager
 msgid "Visits Count"
 msgstr ""
 
-#: traffic-manager.php:1260
+#: traffic-manager.php:1322
 #@ traffic_manager
 msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
 msgstr ""
 
-#: traffic-manager.php:1267
-#: traffic-manager.php:1339
+#: traffic-manager.php:1329
+#: traffic-manager.php:1401
 #@ traffic_manager
 msgid "Browser name"
 msgstr ""
 
-#: traffic-manager.php:1268
-#: traffic-manager.php:1295
-#: traffic-manager.php:1340
-#: traffic-manager.php:1367
+#: traffic-manager.php:1330
+#: traffic-manager.php:1357
+#: traffic-manager.php:1402
+#: traffic-manager.php:1429
 #@ traffic_manager
 msgid "Number of visitors"
 msgstr ""
 
-#: traffic-manager.php:1280
-#: traffic-manager.php:1352
+#: traffic-manager.php:1342
+#: traffic-manager.php:1414
 #@ traffic_manager
 msgid "Browser distribution (%s)"
 msgstr ""
 
-#: traffic-manager.php:1294
-#: traffic-manager.php:1366
+#: traffic-manager.php:1356
+#: traffic-manager.php:1428
 #@ traffic_manager
 msgid "OS name"
 msgstr ""
 
-#: traffic-manager.php:1307
-#: traffic-manager.php:1379
+#: traffic-manager.php:1369
+#: traffic-manager.php:1441
 #@ traffic_manager
 msgid "Operating System distribution (%s)"
 msgstr ""
 
-#: traffic-manager.php:1332
+#: traffic-manager.php:1394
 #@ traffic_manager
 msgid "According to Local Data, here is the distribution of browser types and OS."
 msgstr ""
 
-#: traffic-manager.php:1394
+#: traffic-manager.php:1456
 #@ traffic_manager
 msgid "Browser and OS Statistics"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "Time"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "IP Address"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "Viewed Page"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "Browser"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "OS"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "Referer"
 msgstr ""
 
-#: traffic-manager.php:1423
+#: traffic-manager.php:1485
 #@ traffic_manager
 msgid "Time spent"
 msgstr ""
 
-#: traffic-manager.php:1426
+#: traffic-manager.php:1488
 #@ traffic_manager
 msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
 msgstr ""
 
-#: traffic-manager.php:1427
+#: traffic-manager.php:1489
 #@ traffic_manager
 msgid "If the entry is displayed for the first time, the time field will be in bold characters."
 msgstr ""
 
-#: traffic-manager.php:1428
+#: traffic-manager.php:1490
 #@ traffic_manager
 msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
 msgstr ""
 
-#: traffic-manager.php:1477
-#: traffic-manager.php:1505
+#: traffic-manager.php:1539
+#: traffic-manager.php:1551
+#: traffic-manager.php:1583
 #@ traffic_manager
 msgid "Unknown keywords."
 msgstr ""
 
-#: traffic-manager.php:1493
+#: traffic-manager.php:1571
 #@ traffic_manager
 msgid "Plugin: %s"
 msgstr ""
 
-#: traffic-manager.php:1497
+#: traffic-manager.php:1575
 #@ traffic_manager
 msgid "Plugin: %s, website: %s"
 msgstr ""
 
-#: traffic-manager.php:1545
+#: traffic-manager.php:1647
 #@ traffic_manager
 msgid "No data for now... Please wait until someone visits your website"
 msgstr ""
 
-#: traffic-manager.php:1558
+#: traffic-manager.php:1660
 #@ traffic_manager
 msgid "Details on the Last %s Viewed Pages"
 msgstr ""
 
-#: traffic-manager.php:1563
+#: traffic-manager.php:1665
 #@ traffic_manager
 msgid "You have configured no graph... Please go on the parameters tab to configure them."
 msgstr ""
 
-#: traffic-manager.php:1566
+#: traffic-manager.php:1668
 #@ traffic_manager
 msgid "Web Statistics"
 msgstr ""
 
-#: traffic-manager.php:1568
+#: traffic-manager.php:1670
 #@ traffic_manager
 msgid "Parameters"
 msgstr ""
 
-#: traffic-manager.php:1574
+#: traffic-manager.php:1674
+#@ traffic_manager
+msgid "This plugin enables the improving of your traffic by supervising it and by helping the web crawlers to identify your contents to be indexed."
+msgstr ""
+
+#: traffic-manager.php:1675
+#@ traffic_manager
+msgid "Purpose of that plugin"
+msgstr ""
+
+#: traffic-manager.php:1677
+#@ traffic_manager
+msgid "In order to help the web crawlers to identifify the contents you want to share, this plugin creates a file named %s and a compressed file %s that list the different url to be indexed with a weight."
+msgstr ""
+
+#: traffic-manager.php:1678
+#@ traffic_manager
+msgid "The updates of these files may be notified to the following crawlers:"
+msgstr ""
+
+#: traffic-manager.php:1685
+#@ traffic_manager
+msgid "You also may add some %s to your headers. These tags helps the crawler to understand the page."
+msgstr ""
+
+#: traffic-manager.php:1686
+#@ traffic_manager
+msgid "How to help web crawlers?"
+msgstr ""
+
+#: traffic-manager.php:1688
+#@ traffic_manager
+msgid "This plugin also enables the creation of a chart that summarize the traffic volume on your server (either thanks to a local database or thanks to %s)."
+msgstr ""
+
+#: traffic-manager.php:1689
+#@ traffic_manager
+msgid "Supervising the traffic"
+msgstr ""
+
+#: traffic-manager.php:1691
+#@ traffic_manager
+msgid "This plugin may be render compliant with %s recommandation regarding personal data management."
+msgstr ""
+
+#: traffic-manager.php:1692
+#@ traffic_manager
+msgid "Then, if you use local database, a warning will be display to indicate that the plugin use some cookies and the two last bytes of the IP address will be masked."
+msgstr ""
+
+#: traffic-manager.php:1693
+#@ traffic_manager
+msgid "If you use %s, the system will work only for users that accept to explicitely accept this system thanks to a popup system."
+msgstr ""
+
+#: traffic-manager.php:1694
+#@ traffic_manager
+msgid "Compliance with Personal data management"
+msgstr ""
+
+#: traffic-manager.php:1700
+#@ traffic_manager
+msgid "How To"
+msgstr ""
+
+#: traffic-manager.php:1706
 #@ traffic_manager
 msgid "Manage translations"
 msgstr ""
 
-#: traffic-manager.php:1580
+#: traffic-manager.php:1712
 #@ traffic_manager
 msgid "Give feedback"
 msgstr ""
 
-#: traffic-manager.php:1588
+#: traffic-manager.php:1720
 #@ traffic_manager
 msgid "Other plugins"
 msgstr ""
 
-#: traffic-manager.php:1932
+#: traffic-manager.php:2109
 #@ traffic_manager
 msgid "Google states that the User Rate Limit has been exceeded!"
 msgstr ""
 
-#: traffic-manager.php:1932
+#: traffic-manager.php:2109
 #@ traffic_manager
 msgid "In order to avoid User Rate Limit, you should get an API key."
 msgstr ""
 
-#: traffic-manager.php:1932
+#: traffic-manager.php:2109
 #@ traffic_manager
 msgid "Once a key generated, please configure it in the configuration tab."
 msgstr ""
 
-#: traffic-manager.php:1932
+#: traffic-manager.php:2109
 #@ traffic_manager
 msgid "If you have just saved the API key in the parameters, please reload the page and it shoud work."
 msgstr ""
 
-#: traffic-manager.php:1935
+#: traffic-manager.php:2112
 #@ traffic_manager
 msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
 msgstr ""
 
-#: traffic-manager.php:1963
-#: traffic-manager.php:2101
-#: traffic-manager.php:2351
-#: traffic-manager.php:2361
-#: traffic-manager.php:2371
+#: traffic-manager.php:2140
+#: traffic-manager.php:2278
+#: traffic-manager.php:2555
+#: traffic-manager.php:2565
+#: traffic-manager.php:2575
 #@ traffic_manager
 msgid "An unknown error occured during the API request"
 msgstr ""
 
-#: traffic-manager.php:2004
-#: traffic-manager.php:2086
+#: traffic-manager.php:2181
+#: traffic-manager.php:2263
 #@ traffic_manager
 msgid "No token provided!"
 msgstr ""
 
-#: traffic-manager.php:2082
+#: traffic-manager.php:2259
 #@ traffic_manager
 msgid "No website selected for Google statistics (see the parameter tab)!"
 msgstr ""
 
-#: traffic-manager.php:2083
+#: traffic-manager.php:2260
 #@ traffic_manager
 msgid "No website selected!"
 msgstr ""
 
-#: traffic-manager.php:2323
+#: traffic-manager.php:2527
 #@ traffic_manager
 msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
 msgstr ""
 
-#: traffic-manager.php:2324
+#: traffic-manager.php:2528
 #@ traffic_manager
 msgid "Problem with folder rights on %s"
 msgstr ""

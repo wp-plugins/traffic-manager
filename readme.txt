@@ -31,7 +31,7 @@ This plugin is compatible with multisite installation.
 
 = Localization =
 
-* German (Germany) translation provided by xmee.de, Textdrache, ziix.de
+* German (Germany) translation provided by xmee.de, Textdrache, ziix.de, GLassnig
 * English (United States), default language
 * Spanish (Spain) translation provided by Verto, Verto Producciones
 * Spanish (Mexico) translation provided by 
@@ -67,6 +67,9 @@ Have fun !
 3. Details on connections
 
 == Changelog ==
+
+= 1.3.2 =
+* NEW: Add button adn shortcode to modify the choice when the users have choose.
 
 = 1.3.1 =
 * BUG: typo error
@@ -110,4 +113,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:0f97ee5b937cdf4934cebbefeba54bf9da28c40e
+InfoVersion:c46b88f8bb2efdb85614bd5b8cef423797526966

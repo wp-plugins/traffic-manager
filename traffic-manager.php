@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.1
+Version: 1.3.2
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -64,6 +64,9 @@ class traffic_manager extends pluginSedLex {
 		
 		add_action("save_post", array( $this, "create_sitemap_upon_save"));
 		
+		add_shortcode( 'cookies_buttons', array( $this, 'cookies_buttons_shortcode' ) );
+		add_shortcode( 'google_cookies_buttons', array( $this, 'google_cookies_buttons_shortcode' ) );
+
 		// Important variables initialisation (Do not modify)
 		$this->path = __FILE__ ; 
 		$this->pluginID = get_class() ; 
@@ -519,16 +522,37 @@ class traffic_manager extends pluginSedLex {
 					function acceptLocalCookies() {
 						UserWebStat_sC("whatChoiceForLocalCookies","ACCEPT_COOKIE",30) ; 
 						jQuery('#infoLocalCookies').remove() ;
+						
+						jQuery(".traffic_cookies_allow").hide() ; 
+						jQuery(".traffic_cookies_refuse").show() ; 
+						
 					}
 					function refusLocalCookies() {
 						UserWebStat_sC("whatChoiceForLocalCookies","REFUS_COOKIE",30) ; 
 						jQuery('#infoLocalCookies').remove() ;
 						UserWebStat_sC('sC', null) ; 
 						UserWebStat_sC('rN', null) ; 
+						
+						jQuery(".traffic_cookies_allow").show() ; 
+						jQuery(".traffic_cookies_refuse").hide() ; 
 					}
 					
+					jQuery(function() {
+						// On gere les boutons 
+						if (whatChoiceForLocalCookies()=="REFUS_COOKIE") {
+							jQuery(".traffic_cookies_allow").show() ; 
+							jQuery(".traffic_cookies_refuse").hide() ; 
+						} else if (whatChoiceForLocalCookies()=="ACCEPT_COOKIE") {
+							jQuery(".traffic_cookies_allow").hide() ; 
+							jQuery(".traffic_cookies_refuse").show() ; 
+						} else {
+							jQuery(".traffic_cookies_allow").show() ; 
+							jQuery(".traffic_cookies_refuse").show() ; 						
+						}
+					}) ; 
+
 					function UserWebStat() {
-					
+										
 						<?php if ($this->get_param('local_cnil_compatible')) {	?>
 						if (whatChoiceForLocalCookies()!="REFUS_COOKIE") {
 						<?php } ?>
@@ -671,11 +695,17 @@ class traffic_manager extends pluginSedLex {
 					function acceptGoogleCookies() {
 						UserWebStat_sC("whatChoiceForGoogleCookies","ACCEPT_COOKIE",30) ; 
 						jQuery('#infoGoogleCookies').remove() ;
+						
+						jQuery(".google_traffic_cookies_allow").hide() ; 
+						jQuery(".google_traffic_cookies_refuse").show() ; 
 					}
 					
 					function refusGoogleCookies() {
 						UserWebStat_sC("whatChoiceForGoogleCookies","REFUS_COOKIE",30) ; 
 						jQuery('#infoGoogleCookies').remove() ;
+						
+						jQuery(".google_traffic_cookies_allow").show() ; 
+						jQuery(".google_traffic_cookies_refuse").hide() ; 
 					}
 					
 					function whatChoiceForGoogleCookies() {
@@ -685,6 +715,21 @@ class traffic_manager extends pluginSedLex {
 						}
 						return choix ; 
 					}
+					
+					jQuery(function() {
+						// On gere les boutons 
+						if (whatChoiceForGoogleCookies()=="REFUS_COOKIE") {
+							jQuery(".google_traffic_cookies_allow").show() ; 
+							jQuery(".google_traffic_cookies_refuse").hide() ; 
+						} else if (whatChoiceForGoogleCookies()=="ACCEPT_COOKIE") {
+							jQuery(".google_traffic_cookies_allow").hide() ; 
+							jQuery(".google_traffic_cookies_refuse").show() ; 
+						} else {
+							jQuery(".google_traffic_cookies_allow").show() ; 
+							jQuery(".google_traffic_cookies_refuse").show() ; 						
+						}
+					}) ; 
+
 					
 					function show_optIn(){
 						<?php 
@@ -794,7 +839,9 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('local_cnil_compatible', __("Configure the local statistics to be compatible with French CNIL's recommandations", $this->pluginID), "", "", array('local_cnil_compatible_html')) ; 
 			$params->add_comment(__("The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side.", $this->pluginID)) ; 
 			$params->add_param('local_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
-					
+			$params->add_comment(__("The French CNIL recommends to add buttons in a page to inform the users that he can refuse / allow the cookies (in addition of the banner).", $this->pluginID)) ; 
+			$params->add_comment(sprintf(__("You can add these buttons in any posts/pages with this code %s.", $this->pluginID), "<code>[cookies_buttons]</code>")) ; 
+
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
 			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click', 'googlewebstat_universal_analytics')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
@@ -879,7 +926,8 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('google_cnil_compatible', __("Configure the Google Analytics statistics to be compatible with French CNIL's recommandations", $this->pluginID), "", "", array('google_cnil_compatible_html')) ; 
 			$params->add_comment(__("A small banner will be displayed to allow cookies (by default, no cookie will be used)", $this->pluginID)) ; 
 			$params->add_param('google_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
-
+			$params->add_comment(__("The French CNIL recommends to add buttons in a page to inform the users that he can refuse / allow the cookies (in addition of the banner).", $this->pluginID)) ; 
+			$params->add_comment(sprintf(__("You can add these buttons in any posts/pages with this code %s.", $this->pluginID), "<code>[google_cookies_buttons]</code>")) ; 
 			
 			$params->add_title(__("Sitemaps Configuration", $this->pluginID)) ; 
 			$params->add_param('sitemaps', __('Do you want to compute a Sitemaps file?', $this->pluginID), "", "", array('sitemaps_nb', 'sitemaps_notify_google', 'sitemaps_notify_bing', 'sitemaps_notify_ask')) ; 
@@ -1854,6 +1902,7 @@ class traffic_manager extends pluginSedLex {
 		$browserVersion = 	$brow->getBrowserVersion() ; 
 		$platformName = 	$brow->getPlatformName() ; 
 		$platformVersion = 	$brow->getPlatformVersion() ; 
+	
 		
 		if ($singleCookie=="") {
 			$singleCookie = sha1(microtime()) ; 
@@ -2389,8 +2438,35 @@ class traffic_manager extends pluginSedLex {
 
 	function create_sitemap_upon_save () {
 		$this->generateSitemaps("sitemap", true) ; 
-	}			
+	}		
+	
+	/** ====================================================================================================================================================
+	* Create the cookies buttons for the info page (allow and disallow)
+	*
+	* @return string the text to replace the shortcode
+	*/
 
+    function cookies_buttons_shortcode( $_atts, $string ) {
+    	global $wpdb ; 
+    	
+		$result = "<input type='button' class='traffic_cookies_allow' value='".__('Allow')."' onclick='acceptLocalCookies()'/> <input type='button' class='traffic_cookies_refuse' value='".__('Refuse')."' onclick='refusLocalCookies()'/>" ; 
+
+		return $result ; 
+	}	
+	
+	/** ====================================================================================================================================================
+	* Create the cookies buttons for the info page (allow and disallow)
+	*
+	* @return string the text to replace the shortcode
+	*/
+
+    function google_cookies_buttons_shortcode( $_atts, $string ) {
+    	global $wpdb ; 
+    	
+		$result = "<input type='button' class='google_traffic_cookies_allow' value='".__('Allow')."' onclick='acceptGoogleCookies()'/> <input type='button' class='google_traffic_cookies_refuse' value='".__('Refuse')."' onclick='refusGoogleCookies()'/>" ; 
+
+		return $result ; 
+	}
 	
 	/** ====================================================================================================================================================
 	* Compute a sitemaps
