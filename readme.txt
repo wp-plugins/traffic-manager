@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 3.9.2
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -31,13 +31,13 @@ This plugin is compatible with multisite installation.
 
 = Localization =
 
-* German (Germany) translation provided by xmee.de, Textdrache, ziix.de, GLassnig
+* German (Germany) translation provided by xmee.de, Textdrache, ziix.de
 * English (United States), default language
 * Spanish (Spain) translation provided by Verto, Verto Producciones
 * Spanish (Mexico) translation provided by 
 * Farsi (Iran) translation provided by 7eshop.ir, AhmadWayfarer
 * French (France) translation provided by SedLex, Claude, Froozeify, NEPLES, Drew
-* Italian (Italy) translation provided by ollol
+* Italian (Italy) translation provided by SedLex, ollol, Emilio
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
 * Polish (Poland) translation provided by Rafatokarro666
 * Portuguese (Brazil) translation provided by CristianoLagame
@@ -68,8 +68,8 @@ Have fun !
 
 == Changelog ==
 
-= 1.3.2 =
-* NEW: Add button adn shortcode to modify the choice when the users have choose.
+= 1.4.0 =
+* NEW: The graph are now entirely generate with elycharts/raphael javascript library
 
 = 1.3.1 =
 * BUG: typo error
@@ -113,4 +113,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:c46b88f8bb2efdb85614bd5b8cef423797526966
+InfoVersion:64147b633117b73524879d80b856bffc70b4b83a

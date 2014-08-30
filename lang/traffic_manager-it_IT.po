@@ -4,8 +4,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-06-12T14:23:45+00:00\n"
+"PO-Revision-Date: 2014-08-25T08:20:48+00:00\n"
+"Last-Translator: SedLex <http://www.sedlex.fr/>\n"
 "Last-Translator: ollol <lorenzoapra.jimdo.com>\n"
+"Last-Translator: Emilio <emilio.lupi.lo@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +40,12 @@ msgstr "2 Settimane"
 msgid "1 Week"
 msgstr "1 Settimana"
 
+msgid "Accept"
+msgstr "Accetto"
+
+msgid "Refuse"
+msgstr "Rifiuto"
+
 msgid "The authentication with Google Analytics is successful"
 msgstr "L&#039;autenticazione con Google Analytics è avvenuta con successo"
 
@@ -68,30 +76,6 @@ msgstr "Se è così, un elenco delle ultime pagine viste verrà visualizzata inc
 msgid "How many pages should be displayed?"
 msgstr "Quante pagine devono essere visualizzate?"
 
-msgid "Time"
-msgstr "Ora"
-
-msgid "IP Address"
-msgstr "Indirizzo IP"
-
-msgid "Browser"
-msgstr "Browser"
-
-msgid "OS"
-msgstr "OS"
-
-msgid "Time spent"
-msgstr "Tempo usato"
-
-msgid "Other plugins"
-msgstr "Altri plugins"
-
-msgid "Accept"
-msgstr "Accetto"
-
-msgid "Refuse"
-msgstr "Rifiuto"
-
 msgid "Show statistics on number of visits and viewed pages?"
 msgstr "Mostra statistiche sul numero di visite e pagine viste?"
 
@@ -119,11 +103,251 @@ msgstr "Configurare le statistiche locali per essere compatibile con raccomandaz
 msgid "The last two bytes of the IP will be masked and a small banner to allow the user to refuse cookies will be displayed on the front side."
 msgstr "Gli ultimi due byte dell&#039;IP saranno mascherati e un piccolo banner per consentire all&#039;utente di rifiutare i cookie verranno visualizzati sul lato anteriore."
 
+msgid "The HTML to be displayed for the banner to be compatible with French CNIL's recommandations."
+msgstr "Il codice HTML da visualizzare per il banner per essere compatibile con raccomandazioni di francese CNIL."
+
+msgid "The French CNIL recommends to add buttons in a page to inform the users that he can refuse / allow the cookies (in addition of the banner)."
+msgstr "La CNIL francese raccomanda di aggiungere pulsanti in una pagina per informare gli utenti che può rifiutare / consentire i cookie (in aggiunta del banner)."
+
+msgid "You can add these buttons in any posts/pages with this code %s."
+msgstr "È possibile aggiungere questi pulsanti in ogni post / pagine con questo codice %s."
+
+msgid "Use %s to know from where your users are."
+msgstr ""
+
+msgid "The API key for %s."
+msgstr ""
+
+msgid "You have to create your own key on %s."
+msgstr ""
+
+msgid "You API key appears to be correct."
+msgstr ""
+
+msgid "Your server appears to be located in %s."
+msgstr ""
+
+msgid "There was a problem while contacting the server."
+msgstr ""
+
+msgid "Show the World map."
+msgstr ""
+
+msgid "Show the European map."
+msgstr ""
+
+msgid "Google Analytics Web Statistics"
+msgstr "Google Analytics Statistiche Web"
+
+msgid "Do you want to manage the web statistics with Google Analytics?"
+msgstr "Vuoi gestire le statistiche web con Google Analytics?"
+
+msgid "For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s."
+msgstr "Per ulteriori informazioni, visitare il sito Web %s . Inoltre si poteva vedere tutta la tua autorizzato accessi su questa %spage%s."
+
+msgid "Google Analytics ID:"
+msgstr "Google Analytics ID:"
+
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr "Google Analytics ID è dovrebbe essere simile a%s."
+
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr "Ti puoi anche %sautenticare%s con il tuo account Google e quindi facilitare il processo."
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr "Per ora, questa pagina è autenticato con il tuo account Google Analytics. %sdisattiva l&#039;autenticazione%s."
+
+msgid "Select..."
+msgstr "Selezionare ..."
+
+msgid "Choose your website in this list"
+msgstr "Scegli il tuo sito web in questa lista"
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr "Si prega di notare che l&#039;ID di Google Analytics per%s è %s."
+
+msgid "No Google Analytics ID configured for now."
+msgstr "Nessuna Google Analytics ID configurato per ora."
+
+msgid "Do you want to use the %s?"
+msgstr "Vuoi usare il %s?"
+
+msgid "What is the API key?"
+msgstr "Qual è la chiave API?"
+
+msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgstr "Questa chiave API è utile per evitare qualsiasi limite di quota. Se non si imposta questa chiave, solo pochissime richieste possono essere autorizzati da Google"
+
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgstr "Per ottenere questa chiave API, visitare il sito %s, creare un projet, permetterà a Google Analytics, e poi andare a console API per ottenere un %s"
+
+msgid "Support Display Advertising for Google (only if Universal Analytics is not activated)?"
+msgstr "Supporto Display Advertising di Google (solo se Universale Analytics non è attivato)?"
+
+msgid "This option is to enable Remarketing with Google Analytics or Google Display Network (GDN) Impression Reporting."
+msgstr "Questa opzione è quella di consentire Remarketing con Google Analytics o Rete Display di Google (GDN) Impression Reporting."
+
+msgid "Configure the Google Analytics statistics to be compatible with French CNIL's recommandations"
+msgstr "Configurare le statistiche di Google Analytics per essere compatibile con le raccomandazioni del CNIL francese"
+
+msgid "A small banner will be displayed to allow cookies (by default, no cookie will be used)"
+msgstr "Un piccolo banner sarà visualizzato per consentire i cookie (per impostazione predefinita, verrà utilizzato nessun cookie)"
+
+msgid "Sitemaps Configuration"
+msgstr "Configurazione Sitemaps"
+
+msgid "Do you want to compute a Sitemaps file?"
+msgstr "Vuoi calcolare un file di Sitemap?"
+
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr "Una Sitemap è un file XML che elenca gli URL per il tuo sito. Si informa i motori di ricerca su URL del tuo sito web che sono disponibili per la scansione."
+
+msgid "No sitemap has been generated yet."
+msgstr "Nessun sitemap è stato ancora generato."
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr "Verificato un errore sulla prossima generazione di sitemap: %s."
+
+msgid "The last sitemap has been generated on %s."
+msgstr "L&#039;ultima mappa del sito è stata generata in %s."
+
+msgid "You may see your sitemap at %s."
+msgstr "Si può vedere la tua sitemap a %s."
+
+msgid "How many posts and pages will be included in this file?"
+msgstr "Quanti posti e le pagine saranno inclusi in questo file?"
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr "Se hai troppi messaggi, impostare questo numero per 1000 per esempio, al fine di evitare qualsiasi problema di memoria. Se si imposta questo numero a 0, saranno inclusi tutti i messaggi."
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr "Vuoi informare %s quando la mappa del sito viene aggiornato?"
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr "%s non è mai stato ancora notificato. In attesa del prossimo aggiornamento."
+
+msgid "An error occured when notifying %s for the last time."
+msgstr "Verificato un errore durante la notifica %s per l&#039;ultima volta."
+
+msgid "%s has be notified for the last time on %s."
+msgstr "%s ha una notifica per l&#039;ultima volta il %s."
+
+msgid "Improve your SEO with metatags"
+msgstr "Migliora il tuo SEO con metatag"
+
+msgid "Do you want to add metatag to your page/post"
+msgstr "Vuoi aggiungere metatag alla tua pagina/post"
+
+msgid "Meta tags are snippets of code on a web page. They offer information about a page (metadata) in an invisible way but may enhanced the SEO (Search Engine Optimization) of your website."
+msgstr "Meta tag sono frammenti di codice in una pagina web. Essi offrono informazioni su una pagina (metadati) in modo invisibile ma possono migliorato la SEO (Search Engine Optimization) del tuo sito web."
+
+msgid "Add meta title"
+msgstr "Add meta title"
+
+msgid "Add meta description"
+msgstr "Aggiungere meta description"
+
+msgid "Add meta copyright"
+msgstr "Aggiungere meta copyright"
+
+msgid "It will be by default: %s."
+msgstr "Sarà per impostazione predefinita: %s."
+
+msgid "Override the copyright of the website:"
+msgstr "Ignorare il copyright del sito:"
+
+msgid "Add meta author"
+msgstr "Aggiungere meta autore"
+
+msgid "Override the author name"
+msgstr "Eseguire l&#039;override del nome dell&#039;autore"
+
+msgid "Add meta date (publication date, modification date, etc.)"
+msgstr "Aggiungi la data meta (data di pubblicazione, data di modifica, ecc)"
+
+msgid "Add meta keywords (category, keywords, etc.)"
+msgstr "Aggiungere meta keywords (categoria, parole chiave, ecc)"
+
+msgid "Add meta table of content"
+msgstr "Aggiungere meta tabella dei contenuti"
+
+msgid "Add meta images"
+msgstr "Aggiungere meta immagini"
+
+msgid "from %s to %s"
+msgstr "da %s a %s"
+
+msgid "The number of current user is %s"
+msgstr "Il numero di utente corrente è %s"
+
+msgid "Current users"
+msgstr "Gli attuali utenti"
+
+msgid "Week %s (%s)"
+msgstr "Settimana %s (%s)"
+
+msgid "%s %s"
+msgstr "%s %s"
+
+msgid "Google Analytics Data"
+msgstr "Google Analytics di dati"
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr "Secondo i dati di Google Analytics, ecco il numero di visite e il numero di pagine viste."
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr "Oggi, %s persone hanno visitato il vostro sito e le pagine %s sono stati visti (%s e %s per ieri)."
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr "Questa settimana, %s persone hanno visitato il vostro sito e le pagine %s sono stati visti ( %s e %s per la scorsa settimana)."
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr "Questo mese, %s persone hanno visitato il vostro sito e le pagine %s sono stati visti (%s e %s per il mese scorso)."
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr "NOTA: Google ritiene che la settimana inizia la domenica che non è conforme a ISO 8601 (normalmente inizia il lunedì). Quindi state attenti quando si confrontano settimane con il tuo calendario: numeri della settimana possono essere sligthly diverso."
+
+msgid "Month"
+msgstr "Mese"
+
 msgid "Number of Visitors"
 msgstr "Numero di visitatori"
 
 msgid "Number of Page Views"
 msgstr "Numero di pagine visualizzate"
+
+msgid "Visitors and Page Views (%s)"
+msgstr "I visitatori e Page Views (%s)"
+
+msgid "Time Line"
+msgstr "Time Line"
+
+msgid "Local Data"
+msgstr "Dati locali"
+
+msgid "According to Local Data, here is the number of visits and the number of page views."
+msgstr "Secondo i dati locali, ecco il numero di visite e il numero di pagine viste."
+
+msgid "Visits Count"
+msgstr "Conteggio Visite"
+
+msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
+msgstr "Secondo i dati di Google Analytics, ecco la distribuzione dei tipi di browser e sistema operativo."
+
+msgid "Browser name"
+msgstr "Nome Browser"
+
+msgid "Number of visitors"
+msgstr "Numero di visitatori"
+
+msgid "Browser distribution (%s)"
+msgstr "Distribuzione Browser (%s)"
+
+msgid "OS name"
+msgstr "nome del sistema operativo"
+
+msgid "Operating System distribution (%s)"
+msgstr "Distribuzione del sistema operativo (%s)"
 
 msgid "According to Local Data, here is the distribution of browser types and OS."
 msgstr "Secondo i dati locali, ecco la distribuzione dei tipi di browser e sistema operativo."
@@ -131,14 +355,140 @@ msgstr "Secondo i dati locali, ecco la distribuzione dei tipi di browser e siste
 msgid "Browser and OS Statistics"
 msgstr "Browser e OS Statistics"
 
+msgid "Geolocalisation of the visitor during the last %s days"
+msgstr ""
+
+msgid "Time"
+msgstr "Ora"
+
+msgid "IP Address"
+msgstr "Indirizzo IP"
+
 msgid "Viewed Page"
 msgstr "Pagine viste"
+
+msgid "Browser"
+msgstr "Browser"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Referer"
+msgstr "Referer"
+
+msgid "Time spent"
+msgstr "Tempo usato"
 
 msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
 msgstr "Si prega di notare che l&#039;ora locale corrente del server è %s . Se non è corretto, impostare l&#039;installazione di Wordpress correttamente."
 
 msgid "If the entry is displayed for the first time, the time field will be in bold characters."
 msgstr "Se la voce viene visualizzato per la prima volta, il campo di tempo sarà in grassetto."
+
+msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
+msgstr "Se l&#039;utente accede il tuo sito web per la prima volta oggi, il campo IP sarà in caratteri blod."
+
+msgid "Unknown keywords."
+msgstr "Parole chiave sconosciuti."
+
+msgid "Plugin: %s"
+msgstr "Plugin: %s"
+
+msgid "Plugin: %s, website: %s"
+msgstr "Plugin: %s, sito web: %s"
+
+msgid "No data for now... Please wait until someone visits your website"
+msgstr "Nessun dato per ora ... Si prega di attendere fino a quando qualcuno visita il tuo sito web"
+
+msgid "Details on the Last %s Viewed Pages"
+msgstr "Dettagli sul Ultima %s Pagine Viste"
+
+msgid "You have configured no graph... Please go on the parameters tab to configure them."
+msgstr "È stato configurato nessun grafico ... Per favore, vai nella scheda parametri per configurarli."
+
+msgid "Web Statistics"
+msgstr "Statistiche Web"
+
+msgid "Parameters"
+msgstr "Parametri"
+
+msgid "This plugin enables the improving of your traffic by supervising it and by helping the web crawlers to identify your contents to be indexed."
+msgstr "Questo plugin permette il miglioramento del traffico da supervisione e aiutando i crawler web per identificare i contenuti da indicizzare."
+
+msgid "Purpose of that plugin"
+msgstr "Scopo di tale plug-in"
+
+msgid "In order to help the web crawlers to identifify the contents you want to share, this plugin creates a file named %s and a compressed file %s that list the different url to be indexed with a weight."
+msgstr "Al fine di aiutare i crawler web di identifify il contenuto che si desidera condividere, questo plugin crea un file chiamato %s e un file compresso %s che elenca le diverse URL da indicizzare con un peso."
+
+msgid "The updates of these files may be notified to the following crawlers:"
+msgstr "Gli aggiornamenti di questi file potranno essere comunicati ai seguenti crawler:"
+
+msgid "You also may add some %s to your headers. These tags helps the crawler to understand the page."
+msgstr "Si può anche aggiungere un po &#039; %s per le vostre intestazioni. Questi tag aiuta il crawler per comprendere la pagina."
+
+msgid "How to help web crawlers?"
+msgstr "Come aiutare i crawler web?"
+
+msgid "This plugin also enables the creation of a chart that summarize the traffic volume on your server (either thanks to a local database or thanks to %s)."
+msgstr "Questo plugin consente anche la creazione di un grafico che riassume il volume di traffico sul server (sia grazie a un database locale o grazie al %s)."
+
+msgid "Supervising the traffic"
+msgstr "Supervisione del traffico"
+
+msgid "This plugin may be render compliant with %s recommandation regarding personal data management."
+msgstr "Questo plugin può essere rendere conforme recommandation %s per quanto riguarda la gestione dei dati personali."
+
+msgid "Then, if you use local database, a warning will be display to indicate that the plugin use some cookies and the two last bytes of the IP address will be masked."
+msgstr "Quindi, se si utilizza database locale, un avviso sarà visualizzato per indicare che il plugin utilizzano alcuni biscotti e gli ultimi due byte dell&#039;indirizzo IP verrà mascherati."
+
+msgid "If you use %s, the system will work only for users that accept to explicitely accept this system thanks to a popup system."
+msgstr "Se si utilizza %s, il sistema funziona solo per gli utenti che accettano esplicitamente questo sistema grazie ad un sistema di popup."
+
+msgid "Compliance with Personal data management"
+msgstr "Conformità alla gestione dei dati personali"
+
+msgid "How To"
+msgstr "Come"
+
+msgid "Manage translations"
+msgstr "Gestione traduzioni"
+
+msgid "Give feedback"
+msgstr "Lascia un commento"
+
+msgid "Other plugins"
+msgstr "Altri plugins"
+
+msgid "Google states that the User Rate Limit has been exceeded!"
+msgstr "Google afferma che il tasso di User limite è stato superato!"
+
+msgid "In order to avoid User Rate Limit, you should get an API key."
+msgstr "Al fine di evitare Tasso User Limit, si dovrebbe ottenere una chiave API."
+
+msgid "Once a key generated, please configure it in the configuration tab."
+msgstr "Una volta che viene generata una chiave, configurarla nella scheda di configurazione."
+
+msgid "If you have just saved the API key in the parameters, please reload the page and it shoud work."
+msgstr "Se avete appena salvato la chiave API nei parametri, si prega di ricaricare la pagina e shoud lavoro."
+
+msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
+msgstr "L&#039;autorizzazione sembra essere scaduto o è stato revocato. Si prega di revocare l&#039;autorizzazione (vedi sotto) e ri-Authentify!"
+
+msgid "An unknown error occured during the API request"
+msgstr "Verificato un errore sconosciuto durante la richiesta API"
+
+msgid "No token provided!"
+msgstr "Nessun token disponibile!"
+
+msgid "No website selected for Google statistics (see the parameter tab)!"
+msgstr "Nessun sito web selezionato per le statistiche di Google (vedi la scheda parametri)!"
+
+msgid "No website selected!"
+msgstr "Nessun sito web selezionato!"
+
+msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
+msgstr "Il file %s non può essere creato. Si prega di assicurarsi che i diritti dei file consentono di scrivere nella seguente cartella: %s"
 
 msgid "Problem with folder rights on %s"
 msgstr "Problemi con diritti di una cartella su %s"

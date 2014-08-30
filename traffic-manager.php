@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.3.2
+Version: 1.4.0
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -38,7 +38,7 @@ class traffic_manager extends pluginSedLex {
 		$this->maxTime = 600 ; 
 		
 		// The structure of the SQL table if needed (for instance, 'id_post mediumint(9) NOT NULL, short_url TEXT DEFAULT '', UNIQUE KEY id_post (id_post)') 
-		$this->tableSQL = "id mediumint(9) NOT NULL AUTO_INCREMENT, count mediumint(9) NOT NULL, uniq_visit mediumint(9) NOT NULL, viewed BOOL, type VARCHAR(15), ip VARCHAR(100), browserName VARCHAR(30), browserVersion VARCHAR(100), platformName VARCHAR(30), platformVersion VARCHAR(30),  browserUserAgent VARCHAR(250), referer VARCHAR(500), page VARCHAR(100), time DATETIME, singleCookie VARCHAR(100), refreshNumber mediumint(9) NOT NULL, UNIQUE KEY id (id)" ; 
+		$this->tableSQL = "id mediumint(9) NOT NULL AUTO_INCREMENT, count mediumint(9) NOT NULL, uniq_visit mediumint(9) NOT NULL, viewed BOOL, type VARCHAR(15), ip VARCHAR(100), browserName VARCHAR(30), browserVersion VARCHAR(100), platformName VARCHAR(30), platformVersion VARCHAR(30),  browserUserAgent VARCHAR(250), referer VARCHAR(500), page VARCHAR(100), time DATETIME, singleCookie VARCHAR(100), refreshNumber mediumint(9) NOT NULL, geolocate_state TEXT, geolocate TEXT, UNIQUE KEY id (id)" ; 
 
 		// The name of the SQL table (Do no modify except if you know what you do)
 		$this->table_name = $wpdb->prefix . "pluginSL_" . get_class() ; 
@@ -117,7 +117,23 @@ class traffic_manager extends pluginSedLex {
 	*/
 	
 	public function _update() {
-		
+		global $wpdb ; 
+		// This update aims at adding the nb_hits fields 
+		if ( !$wpdb->get_var("SHOW COLUMNS FROM ".$this->table_name." LIKE 'geolocate'")  ) {
+			$wpdb->query("ALTER TABLE ".$this->table_name." ADD geolocate_state TEXT;");
+			$wpdb->query("ALTER TABLE ".$this->table_name." ADD geolocate TEXT;");
+		}  
+	}
+	
+	
+	/** ====================================================================================================================================================
+	* Init CSS for the admin side
+	*
+	* @return void
+	*/
+	
+	function _admin_css_load() {
+		$this->add_css(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'css/jquery-jvectormap-1.2.2.css') ; 
 	}
 	
 	/** ====================================================================================================================================================
@@ -130,8 +146,11 @@ class traffic_manager extends pluginSedLex {
 	*/
 	
 	function _admin_js_load() {	
-		wp_enqueue_script( 'jsapi', 'https://www.google.com/jsapi');
+		global $wpdb ; 
 		
+		$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/raphael-min.js') ; 
+		$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/elycharts.min.js') ; 
+					
 		if (($this->get_param('localwebstat'))&&($this->get_param('local_current_user'))) {
 			ob_start() ; 
 			?>
@@ -156,7 +175,171 @@ class traffic_manager extends pluginSedLex {
 			$java = ob_get_clean() ; 
 			$this->add_inline_js($java) ; 
 		}
-
+		
+		if (($this->get_param('geolocate_show_world'))||($this->get_param('geolocate_show_europe'))||(trim($this->get_param('geolocate_show_state'))!="")){
+			$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/jquery-jvectormap-1.2.2.min.js') ; 
+		}
+		
+		if ($this->get_param('geolocate_show_world')){
+			$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/jquery-jvectormap-world-mill-en.js') ; 
+			ob_start();
+				$results = $wpdb->get_results("SELECT geolocate, count(*) as nombre FROM ".$this->table_name." WHERE type='single' AND geolocate_state != '' AND time BETWEEN '".date_i18n('Y-m-d 0:0:0', strtotime(date_i18n("Y-m-d").' -'.$this->get_param('local_keep_detailed_info').' day'))."' AND '".date_i18n('Y-m-d H:i:s')."' GROUP BY geolocate_state") ; 
+				echo "\r\nvar gdpData = {\r\n" ; 
+				$first = true;
+				foreach ($results as $r){
+					if (!$first){
+						echo ", " ; 
+					}
+					$rus = @unserialize($r->geolocate) ; 
+					if (is_array($rus)){
+						$first = false ; 
+						echo $rus['countryCode'].':'.$r->nombre ; 
+					}
+				}
+				echo "};\r\n"
+			?>
+				jQuery(function(){
+					jQuery('#geolocate_show_world').vectorMap({
+						map: 'world_mill_en',
+						backgroundColor: '#A1A1A1',
+						series: {
+						    regions: [{
+						      values: gdpData,
+							  hoverOpacity: 0.7,
+    						  hoverColor: false,
+						      scale: ['#C8EEFF', '#000066'],
+						      normalizeFunction: 'polynomial'
+						    }]
+						},
+						onRegionLabelShow: function(e, el, code){
+						    el.html(el.html()+' ('+gdpData[code]+')');
+						}
+					});
+				}) ; 
+				
+			<?php
+			
+			
+				
+			$java = ob_get_clean() ; 
+			$this->add_inline_js($java) ;
+		}
+		
+		if ($this->get_param('geolocate_show_europe')){
+			$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/jquery-jvectormap-europe-mill-en.js') ; 
+			ob_start();
+				$results = $wpdb->get_results("SELECT geolocate, count(*) as nombre FROM ".$this->table_name." WHERE type='single' AND geolocate_state != '' AND time BETWEEN '".date_i18n('Y-m-d 0:0:0', strtotime(date_i18n("Y-m-d").' -'.$this->get_param('local_keep_detailed_info').' day'))."' AND '".date_i18n('Y-m-d H:i:s')."' GROUP BY geolocate_state") ; 
+				echo "\r\nvar gdpData_europe = {\r\n" ; 
+				$first = true;
+				foreach ($results as $r){
+					if (!$first){
+						echo ", " ; 
+					}
+					$rus = @unserialize($r->geolocate) ; 
+					if (is_array($rus)){
+						$first = false ; 
+						echo $rus['countryCode'].':'.$r->nombre ; 
+					}
+				}
+				echo "};\r\n"
+			?>
+				jQuery(function(){
+					jQuery('#geolocate_show_europe').vectorMap({
+						map: 'europe_mill_en',
+						backgroundColor: '#A1A1A1',
+						series: {
+						    regions: [{
+						      values: gdpData,
+							  hoverOpacity: 0.7,
+    						  hoverColor: false,
+						      scale: ['#C8EEFF', '#000066'],
+						      normalizeFunction: 'polynomial'
+						    }]
+						},
+						onRegionLabelShow: function(e, el, code){
+						    el.html(el.html()+' ('+gdpData[code]+')');
+						}
+					});
+				}) ; 
+			<?php 
+				
+			$java = ob_get_clean() ; 
+			$this->add_inline_js($java) ;
+		}
+		
+		if (trim($this->get_param('geolocate_show_state'))!=""){
+			$state = explode(',', $this->get_param('geolocate_show_state')) ;
+			foreach ($state as $st) {
+				$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/jquery-jvectormap-'.$st.'.js') ; 
+				ob_start();
+					$results = $wpdb->get_results("SELECT geolocate, count(*) as nombre FROM ".$this->table_name." WHERE type='single' AND geolocate_state != '' AND time BETWEEN '".date_i18n('Y-m-d 0:0:0', strtotime(date_i18n("Y-m-d").' -'.$this->get_param('local_keep_detailed_info').' day'))."' AND '".date_i18n('Y-m-d H:i:s')."' GROUP BY geolocate") ; 
+					// markers
+					echo "\r\nvar markers_".sha1($st)." = [\r\n" ; 
+					$first = true;
+					foreach ($results as $r){
+						if (!$first){
+							echo ", " ; 
+						}
+						$rus = @unserialize($r->geolocate) ; 
+						$rus['cityName'] = str_replace("'", " ", $rus['cityName']) ; 
+						if (is_array($rus)){
+							$first = false ; 
+							echo "{latLng: [".$rus['latitude'].", ".$rus['longitude']."], name: '".sprintf(__('%s visits', $this->pluginID), $r->nombre)." - ".$rus['cityName']." (".$rus['zipCode'].")'}" ; 
+						}
+					}
+					echo "];\r\n" ;
+					
+					// taille
+					echo "\r\nvar size_".sha1($st)." = [\r\n" ; 
+					$first = true;
+					foreach ($results as $r){
+						if (!$first){
+							echo ", " ; 
+						}
+						$rus = @unserialize($r->geolocate) ; 
+						$rus['cityName'] = str_replace("'", " ", $rus['cityName']) ; 
+						if (is_array($rus)){
+							$first = false ; 
+							echo $r->nombre ; 
+						}
+					}
+					echo "];\r\n";
+					
+				?>
+					jQuery(function(){
+						jQuery('#geolocate_show_<?php echo sha1($st) ; ?>').vectorMap({
+							map: '<?php echo str_replace('-', '_', $st) ; ?>',
+							scaleColors: ['#C8EEFF', '#000066'],
+							normalizeFunction: 'polynomial',
+							hoverOpacity: 0.7,
+							hoverColor: false,
+							markerStyle: {
+							  initial: {
+								fill: '#F8E23B',
+								stroke: '#383f47'
+							  }
+							},
+							backgroundColor: '#A1A1A1',
+							markers: markers_<?php echo sha1($st) ; ?>,
+							series: {
+								markers: [{
+      							  attribute: 'fill',
+      							  scale: ['#C8EEFF', '#000066'],
+      							  values: size_<?php echo sha1($st) ; ?>
+      						    },{
+								  attribute: 'r',
+      							  scale: [4, 40],
+      							  values: size_<?php echo sha1($st) ; ?>
+								}]
+							}
+						});
+					}) ; 
+				<?php 
+				
+				$java = ob_get_clean() ; 
+				$this->add_inline_js($java) ;
+			}
+		}
 
 		return ; 
 	}
@@ -386,13 +569,14 @@ class traffic_manager extends pluginSedLex {
 			case 'local_show_visits'		: return false ; break ; 
 			case 'local_period'		: return array(array(__('3 Year', $this->pluginID), "a3"), array(__('1 Year', $this->pluginID), "a1"), array(__('6 Month', $this->pluginID), "m6"), array("*".__('1 Month', $this->pluginID), "m1"), array(__('2 Week', $this->pluginID), "w2"), array(__('1 Week', $this->pluginID), "w1")) ; break ; 
 			case 'local_show_type'		: return false ; break ; 
-			case 'local_color'		: return "*['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; break ; 
 			case 'local_cron_concat'		: return "" ; break ; 
 			case 'local_current_user'		: return true ; break ; 
 			case 'local_cnil_compatible'		: return false ; break ; 			
 			case 'local_cnil_compatible_html'		: return  "*<div id='infoLocalCookies' style='z-index:1000; border:1px solid black; opacity:0.9;background-color:#999999;width:100%;position:fixed;bottom:0px;color:#EEEEEE;'>
    <p style='text-align:center'>This site uses cookies for anonymous statistics. These statistics are used for local use only. If you prefer, you may refuse these cookies. %accept% or %refuse%</p>
 </div>" ; 
+			case 'local_keep_detailed_info'		: return 10 ; break ; 	
+
 
 			case 'googlewebstat' 		: return false 		; break ;
 			case 'googlewebstat_universal_analytics' 		: return false 		; break ;
@@ -406,7 +590,6 @@ class traffic_manager extends pluginSedLex {
 			case 'google_show_visits'		: return false ; break ; 
 			case 'google_show_type'		: return false ; break ; 
 			case 'google_track_user'		: return true ; break ; 
-			case 'google_color'		: return "*['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; break ; 
 			case 'google_period'		: return array(array(__('3 Year', $this->pluginID), "a3"), array(__('1 Year', $this->pluginID), "a1"), array(__('6 Month', $this->pluginID), "m6"), array("*".__('1 Month', $this->pluginID), "m1"), array(__('2 Week', $this->pluginID), "w2"), array(__('1 Week', $this->pluginID), "w1")) ; break ; 
 			case 'google_cnil_compatible'		: return false ; break ; 			
 			case 'google_cnil_compatible_html'		: return  "*<div id='infoGoogleCookies' style='z-index:1000; border:1px solid black; opacity:0.9;background-color:#999999;width:100%;position:fixed;top:0px;color:#EEEEEE;'>
@@ -434,6 +617,13 @@ class traffic_manager extends pluginSedLex {
 			case 'metatag_author_override'		: return "" ; break ; 
 			case 'metatag_toc'		: return true ; break ; 
 			case 'metatag_image'		: return true ; break ; 
+
+			case 'geolocate_ipinfodb'		: return false ; break ; 
+			case 'geolocate_ipinfodb_key'		: return "" ; break ; 
+			case 'geolocate_show_world'		: return false ; break ; 
+			case 'geolocate_show_europe'		: return false ; break ; 
+			case 'geolocate_show_state'		: return "" ; break ; 
+			
 		}
 		return null ;
 	}
@@ -489,7 +679,6 @@ class traffic_manager extends pluginSedLex {
 				ob_start() ; 
 					?>
 
-					
 					function UserWebStat_sC(name,value,days) {
 						if (days) {
 							var date = new Date();
@@ -820,7 +1009,7 @@ class traffic_manager extends pluginSedLex {
 			
 			$params = new SLFramework_Parameters($this, "tab-parameters") ; 
 			$params->add_title(__("Local Web Statistics", $this->pluginID)) ; 
-			$params->add_param('localwebstat', __('Do you want to manage the web statistics locally?', $this->pluginID),"", "", array('local_track_user', 'local_detail', 'local_detail_nb', 'local_show_visits', 'local_show_type', 'local_color', 'local_period')) ; 
+			$params->add_param('localwebstat', __('Do you want to manage the web statistics locally?', $this->pluginID),"", "", array('local_track_user', 'local_detail', 'local_detail_nb', 'local_show_visits', 'local_show_type', 'local_period')) ; 
 			$params->add_comment(__("If so, stats will be stored in the local SQL database. Be sure that you have free space into your database", $this->pluginID)) ; 
 			if ($this->get_param('localwebstat')) {
 				$params->add_comment(sprintf(__("The next compression of the database will occur on %s", $this->pluginID), date_i18n("Y-m-d H:i:s", $this->get_param('local_cron_concat')))) ; 
@@ -829,10 +1018,11 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('local_detail', __('Do you want to display the last viewed pages?', $this->pluginID),"", "", array('local_detail_nb')) ; 
 			$params->add_comment(__("If so, a list of the last viewed pages will be displayed including IP of the user, the url of the viewed page, the time, the referer, the browser name, the OS name, etc.", $this->pluginID)) ; 
 			$params->add_param('local_detail_nb', __('How many pages should be displayed?', $this->pluginID)) ; 
+			$params->add_param('local_keep_detailed_info', __('How many days do you want to keep detailed info in your database?', $this->pluginID)) ; 
+			$params->add_comment(__("All detailled info will be used for the geolocation (see below).", $this->pluginID)) ; 
+			$params->add_comment(sprintf(__("It is recommended to keep the detailled information no more than %s days.", $this->pluginID), "15")) ; 
 			$params->add_param('local_show_visits', __('Show statistics on number of visits and viewed pages?', $this->pluginID)) ; 
 			$params->add_param('local_show_type', __('Show statistics on the OS and browser types of your visitors?', $this->pluginID)) ; 
-			$params->add_param('local_color', __('What are the colors for the charts?', $this->pluginID)) ; 
-			$params->add_comment(sprintf(__("The default colors are %s.", $this->pluginID), "<code>['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']</code>")) ; 
 			$params->add_param('local_period', __('What are the period for which charts should be provided?', $this->pluginID)) ; 
 			$params->add_param('local_track_user', __('Do you want to track the logged user?', $this->pluginID)) ; 
 			$params->add_param('local_current_user', __('Show the number of current connected users on your website', $this->pluginID)) ; 
@@ -841,9 +1031,56 @@ class traffic_manager extends pluginSedLex {
 			$params->add_param('local_cnil_compatible_html', __("The HTML to be displayed for the banner to be compatible with French CNIL's recommandations.", $this->pluginID)) ; 
 			$params->add_comment(__("The French CNIL recommends to add buttons in a page to inform the users that he can refuse / allow the cookies (in addition of the banner).", $this->pluginID)) ; 
 			$params->add_comment(sprintf(__("You can add these buttons in any posts/pages with this code %s.", $this->pluginID), "<code>[cookies_buttons]</code>")) ; 
+			$params->add_param('geolocate_ipinfodb', sprintf(__("Use %s to know from where your users are.", $this->pluginID), "<code>IPInfoDb</code>"),"","",array('geolocate_ipinfodb_key')) ;
+			$params->add_param('geolocate_ipinfodb_key', sprintf(__("The API key for %s.", $this->pluginID), "<code>IPInfoDb</code>")) ; 
+			if ($this->get_param('geolocate_ipinfodb_key')==""){
+				$params->add_comment(sprintf(__("You have to create your own key on %s.", $this->pluginID), "<a href='http://www.ipinfodb.com/ip_location_api.php'>IPInfoDb</a>")) ; 
+			} else {
+				$geo = $this->geolocate("", false) ; 
+				if (is_array($geo)){
+					$params->add_comment(__("You API key appears to be correct.", $this->pluginID)) ; 				
+					$params->add_comment(sprintf(__("Your server appears to be located in %s.", $this->pluginID), "<code>".ucfirst(strtolower($geo['countryName']))." (".$geo['zipCode']." ".ucfirst(strtolower($geo['cityName'])).")</code>")) ; 				
+				} else {
+					$params->add_comment(__("There was a problem while contacting the server.", $this->pluginID)) ; 				
+					if (is_string($geo)){
+						$params->add_comment("<code>".$geo."</code>") ; 				
+					}
+				}
+			}
+			$params->add_param('geolocate_show_world', __("Show the World map.", $this->pluginID)) ; 
+			$params->add_param('geolocate_show_europe', __("Show the European map.", $this->pluginID)) ; 
+			$params->add_param('geolocate_show_state', __("Show a state map.", $this->pluginID)) ; 
+			$params->add_comment(__("This is a comma separated list.", $this->pluginID)) ; 
+			$comment_regions = sprintf(__("Use %s for the Argentina map.", $this->pluginID), "<code>ar-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Australia map.", $this->pluginID), "<code>at-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Austria map.", $this->pluginID), "<code>au-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Beligium map.", $this->pluginID), "<code>be-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Canadia map.", $this->pluginID), "<code>ca-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Chinese map.", $this->pluginID), "<code>cn-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Colombian map.", $this->pluginID), "<code>co-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Denmark map.", $this->pluginID), "<code>dk-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the France map.", $this->pluginID), "<code>fr-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Germany map.", $this->pluginID), "<code>de-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the India map.", $this->pluginID), "<code>in-mill-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Italy map.", $this->pluginID), "<code>it-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Netherlands map.", $this->pluginID), "<code>nl-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the New Zealand map.", $this->pluginID), "<code>nz-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Norway map.", $this->pluginID), "<code>no-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Philippines map.", $this->pluginID), "<code>ph-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Poland map.", $this->pluginID), "<code>pl-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Portugal map.", $this->pluginID), "<code>pt-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the South Africa map.", $this->pluginID), "<code>za-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Spain map.", $this->pluginID), "<code>es-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Sweden map.", $this->pluginID), "<code>se-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Switzerland map.", $this->pluginID), "<code>ch-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the Thailand map.", $this->pluginID), "<code>th-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the UK map.", $this->pluginID), "<code>uk-mill-en</code>") ;
+			$comment_regions .= " ".sprintf(__("Use %s for the USA map.", $this->pluginID), "<code>us-aea-en</code>") ; 
+			$comment_regions .= " ".sprintf(__("Use %s for the Venezuela map.", $this->pluginID), "<code>ve-aea-en</code>") ; 
+			$params->add_comment($comment_regions) ; 
 
 			$params->add_title(__("Google Analytics Web Statistics", $this->pluginID)) ; 
-			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_color', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click', 'googlewebstat_universal_analytics')) ; 
+			$params->add_param('googlewebstat', __('Do you want to manage the web statistics with Google Analytics?', $this->pluginID), "", "", array('googlewebstat_user', 'googlewebstat_list', 'google_show_visits', 'google_show_type', 'google_show_time', 'google_period', 'google_track_user', 'google_api_key', 'google_double_click', 'googlewebstat_universal_analytics')) ; 
 			$params->add_comment(sprintf(__("For additional information, please visit the %s website. Moreover you could see all your authorized accesses on this %spage%s.", $this->pluginID), "<a href='http://www.google.com/analytics/'>Google Analytics</a>", "<a href='https://accounts.google.com/b/0/IssuedAuthSubTokens'>", "</a>")) ; 
 			
 			if (!$this->get_param('googlewebstat_auth')) {
@@ -915,8 +1152,6 @@ class traffic_manager extends pluginSedLex {
 				
 				$params->add_param('google_show_visits', __('Show statistics on number of visits and viewed pages?', $this->pluginID)) ; 
 				$params->add_param('google_show_type', __('Show statistics on the OS and browser types of your visitors?', $this->pluginID)) ; 
-				$params->add_param('google_color', __('What are the colors for the charts?', $this->pluginID)) ; 
-				$params->add_comment(sprintf(__("The default colors are %s.", $this->pluginID), "<code>['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']</code>")) ; 
 				$params->add_param('google_period', __('What are the period for which charts should be provided?', $this->pluginID)) ; 
 	
 			}
@@ -1103,7 +1338,14 @@ class traffic_manager extends pluginSedLex {
 
 						if ( ($this->get_param('googlewebstat')) && ($this->get_param('google_show_visits')) && (isset($data['visits'])) ) {
 							$google_show = true ; 
-							$rows = "" ; 
+
+							$rows_legend = "" ; 
+							$rows_series1= "" ; 
+							$rows_series1_tooltip = "" ; 
+							$rows_series2= "" ; 
+							$rows_series2_tooltip = "" ; 
+							
+							$max_value = 10 ;
 							
 							$first = true ; 
 							$nb = 0 ; 
@@ -1111,22 +1353,49 @@ class traffic_manager extends pluginSedLex {
 							$last_visits = "0" ; 
 							foreach ($data['visits'] as $k => $d) {
 								if ($pas=="ga:date") {
-									if (!$first) $rows .= "," ; 
+									if (!$first) {
+										$rows_legend .= "," ; 
+										$rows_series1 .= "," ; 
+										$rows_series1_tooltip .= "," ;  
+										$rows_series2 .= "," ; 
+										$rows_series2_tooltip .= "," ; 
+									}
 									$date = date_i18n(get_option('date_format') , strtotime($k)) ; 
 									$visit = $d["ga:visits"] ; 
 									$pageViews = $d["ga:pageviews"] ; 
-									$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+									
+									$rows_legend .= "'".date_i18n(get_option('date_format') , strtotime($k))."'" ; 
+									$rows_series1 .= $d["ga:visits"] ; 
+									$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$d["ga:visits"]))."'" ; 
+									$rows_series2 .= $d["ga:pageviews"] ; 
+									$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$d["ga:pageviews"]))."'" ; 
+									
+									$max_value = max($max_value, $d["ga:visits"], $d["ga:pageviews"]) ; 
+
 									$first = false ; 
 									$nb++ ; 
 								}
 								if ($pas=="ga:year,ga:week") {
 									// On boucle sur les annees
 									foreach ($d as $w => $a) {
-										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('Week %s (%s)', $this->pluginID), $w, $k) ; 
+										if (!$first) {
+											$rows_legend .= "," ; 
+											$rows_series1 .= "," ; 
+											$rows_series1_tooltip .= "," ;  
+											$rows_series2 .= "," ; 
+											$rows_series2_tooltip .= "," ; 
+										} 
 										$visit = $a["ga:visits"] ; 
 										$pageViews = $a["ga:pageviews"] ; 
-										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+										
+										$rows_legend .= "'".sprintf(__('Week %s (%s)', $this->pluginID), $w, $k)."'" ; 
+										$rows_series1 .= $a["ga:visits"] ; 
+										$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$a["ga:visits"]))."'" ; 
+										$rows_series2 .= $a["ga:pageviews"] ; 
+										$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$a["ga:pageviews"]))."'" ; 
+										
+										$max_value = max($max_value, $a["ga:visits"], $a["ga:pageviews"]) ; 
+										
 										$first = false ; 
 										$nb++ ; 
 									}
@@ -1134,11 +1403,25 @@ class traffic_manager extends pluginSedLex {
 								if ($pas=="ga:year,ga:month") {
 									// On boucle sur les annees
 									foreach ($d as $m => $a) {
-										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,$m, date_i18n("j"))), $k) ; 
+										if (!$first) {
+											$rows_legend .= "," ; 
+											$rows_series1 .= "," ; 
+											$rows_series1_tooltip .= "," ;  
+											$rows_series2 .= "," ; 
+											$rows_series2_tooltip .= "," ; 
+										}
+																				
 										$visit = $a["ga:visits"] ; 
 										$pageViews = $a["ga:pageviews"] ; 
-										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+										
+										$rows_legend .= "'".sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,$m, date_i18n("j"))), $k)."'" ; 
+										$rows_series1 .= $a["ga:visits"] ; 
+										$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$a["ga:visits"]))."'" ; 
+										$rows_series2 .= $a["ga:pageviews"] ; 
+										$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$a["ga:pageviews"]))."'" ; 
+										
+										$max_value = max($max_value, $a["ga:visits"], $a["ga:pageviews"]) ; 
+
 										$first = false ; 
 										$nb++ ; 
 									}
@@ -1150,6 +1433,9 @@ class traffic_manager extends pluginSedLex {
 							}
 							$width = "900" ; 
 							$height = "400" ; 
+							
+							$max_value = ceil($max_value*1.06/10)*10 ; 
+							
 							?>
 							<h3><?php echo __('Google Analytics Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Google Analytics Data, here is the number of visits and the number of page views.', $this->pluginID)?></p>
@@ -1169,34 +1455,99 @@ class traffic_manager extends pluginSedLex {
 								<?php
 							}
 							
-							$colors = $this->get_param('google_color') ; 
-							if ($this->get_param('google_color')=="") {
-								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
-							}
-							
 							?>
 							<div id="google_visits_count" style="margin: 0px auto; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 							<script  type="text/javascript">
-								google.setOnLoadCallback(CountVisits);
-								google.load('visualization', '1', {'packages':['corechart']});
-								
-								function CountVisits() {
-									var data = new google.visualization.DataTable();
-									data.addColumn('string', '<?php echo __('Month', $this->pluginID)?>');
-									data.addColumn('number', '<?php echo __('Number of Visitors', $this->pluginID)?>');
-									data.addColumn('number', '<?php echo __('Number of Page Views', $this->pluginID)?>');
-									data.addRows([<?php echo $rows ; ?>]);
-									var options = {
-										width: <?php echo $width ; ?>, 
-										height: <?php echo $height ; ?>,
-										colors:<?php echo $colors ?>,
-										title: '<?php echo sprintf(__("Visitors and Page Views (%s)", $this->pluginID), $ptd) ?>',
-										hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
+								jQuery(function(){
+									jQuery.elycharts.templates['google_visits_count'] = {
+									 	type : "line",
+									 	margins : [10, 10, 80, 50],
+									 	defaultSeries : {
+									 		plotProps : {
+									   			opacity : 0.6
+									  		},
+									  		highlight : {
+									   			overlayProps : {
+													fill : "white",
+													opacity : 0.2
+									   			}
+									  		},
+									  		tooltip : {
+										   		frameProps : {
+											   		opacity: 0.95,
+		                							fill: "#292929",
+									                stroke: "#CDCDCD",
+									                'stroke-width': 1
+										   		},
+										   		height : 20,
+										  		padding: [3, 3],
+										   		offset : [10, 0],
+										   		contentStyle : {
+											   		"font-weight": "normal",
+											   		"font-family": "sans-serif, Verdana", 
+											   		color: "#FFFFFF",
+											   		"text-align": "center"
+											 	}
+											},
+										},
+								 		series : {
+										  	serie1 : {
+										   		color : "#000066"
+										  	},
+								 			serie2 : {
+								   				color : "#9494BF"
+								  			}
+								 		},
+								 		defaultAxis : {
+								  			labels : true
+								 		},
+								 		axis : {
+								 			l  : {
+								 				max:<?php echo $max_value?>, 
+								 				labelsProps : {
+												font : "10px Verdana"
+												}
+								 			}, 
+								 			x : {
+												labelsRotate : 35,
+												labelsProps : {
+												font : "10px bold Verdana"
+												}
+											}
+								 		},
+								 		features : {
+								  			grid : {
+								   				draw : [true, false],
+								   				forceBorder : false,
+								   				evenHProps : {
+													fill : "#FFFFFF",
+													opacity : 0.2
+								   				},
+								  				oddHProps : {
+													fill : "#AAAAAA",
+													opacity : 0.2
+								   				}
+								  			}
+								 		}
 									};
-
-									var chart = new google.visualization.ColumnChart(document.getElementById('google_visits_count'));
-									chart.draw(data, options);
-								}
+								
+									jQuery("#google_visits_count").chart({
+										 template : "google_visits_count",
+										 tooltips : {
+										  serie1 : <?php echo "[$rows_series1_tooltip]" ; ?>,
+										  serie2 : <?php echo "[$rows_series2_tooltip]" ; ?>
+										 },
+										 values : {
+										  serie1 : <?php echo "[$rows_series1]" ; ?>,
+										  serie2 : <?php echo "[$rows_series2]" ; ?>
+										 },
+										 labels : <?php echo "[$rows_legend]" ; ?>,
+										 defaultSeries : {
+										  type : "bar"
+										 },
+										 barMargins : 10
+									});
+								});								
 							</script>
 							<?php
 						}	
@@ -1204,7 +1555,15 @@ class traffic_manager extends pluginSedLex {
 						
 						if ( ($this->get_param('localwebstat')) && ($this->get_param('local_show_visits')) && (isset($data_local['visits'])) ) {
 							$google_show = true ; 
-							$rows = "" ; 
+							
+							$rows_legend = "" ; 
+							$rows_series1= "" ; 
+							$rows_series1_tooltip = "" ; 
+							$rows_series2= "" ; 
+							$rows_series2_tooltip = "" ; 
+							
+							$max_value = 10 ; 
+							
 							$first = true ; 
 							$nb = 0 ; 
 							
@@ -1213,22 +1572,50 @@ class traffic_manager extends pluginSedLex {
 							foreach ($data_local['visits'] as $k => $d) {
 								$k = trim($k) ; 
 								if ($pas_local=="day") {
-									if (!$first) $rows .= "," ; 
-									$date = date_i18n(get_option('date_format') , strtotime($k)) ; 
-									$visit = $d["visits"] ; 
+									if (!$first) {
+										$rows_legend .= "," ; 
+										$rows_series1 .= "," ; 
+										$rows_series1_tooltip .= "," ;  
+										$rows_series2 .= "," ; 
+										$rows_series2_tooltip .= "," ; 
+									}
+									
+									$visit = $d["visits"] ;
 									$pageViews = $d["pageviews"] ; 
-									$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+									
+									$rows_legend .= "'".date_i18n(get_option('date_format') , strtotime($k))."'" ; 
+									$rows_series1 .= $d["visits"] ; 
+									$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$d["visits"]))."'" ; 
+									$rows_series2 .= $d["pageviews"] ; 
+									$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$d["pageviews"]))."'" ; 
+									
+									$max_value = max($max_value, $d["visits"], $d["pageviews"]) ; 
+									
 									$first = false ; 
 									$nb++ ; 
 								}
 								if ($pas_local=="week") {
 									// On boucle sur les annees
 									foreach ($d as $w => $a) {
-										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('Week %s (%s)', $this->pluginID), $w, $k) ; 
-										$visit = $a["visits"] ; 
+										if (!$first) {
+											$rows_legend .= "," ; 
+											$rows_series1 .= "," ; 
+											$rows_series1_tooltip .= "," ;  
+											$rows_series2 .= "," ; 
+											$rows_series2_tooltip .= "," ; 
+										}
+										
+										$visit = $a["visits"] ;
 										$pageViews = $a["pageviews"] ; 
-										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+									
+										$rows_legend .= "'".sprintf(__('Week %s (%s)', $this->pluginID), $w, $k)."'" ; 
+										$rows_series1 .= $a["visits"] ; 
+										$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$a["visits"]))."'" ; 
+										$rows_series2 .= $a["pageviews"] ; 
+										$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$a["pageviews"]))."'" ; 
+										
+										$max_value = max($max_value, $a["visits"], $a["pageviews"]) ; 
+										
 										$first = false ; 
 										$nb++ ; 
 									}
@@ -1236,11 +1623,24 @@ class traffic_manager extends pluginSedLex {
 								if ($pas_local=="month") {
 									// On boucle sur les annees
 									foreach ($d as $m => $a) {
-										if (!$first) $rows .= "," ; 
-										$date = sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,$m, date_i18n("j"))), $k) ; 
-										$visit = $a["visits"] ; 
+										if (!$first) {
+											$rows_legend .= "," ; 
+											$rows_series1 .= "," ; 
+											$rows_series1_tooltip .= "," ;  
+											$rows_series2 .= "," ; 
+											$rows_series2_tooltip .= "," ; 
+										}
+										
+										$visit = $a["visits"] ;
 										$pageViews = $a["pageviews"] ; 
-										$rows .= "['".$date."', ".$visit .", ".$pageViews."]" ; 
+										$rows_legend .= "'".sprintf(__('%s %s', $this->pluginID), date_i18n("F",mktime(date_i18n("H"),date_i18n("i"),date_i18n("s") ,intval($m), date_i18n("j"))), intval($k))."'" ; 
+										$rows_series1 .= $a["visits"] ; 
+										$rows_series1_tooltip .= "'".str_replace("'", "", sprintf(__("%s visitors"),$a["visits"]))."'" ; 
+										$rows_series2 .= $a["pageviews"] ; 
+										$rows_series2_tooltip .= "'".str_replace("'", "", sprintf(__("%s visits"),$a["pageviews"]))."'" ; 
+										
+										$max_value = max($max_value, $a["visits"], $a["pageviews"]) ; 
+										
 										$first = false ; 
 										$nb++ ; 
 									}
@@ -1253,10 +1653,7 @@ class traffic_manager extends pluginSedLex {
 							$width = "900" ; 
 							$height = "400" ; 
 							
-							$colors = $this->get_param('local_color') ; 
-							if ($this->get_param('local_color')=="") {
-								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
-							}
+							$max_value = ceil($max_value*1.06/10)*10 ; 
 							
 							?>
 							<h3><?php echo __('Local Data', $this->pluginID)?></h3>
@@ -1272,24 +1669,96 @@ class traffic_manager extends pluginSedLex {
 							</p>							
 							<div id="local_visits_count" style="margin: 0px auto; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 							<script  type="text/javascript">
-								google.setOnLoadCallback(CountVisits_local);
-								function CountVisits_local() {
-									var data = new google.visualization.DataTable();
-									data.addColumn('string', '<?php echo __('Month', $this->pluginID)?>');
-									data.addColumn('number', '<?php echo __('Number of Visitors', $this->pluginID)?>');
-									data.addColumn('number', '<?php echo __('Number of Page Views', $this->pluginID)?>');
-									data.addRows([<?php echo $rows ; ?>]);
-									var options = {
-									  	width: <?php echo $width ; ?>, 
-									 	height: <?php echo $height ; ?>,
-									  	colors:<?php echo $colors?>,
-									  	title: '<?php echo sprintf(__("Visitors and Page Views (%s)", $this->pluginID), $ptd_local) ?>',
-									  	hAxis: {title: '<?php echo __('Time Line', $this->pluginID)?>'}
+								jQuery(function(){
+									jQuery.elycharts.templates['local_visits_count'] = {
+									 	type : "line",
+									 	margins : [10, 10, 80, 50],
+									 	defaultSeries : {
+									 		plotProps : {
+									   			opacity : 0.6
+									  		},
+									  		highlight : {
+									   			overlayProps : {
+													fill : "white",
+													opacity : 0.2
+									   			}
+									  		},
+									  		tooltip : {
+										   		frameProps : {
+											   		opacity: 0.95,
+		                							fill: "#292929",
+									                stroke: "#CDCDCD",
+									                'stroke-width': 1
+										   		},
+										   		height : 20,
+										  		padding: [3, 3],
+										   		offset : [10, 0],
+										   		contentStyle : {
+											   		"font-weight": "normal",
+											   		"font-family": "sans-serif, Verdana", 
+											   		color: "#FFFFFF",
+											   		"text-align": "center"
+											 	}
+											},
+										},
+								 		series : {
+										  	serie1 : {
+										   		color : "#000066"
+										  	},
+								 			serie2 : {
+								   				color : "#9494BF"
+								  			}
+								 		},
+								 		defaultAxis : {
+								  			labels : true
+								 		},
+								 		axis : {
+								 			l  : {
+								 				max:<?php echo $max_value?>, 
+								 				labelsProps : {
+												font : "10px Verdana"
+												}
+								 			}, 
+								 			x : {
+												labelsRotate : 35,
+												labelsProps : {
+												font : "10px bold Verdana"
+												}
+											}
+								 		},
+								 		features : {
+								  			grid : {
+								   				draw : [true, false],
+								   				forceBorder : false,
+								   				evenHProps : {
+													fill : "#FFFFFF",
+													opacity : 0.2
+								   				},
+								  				oddHProps : {
+													fill : "#AAAAAA",
+													opacity : 0.2
+								   				}
+								  			}
+								 		}
 									};
-
-									var chart = new google.visualization.ColumnChart(document.getElementById('local_visits_count'));
-									chart.draw(data, options);
-								}
+								
+									jQuery("#local_visits_count").chart({
+										 template : "local_visits_count",
+										 tooltips : {
+										  serie1 : <?php echo "[$rows_series1_tooltip]" ; ?>,
+										  serie2 : <?php echo "[$rows_series2_tooltip]" ; ?>
+										 },
+										 values : {
+										  serie1 : <?php echo "[$rows_series1]" ; ?>,
+										  serie2 : <?php echo "[$rows_series2]" ; ?>
+										 },
+										 labels : <?php echo "[$rows_legend]" ; ?>,
+										 defaultSeries : {
+										  type : "bar"
+										 },
+										 barMargins : 10
+									});
+								});
 							</script>
 							<?php
 						}
@@ -1312,68 +1781,219 @@ class traffic_manager extends pluginSedLex {
 							$width = 450 ; 
 							$height = 300 ; 
 							
-							$colors = $this->get_param('google_color') ; 
-							if ($this->get_param('google_color')=="") {
-								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
-							}
-							
 							?>
 							<h3><?php echo __('Google Analytics Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Google Analytics Data, here is the distribution of browser types and OS.', $this->pluginID)?></p>
 							<div style="margin: 0px auto; width:<?php echo $width*2; ?>px; height:<?php echo $height; ?>px;">
 								<div id="google_visitors_browser" style="float: left; margin: 0; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 								<script type="text/javascript">
-								google.setOnLoadCallback(CountTypes);
-								function CountTypes() {
-										var data = new google.visualization.DataTable();
-										data.addColumn('string', '<?php echo __('Browser name', $this->pluginID)?>');
-										data.addColumn('number', '<?php echo __('Number of visitors', $this->pluginID)?>');
-										data.addRows([
-											<?php
-											$first = true ; 
-											foreach ($data['browser'] as $k => $d) {
-												if (!$first) echo "," ; 
-												echo "['".$k."', ".$d["ga:visits"]."]" ; 
-												$first = false ; 
+									jQuery(function() {
+										jQuery.elycharts.templates['google_visitors_browser'] = {
+											type : "pie",
+											defaultSeries : {
+												plotProps : {
+													stroke : "white",
+													"stroke-width" : 1,
+													opacity : 0.8
+												},
+												highlight : {
+													move : 10
+												},
+												tooltip : {
+													frameProps : {
+														opacity: 0.95,
+														fill: "#292929",
+														stroke: "#CDCDCD",
+														'stroke-width': 1
+													},
+													height : 20,
+													width : 150,
+													padding: [3, 3],
+													offset : [10, 0],
+													contentStyle : {
+														"font-weight": "normal",
+														"font-family": "sans-serif, Verdana", 
+														color: "#FFFFFF",
+														"text-align": "center"
+													}
+												}
+											},
+											features : {
+												legend : {
+													horizontal : false,
+													width : 120,
+													height : 200,
+													x : 1,
+													y : 60,
+													borderProps : {
+														"fill-opacity" : 0.3
+													}
+												}
 											}
-											?>
-										]);
-										var options = {
-											title: '<?php echo sprintf(__("Browser distribution (%s)", $this->pluginID), $ptd) ?>',
-											colors:<?php echo $colors ?>,
-											width: <?php echo $width ; ?>, 
-									 		height: <?php echo $height ; ?>
 										};
-										var chart = new google.visualization.PieChart(document.getElementById('google_visitors_browser'));
-										chart.draw(data, options);
-									}
+								
+										jQuery("#google_visitors_browser").chart({
+											template : "google_visitors_browser",
+											values : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo $d["ga:visits"] ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											labels : [<?php
+												$first = true ; 
+												foreach ($data['browser'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											legend : [<?php
+												$first = true ; 
+												foreach ($data['browser'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											tooltips : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo "'".str_replace("'","",$k)." (".$d["ga:visits"].")'" ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											defaultSeries : {
+												values : [<?php
+													$list_color = array("#6699CC", "#003366", "#C0C0C0", "#000044", "#E8D0A9", "#B7AFA3",  "#C1DAD6",  "#F5FAFA",  "#ACD1E9",  "#6D929B") ; 
+													$first = true ; 
+													$j=0 ; 
+													foreach ($data['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo '{plotProps : {fill : "'.$list_color[$j].'" }}' ; 
+														$first = false ; 
+														$j++ ; 
+														if ($j>count($list_color)-1) {
+															$j=0 ; 
+														}
+													}
+												?>]
+											}
+										});
+									
+									});
 								</script>
 								<div id="google_visitors_os" style="float: left; margin: 0; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 								<script  type="text/javascript">
-								google.setOnLoadCallback(CountTypesOS);
-								function CountTypesOS() {
-										var data = new google.visualization.DataTable();
-										data.addColumn('string', '<?php echo __('OS name', $this->pluginID)?>');
-										data.addColumn('number', '<?php echo __('Number of visitors', $this->pluginID)?>');
-										data.addRows([
-											<?php
-											$first = true ; 
-											foreach ($data['os'] as $k => $d) {
-												if (!$first) echo "," ; 
-												echo "['".$k."', ".$d["ga:visits"]."]" ; 
-												$first = false ; 
+									jQuery(function() {
+										jQuery.elycharts.templates['google_visitors_os'] = {
+											type : "pie",
+											defaultSeries : {
+												plotProps : {
+													stroke : "white",
+													"stroke-width" : 1,
+													opacity : 0.8
+												},
+												highlight : {
+													move : 10
+												},
+												tooltip : {
+													frameProps : {
+														opacity: 0.95,
+														fill: "#292929",
+														stroke: "#CDCDCD",
+														'stroke-width': 1
+													},
+													height : 20,
+													width : 150,
+													padding: [3, 3],
+													offset : [10, 0],
+													contentStyle : {
+														"font-weight": "normal",
+														"font-family": "sans-serif, Verdana", 
+														color: "#FFFFFF",
+														"text-align": "center"
+													}
+												}
+											},
+											features : {
+												legend : {
+													horizontal : false,
+													width : 110,
+													height : 200,
+													x : 330,
+													y : 60,
+													borderProps : {
+														"fill-opacity" : 0.3
+													}
+												}
 											}
-											?>
-										]);
-										var options = {
-											title: '<?php echo sprintf(__("Operating System distribution (%s)", $this->pluginID), $ptd) ?>',
-											colors:<?php echo $colors?>,
-											width: <?php echo $width ; ?>, 
-									 		height: <?php echo $height ; ?>	
 										};
-										var chart = new google.visualization.PieChart(document.getElementById('google_visitors_os'));
-										chart.draw(data, options);
-									}
+								
+										jQuery("#google_visitors_os").chart({
+											template : "google_visitors_os",
+											values : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo $d["ga:visits"] ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											labels : [<?php
+												$first = true ; 
+												foreach ($data['os'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											legend : [<?php
+												$first = true ; 
+												foreach ($data['os'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											tooltips : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo "'".str_replace("'","",$k)." (".$d["ga:visits"].")'" ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											defaultSeries : {
+												values : [<?php
+													$list_color = array("#6699CC", "#003366", "#C0C0C0", "#000044", "#E8D0A9", "#B7AFA3",  "#C1DAD6",  "#F5FAFA",  "#ACD1E9",  "#6D929B") ; 
+													$first = true ; 
+													$j=0 ; 
+													foreach ($data['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo '{plotProps : {fill : "'.$list_color[$j].'" }}' ; 
+														$first = false ; 
+														$j++ ; 
+														if ($j>count($list_color)-1) {
+															$j=0 ; 
+														}
+													}
+												?>]
+											}
+										});
+									
+									});
 								</script>
 							</div>
 							<?php
@@ -1384,68 +2004,221 @@ class traffic_manager extends pluginSedLex {
 							$width = 450 ; 
 							$height = 300 ; 
 							
-							$colors = $this->get_param('local_color') ; 
-							if ($this->get_param('local_color')=="") {
-								$colors = "['#0A3472', '#2EBBFD', '#57AEBE', '#537E78', '#49584B', '#72705A', '#807374', '#5E5556', '#55475E', '#2F2C47']" ; 
-							}
-							
 							?>
 							<h3><?php echo __('Local Data', $this->pluginID)?></h3>
 							<p><?php echo __('According to Local Data, here is the distribution of browser types and OS.', $this->pluginID)?></p>
 							<div style="margin: 0px auto; width:<?php echo $width*2; ?>px; height:<?php echo $height; ?>px;">
 								<div id="local_visitors_browser" style="float: left; margin: 0; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 								<script type="text/javascript">
-								google.setOnLoadCallback(CountTypes_local);
-								function CountTypes_local() {
-										var data = new google.visualization.DataTable();
-										data.addColumn('string', '<?php echo __('Browser name', $this->pluginID)?>');
-										data.addColumn('number', '<?php echo __('Number of visitors', $this->pluginID)?>');
-										data.addRows([
-											<?php
-											$first = true ; 
-											foreach ($data_local['browser'] as $k => $d) {
-												if (!$first) echo "," ; 
-												echo "['".$k."', ".$d["visits"]."]" ; 
-												$first = false ; 
+									jQuery(function() {
+										jQuery.elycharts.templates['local_visitors_browser'] = {
+											type : "pie",
+											defaultSeries : {
+												plotProps : {
+													stroke : "white",
+													"stroke-width" : 1,
+													opacity : 0.8
+												},
+												highlight : {
+													move : 10
+												},
+												tooltip : {
+													frameProps : {
+														opacity: 0.95,
+														fill: "#292929",
+														stroke: "#CDCDCD",
+														'stroke-width': 1
+													},
+													height : 20,
+													width : 150,
+													padding: [3, 3],
+													offset : [10, 0],
+													contentStyle : {
+														"font-weight": "normal",
+														"font-family": "sans-serif, Verdana", 
+														color: "#FFFFFF",
+														"text-align": "center"
+													}
+												}
+											},
+											features : {
+												legend : {
+													horizontal : false,
+													width : 120,
+													height : 200,
+													x : 1,
+													y : 60,
+													borderProps : {
+														"fill-opacity" : 0.3
+													}
+												}
 											}
-											?>
-										]);
-										var options = {
-											title: '<?php echo sprintf(__("Browser distribution (%s)", $this->pluginID), $ptd_local) ?>',
-											colors:<?php echo $colors ; ?>,
-											width: <?php echo $width ; ?>, 
-									 		height: <?php echo $height ; ?>
 										};
-										var chart = new google.visualization.PieChart(document.getElementById('local_visitors_browser'));
-										chart.draw(data, options);
-									}
+								
+										jQuery("#local_visitors_browser").chart({
+											template : "local_visitors_browser",
+											values : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data_local['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo $d["visits"] ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											labels : [<?php
+												$first = true ; 
+												foreach ($data_local['browser'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											legend : [<?php
+												$first = true ; 
+												foreach ($data_local['browser'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											tooltips : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data_local['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo "'".str_replace("'","",$k)." (".$d["visits"].")'" ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											defaultSeries : {
+												values : [<?php
+													$list_color = array("#6699CC", "#003366", "#C0C0C0", "#000044", "#E8D0A9", "#B7AFA3",  "#C1DAD6",  "#F5FAFA",  "#ACD1E9",  "#6D929B") ; 
+													$first = true ; 
+													$j=0 ; 
+													foreach ($data_local['browser'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo '{plotProps : {fill : "'.$list_color[$j].'" }}' ; 
+														$first = false ; 
+														$j++ ; 
+														if ($j>count($list_color)-1) {
+															$j=0 ; 
+														}
+													}
+												?>]
+											}
+										});
+									
+									});
+
+									
 								</script>
 								<div id="local_visitors_os" style="float: left; margin: 0; width:<?php echo $width; ?>px; height:<?php echo $height; ?>px;"></div>
 								<script  type="text/javascript">
-								google.setOnLoadCallback(CountTypesOS_local);
-								function CountTypesOS_local() {
-										var data = new google.visualization.DataTable();
-										data.addColumn('string', '<?php echo __('OS name', $this->pluginID)?>');
-										data.addColumn('number', '<?php echo __('Number of visitors', $this->pluginID)?>');
-										data.addRows([
-											<?php
-											$first = true ; 
-											foreach ($data_local['os'] as $k => $d) {
-												if (!$first) echo "," ; 
-												echo "['".$k."', ".$d["visits"]."]" ; 
-												$first = false ; 
+									jQuery(function() {
+										jQuery.elycharts.templates['local_visitors_os'] = {
+											type : "pie",
+											defaultSeries : {
+												plotProps : {
+													stroke : "white",
+													"stroke-width" : 1,
+													opacity : 0.8
+												},
+												highlight : {
+													move : 10
+												},
+												tooltip : {
+													frameProps : {
+														opacity: 0.95,
+														fill: "#292929",
+														stroke: "#CDCDCD",
+														'stroke-width': 1
+													},
+													height : 20,
+													width : 150,
+													padding: [3, 3],
+													offset : [10, 0],
+													contentStyle : {
+														"font-weight": "normal",
+														"font-family": "sans-serif, Verdana", 
+														color: "#FFFFFF",
+														"text-align": "center"
+													}
+												}
+											},
+											features : {
+												legend : {
+													horizontal : false,
+													width : 110,
+													height : 200,
+													x : 330,
+													y : 60,
+													borderProps : {
+														"fill-opacity" : 0.3
+													}
+												}
 											}
-											?>
-										]);
-										var options = {
-											title: '<?php echo sprintf(__("Operating System distribution (%s)", $this->pluginID), $ptd_local) ?>',
-											colors:<?php echo $colors ;?>,
-											width: <?php echo $width ; ?>, 
-									 		height: <?php echo $height ; ?>	
 										};
-										var chart = new google.visualization.PieChart(document.getElementById('local_visitors_os'));
-										chart.draw(data, options);
-									}
+								
+										jQuery("#local_visitors_os").chart({
+											template : "local_visitors_os",
+											values : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data_local['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo $d["visits"] ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											labels : [<?php
+												$first = true ; 
+												foreach ($data_local['os'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											legend : [<?php
+												$first = true ; 
+												foreach ($data_local['os'] as $k => $d) {
+													if (!$first) echo "," ; 
+													echo "'".str_replace("'","",$k)."'" ; 
+													$first = false ; 
+												}
+											?>],
+											tooltips : {
+												serie1 : [<?php
+													$first = true ; 
+													foreach ($data_local['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo "'".str_replace("'","",$k)." (".$d["visits"].")'" ; 
+														$first = false ; 
+													}
+												?>]
+											},
+											defaultSeries : {
+												values : [<?php
+													$list_color = array("#6699CC", "#003366", "#C0C0C0", "#000044", "#E8D0A9", "#B7AFA3",  "#C1DAD6",  "#F5FAFA",  "#ACD1E9",  "#6D929B") ; 
+													$first = true ; 
+													$j=0 ; 
+													foreach ($data_local['os'] as $k => $d) {
+														if (!$first) echo "," ; 
+														echo '{plotProps : {fill : "'.$list_color[$j].'" }}' ; 
+														$first = false ; 
+														$j++ ; 
+														if ($j>count($list_color)-1) {
+															$j=0 ; 
+														}
+													}
+												?>]
+											}
+										});
+									
+									});
 								</script>
 							</div>
 							<?php
@@ -1454,6 +2227,45 @@ class traffic_manager extends pluginSedLex {
 					$content_graph = ob_get_clean() ; 
 					if (strlen($content_graph)>0) {
 						$box = new SLFramework_Box (__("Browser and OS Statistics", $this->pluginID), $content_graph) ; 
+						echo $box->flush() ; 
+					}
+					
+					// Display maps
+					//----------------------------------
+					
+					$content_map = "" ; 
+					
+					if ($this->get_param('geolocate_show_world')) {
+						
+						ob_start() ; 
+							echo "<div id='geolocate_show_world' style='margin:0px auto;width:800px;height:500px;'></div>" ; 
+						$content_map .= ob_get_clean() ; 
+					}
+					
+					if ($this->get_param('geolocate_show_europe')) {
+						ob_start() ; 
+							if (strlen($content_map)>0) {
+								echo "<br/>" ; 
+							}
+							echo "<div id='geolocate_show_europe' style='margin:0px auto;width:800px;height:500px;'></div>" ; 
+						$content_map .= ob_get_clean() ; 
+						
+					}
+					
+					if (trim($this->get_param('geolocate_show_state'))!=""){
+						$state = explode(',', $this->get_param('geolocate_show_state')) ;
+						foreach ($state as $st) {
+							ob_start() ; 
+								if (strlen($content_map)>0) {
+									echo "<br/>" ; 
+								}
+								echo "<div id='geolocate_show_".sha1($st)."' style='margin:0px auto;width:800px;height:500px;'></div>" ; 
+							$content_map .= ob_get_clean() ; 
+						}
+					}
+					
+					if (strlen($content_map)>0) {
+						$box = new SLFramework_Box (sprintf(__("Geolocalisation of visits/visitors during the last %s days", $this->pluginID), $this->get_param('local_keep_detailed_info')), $content_map) ; 
 						echo $box->flush() ; 
 					}
 					
@@ -1507,6 +2319,13 @@ class traffic_manager extends pluginSedLex {
 										} else {
 											$content_ip .= $ips[$i] ; 
 										}
+									}
+								}
+								
+								if (($l->geolocate!="")&&(!is_null($l->geolocate))){
+									$array_geo = @unserialize($l->geolocate) ;
+									if (is_array($array_geo)){
+										$content_ip .= "<br/>".ucfirst(strtolower($array_geo['countryName']))." (".$array_geo['zipCode']." ".ucfirst(strtolower($array_geo['cityName'])).")" ; 
 									}
 								}
 								
@@ -1665,6 +2484,8 @@ class traffic_manager extends pluginSedLex {
 					echo "<p>".__('You have configured no graph... Please go on the parameters tab to configure them.', $this->pluginID)."</p>" ; 
 				}
 				
+
+				
 			$tabs->add_tab(__('Web Statistics',  $this->pluginID), ob_get_clean()) ; 	
 				
 			$tabs->add_tab(__('Parameters',  $this->pluginID), $parameters , plugin_dir_url("/").'/'.str_replace(basename(__FILE__),"",plugin_basename(__FILE__))."core/img/tab_param.png") ; 	
@@ -1754,7 +2575,7 @@ class traffic_manager extends pluginSedLex {
 	* @return string adress
 	*/
 
-	function getRemoteAddress() {
+	function getRemoteAddress($hideifrequired=true) {
 		$hostname = $_SERVER['REMOTE_ADDR'];
 		
 		// GET the header of the HTTP request
@@ -1797,7 +2618,7 @@ class traffic_manager extends pluginSedLex {
 		}
 		
 		// We remove the two last bytes if need to be compliant with CNIL
-		if ($this->get_param('local_cnil_compatible')) {
+		if (($this->get_param('local_cnil_compatible'))&&($hideifrequired)) {
 			for ($i=0 ; $i<count($list_proxy) ; $i++) {
 				$ip = $list_proxy[$i] ;
 				$ipv4 = explode(".", $list_proxy[$i]) ;
@@ -1902,9 +2723,9 @@ class traffic_manager extends pluginSedLex {
 		$browserVersion = 	$brow->getBrowserVersion() ; 
 		$platformName = 	$brow->getPlatformName() ; 
 		$platformVersion = 	$brow->getPlatformVersion() ; 
-	
 		
-		if ($singleCookie=="") {
+		// La longueur du SHA1 est de 40 caracteres
+		if (($singleCookie=="")||(!preg_match("/^[a-z0-9]{40}$/u",$singleCookie))) {
 			$singleCookie = sha1(microtime()) ; 
 		} else {
 			// On regarde s'il existe deja une page avec les memes informations il y a moins d'une minute, 
@@ -1958,6 +2779,7 @@ class traffic_manager extends pluginSedLex {
 				$sql_insert .= "time='".date_i18n('Y-m-d H:i:s')."', " ; 
 				$sql_insert .= "singleCookie='".$singleCookie."', " ; 
 				$sql_insert .= "refreshNumber='".$refreshNumber."'" ; 
+				$sql_insert .= $this->geolocate() ; 
 				$wpdb->query($sql_insert) ; 
 			}
 		}
@@ -1971,7 +2793,7 @@ class traffic_manager extends pluginSedLex {
 			// On me en place le prochain cron
 			$this->set_param('local_cron_concat', strtotime(date_i18n("Ymd 0:0:1")." +1 day")) ; 
 			
-			$offset = 2 ; // Deux jours et 7 jours avant ...
+			$offset = $this->get_param('local_keep_detailed_info') ; 
 			$max = -1 ; 
 			// On trouve le plus vieux single existant
 			$sql_old = "SELECT time FROM ".$this->table_name." WHERE " ; 
@@ -2045,7 +2867,6 @@ class traffic_manager extends pluginSedLex {
 			}
 		}
 		
-		
 		// On ne force le rafraichissement que s'il y a des cookies (car sinon doublons)
 		if ($cookieEnabled==true)
 			echo $singleCookie.",".($refreshNumber+1) ; 
@@ -2053,6 +2874,63 @@ class traffic_manager extends pluginSedLex {
 		die() ; 
 	}
 	
+	/** ====================================================================================================================================================
+	* Convert the on-time token into a session token
+	*
+	* @return string the token (or false in case of error)
+	*/
+	
+	function geolocate($ip=null, $serialize_for_database=true) {
+		$geolocate_data = "" ; 
+		if ($this->get_param('geolocate_ipinfodb')) {
+			// Si l'IP n'est pas forcé, cela veut dire que l'on regarde l'IP du client qui fait la requête.
+			if (is_null($ip)){
+				$ip = explode(",", $this->getRemoteAddress(false)) ; 
+				$ip=$ip[0] ;
+			}
+			if ($this->get_param('geolocate_ipinfodb_key')!="") {
+				$result_geo_xml = @file_get_contents("http://api.ipinfodb.com/v3/ip-city/?key=".trim($this->get_param('geolocate_ipinfodb_key'))."&format=xml&ip=".$ip) ; 
+				
+				if ($result_geo_xml!==false){
+					
+					if (!preg_match("/<\?xml/ui", $result_geo_xml)){
+						$result_geo_xml = "<".""."?".""."xml version='1.0'?>".$result_geo_xml ; 
+					}
+					
+					$result_geo_xml = @simplexml_load_string($result_geo_xml); 
+					if ($result_geo_xml!==false){
+						
+						$geolocate_data['countryCode'] = (string)$result_geo_xml->countryCode ; 
+						$geolocate_data['countryName'] = (string)$result_geo_xml->countryName ; 
+						$geolocate_data['regionName'] = (string)$result_geo_xml->regionName ; 
+						$geolocate_data['cityName'] = (string)$result_geo_xml->cityName ; 
+						$geolocate_data['zipCode'] = (string)$result_geo_xml->zipCode ; 
+						$geolocate_data['latitude'] = (string)$result_geo_xml->latitude ; 
+						$geolocate_data['longitude'] = (string)$result_geo_xml->longitude ; 
+						
+						// On le prepare pour la BDD
+						if ($serialize_for_database){
+							$geolocate_state['countryCode'] = $geolocate_data['countryCode'];
+							$geolocate_state['countryName'] = $geolocate_data['countryName'];
+							
+							$geolocate_data = ", geolocate='".esc_sql(@serialize($geolocate_data))."',geolocate_state='".esc_sql(@serialize($geolocate_state))."' " ; 
+						}
+					} else {
+						if (!$serialize_for_database){
+							$error = error_get_last();
+							return $error['message'] ; 
+						}
+					}
+				} else {
+					if (!$serialize_for_database){
+						$error = error_get_last();
+						return $error['message'] ; 
+					}
+				}
+			}
+		}
+		return $geolocate_data ; 
+	}
 	
 	
 	/** ====================================================================================================================================================
@@ -2234,6 +3112,37 @@ class traffic_manager extends pluginSedLex {
 						$result['browser'] = array() ; 
 					}
 					
+					// We remove the extra browsers if there is more than 10 browsers
+					if (count($result['browser'])>10) {
+						$toBeShown = array() ; 
+						foreach ($result['browser'] as $k => $d) {
+							$toBeShown[$k] = $d["ga:visits"] ; 
+						}
+						arsort($toBeShown) ; 
+						$nb_visits_other = 0 ; 
+						$i = 0 ; 
+						foreach ($toBeShown as $val_visit) {
+							if ($i>10) {
+								$nb_visits_other += $val_visit ; 
+							}
+							$i++ ; 
+						}
+						$toBeShown = array_slice($toBeShown, 0, 10) ; 
+												
+						foreach ($result['browser'] as $k => $d) {
+							if (!isset($toBeShown[$k])) {
+								unset($result['browser'][$k]) ; 
+							}
+						}
+						if ($nb_visits_other>0) {
+							if (isset($result['browser']['Other'])) {
+								$result['browser']['Other']['ga:visits'] += $nb_visits_other ; 
+							} else {
+								$result['browser']['Other']['ga:visits'] = $nb_visits_other ; 
+							}
+						}
+					}
+					
 					// GET THE TYPE OF THE OS
 					//========================================
 					$args['headers'] = array('Content-Type' => 'application/x-www-form-urlencoded');
@@ -2247,6 +3156,37 @@ class traffic_manager extends pluginSedLex {
 							$errorGoogle .= "<p>".$result['os']['error']."</p>" ; 
 						}
 						$result['os'] = array() ; 
+					}
+					
+					// We remove the extra system if there is more than 10 system
+					if (count($result['os'])>10) {
+						$toBeShown = array() ; 
+						foreach ($result['os'] as $k => $d) {
+							$toBeShown[$k] = $d["ga:visits"] ; 
+						}
+						arsort($toBeShown) ; 
+						$nb_visits_other = 0 ; 
+						$i = 0 ; 
+						foreach ($toBeShown as $val_visit) {
+							if ($i>10) {
+								$nb_visits_other += $val_visit ; 
+							}
+							$i++ ; 
+						}
+						$toBeShown = array_slice($toBeShown, 0, 10) ; 
+												
+						foreach ($result['os'] as $k => $d) {
+							if (!isset($toBeShown[$k])) {
+								unset($result['os'][$k]) ; 
+							}
+						}
+						if ($nb_visits_other>0) {
+							if (isset($result['os']['Other'])) {
+								$result['os']['Other']['ga:visits'] += $nb_visits_other ; 
+							} else {
+								$result['os']['Other']['ga:visits'] = $nb_visits_other ; 
+							}
+						}
 					}
 				}
 				

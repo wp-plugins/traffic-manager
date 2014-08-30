@@ -4,11 +4,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-06-30T21:43:23+00:00\n"
+"PO-Revision-Date: 2013-04-07T16:13:10+00:00\n"
 "Last-Translator: xmee.de <blog.xmee.de>\n"
 "Last-Translator: Textdrache <http://www.textdrache.de>\n"
 "Last-Translator: ziix.de <ziix.de>\n"
-"Last-Translator: GLassnig <http://www.e67-its.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,6 +70,9 @@ msgstr "Wenn ja, wird eine Liste der zuletzt aufgerufenen Seiten angezeigt, inkl
 msgid "How many pages should be displayed?"
 msgstr "Wie viele Seiten sollen angezeigt werden?"
 
+msgid "Show statistics on number of visits and viewed pages?"
+msgstr ""
+
 msgid "Show statistics on the OS and browser types of your visitors?"
 msgstr "Zeige Statistiken über Betriebssystem und Browsertypen Ihrer Besucher?"
 
@@ -79,6 +81,9 @@ msgstr "Was sind die Farben für die Tabellen?"
 
 msgid "The default colors are %s."
 msgstr "Die vorgegebenen Farben sind %s."
+
+msgid "What are the period for which charts should be provided?"
+msgstr ""
 
 msgid "Do you want to track the logged user?"
 msgstr "Möchten Sie die eingeloggten Nutzer zurückverfolgen?"
@@ -95,11 +100,23 @@ msgstr "Für ergänzende Informationen besuchen Sie bitte die %s Webseite. Ferne
 msgid "Google Analytics ID:"
 msgstr "Google Analytics ID:"
 
+msgid "The Google Analytics ID is should be similar to %s."
+msgstr ""
+
+msgid "You may also %sauthenticate%s with your Google account and thus ease the process."
+msgstr ""
+
+msgid "For now, this page is authenticated with your Google Analytics accounts. %sUnapprove the authentication%s"
+msgstr ""
+
 msgid "Select..."
 msgstr "Wähle..."
 
 msgid "Choose your website in this list"
 msgstr "Wählen Sie Ihre Webseite aus dieser Liste"
+
+msgid "Please note that the Google Analytics ID for %s is %s."
+msgstr ""
 
 msgid "No Google Analytics ID configured for now."
 msgstr "Keine Google Analytics ID konfiguriert"
@@ -107,14 +124,53 @@ msgstr "Keine Google Analytics ID konfiguriert"
 msgid "What is the API key?"
 msgstr "Wie lautet der API-Schlüssel"
 
+msgid "This API key is useful to avoid any quota limit. If you do not set this key, only very few requests may be allowed by Google"
+msgstr ""
+
+msgid "To get this API key, please visit %s, create a projet, allow Google Analytics, and then go to API console to get a %s"
+msgstr ""
+
 msgid "Sitemaps Configuration"
 msgstr "Sitemap Konfiguration"
 
 msgid "Do you want to compute a Sitemaps file?"
 msgstr "Wollen Sie eine Sitemap Datei erstellen?"
 
+msgid "A Sitemap is an XML file that lists the URLs for your website. It informs search engines about URLs on your website that are available for crawling."
+msgstr ""
+
 msgid "No sitemap has been generated yet."
 msgstr "Es wurde keine Sitemap generiert"
+
+msgid "An error occured on the next sitemap generation : %s."
+msgstr ""
+
+msgid "The last sitemap has been generated on %s."
+msgstr ""
+
+msgid "You may see your sitemap at %s."
+msgstr ""
+
+msgid "How many posts and pages will be included in this file?"
+msgstr ""
+
+msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
+msgstr ""
+
+msgid "Do you want to notify %s when the sitemap is updated?"
+msgstr ""
+
+msgid "%s has never been notified yet. Waiting for the next update."
+msgstr ""
+
+msgid "An error occured when notifying %s for the last time."
+msgstr ""
+
+msgid "%s has be notified for the last time on %s."
+msgstr ""
+
+msgid "You may see here the statistics of your website (locally or with Google Analytics) and improve the future traffic by informing web crawlers of your contents (sitemaps and notifications)."
+msgstr ""
 
 msgid "from %s to %s"
 msgstr "von %s bis %s"
@@ -122,8 +178,26 @@ msgstr "von %s bis %s"
 msgid "Week %s (%s)"
 msgstr "Woche %s (%s)"
 
+msgid "%s %s"
+msgstr ""
+
 msgid "Google Analytics Data"
 msgstr "Google Analytics Daten"
+
+msgid "According to Google Analytics Data, here is the number of visits and the number of page views."
+msgstr ""
+
+msgid "Today, %s people have visited your site and %s pages have been viewed (%s and %s for yesterday)."
+msgstr ""
+
+msgid "This week, %s people have visited your site and %s pages have been viewed (%s and %s for last week)."
+msgstr ""
+
+msgid "This month, %s people have visited your site and %s pages have been viewed (%s and %s for last month)."
+msgstr ""
+
+msgid "NOTA: Google considers that the week starts on sundays which is not ISO 8601 compliant (normally starts on mondays). So be careful when comparing weeks with your calendar: week numbers may be sligthly different."
+msgstr ""
 
 msgid "Month"
 msgstr "Monat"
@@ -143,6 +217,15 @@ msgstr "Zeitlinie"
 msgid "Local Data"
 msgstr "Lokale Daten"
 
+msgid "According to Local Data, here is the number of visits and the number of page views."
+msgstr ""
+
+msgid "Visits Count"
+msgstr ""
+
+msgid "According to Google Analytics Data, here is the distribution of browser types and OS."
+msgstr ""
+
 msgid "Browser name"
 msgstr "Browsername"
 
@@ -154,6 +237,15 @@ msgstr "Browser Verbreitung (%s)"
 
 msgid "OS name"
 msgstr "Betriebssystem"
+
+msgid "Operating System distribution (%s)"
+msgstr ""
+
+msgid "According to Local Data, here is the distribution of browser types and OS."
+msgstr ""
+
+msgid "Browser and OS Statistics"
+msgstr ""
 
 msgid "Time"
 msgstr "Zeit"
@@ -176,8 +268,29 @@ msgstr "Referer"
 msgid "Time spent"
 msgstr "Zeit verbracht"
 
+msgid "Please note that the current local time of the server is %s. If it is not correct, please set the Wordpress installation correctly."
+msgstr ""
+
+msgid "If the entry is displayed for the first time, the time field will be in bold characters."
+msgstr ""
+
+msgid "If the user accesses your website for the first time today, the IP field will be in blod characters."
+msgstr ""
+
+msgid "Unknown keywords."
+msgstr ""
+
 msgid "Plugin: %s"
 msgstr "Plugin: %s"
+
+msgid "Plugin: %s, website: %s"
+msgstr ""
+
+msgid "No data for now... Please wait until someone visits your website"
+msgstr ""
+
+msgid "Details on the Last %s Viewed Pages"
+msgstr ""
 
 msgid "You have configured no graph... Please go on the parameters tab to configure them."
 msgstr "Sie haben keinen Graph konfiguriert...Bitte gehen Sie auf den Parameter Tab und konfigurieren Sie sie."
@@ -197,102 +310,36 @@ msgstr "Feedback"
 msgid "Other plugins"
 msgstr "Andere Plugins"
 
-msgid "Show statistics on number of visits and viewed pages?"
-msgstr "Besucher- und Seitenaufrufstatistiken anzeigen?"
+msgid "Google states that the User Rate Limit has been exceeded!"
+msgstr ""
 
-msgid "Current users"
-msgstr "Aktuelle Besucher"
+msgid "In order to avoid User Rate Limit, you should get an API key."
+msgstr ""
 
-msgid "%s %s"
-msgstr "%s %s"
+msgid "Once a key generated, please configure it in the configuration tab."
+msgstr ""
 
-msgid "Visits Count"
-msgstr "Besucherzähler"
+msgid "If you have just saved the API key in the parameters, please reload the page and it shoud work."
+msgstr ""
 
-msgid "Browser and OS Statistics"
-msgstr "Browser und OS Statistiken"
-
-msgid "Plugin: %s, website: %s"
-msgstr "Plugin: %s, Webseite: %s"
-
-msgid "Problem with folder rights on %s"
-msgstr "Probleme bei den Zugriffrechten für Ordner in %s"
-
-msgid "Accept"
-msgstr "Akzeptieren"
-
-msgid "Refuse"
-msgstr "Ablehnen"
-
-msgid "What are the period for which charts should be provided?"
-msgstr "Für welchen Zeitraum sollen die Diagramme zur Verfügung gestellt werden?"
-
-msgid "Show the number of current connected users on your website"
-msgstr "Zeigt die Anzahl der aktuellen Besucher Ihrer Webseite an."
-
-msgid "Do you want to notify %s when the sitemap is updated?"
-msgstr "Möchten Sie %s informieren, wenn die Seitenübersicht (Sitemap) aktuallisiert wurde?"
-
-msgid "Improve your SEO with metatags"
-msgstr "Verbessern Sie Ihre SEO mit Metatags"
-
-msgid "Do you want to add metatag to your page/post"
-msgstr "Möchten Sie Metatags zu Ihren Seiten/Beiträgen hinzufügen?"
-
-msgid "Add meta title"
-msgstr "Meta Titel hinzufügen"
-
-msgid "Add meta description"
-msgstr "Meta Beschreibung hinzufügen"
-
-msgid "Add meta copyright"
-msgstr "Meta Copyright hinzufügen"
-
-msgid "Override the copyright of the website:"
-msgstr "Copyright der Webseite überschreiben:"
-
-msgid "Add meta author"
-msgstr "Meta Autor hinzufügen"
-
-msgid "Override the author name"
-msgstr "Name des Autors überschreiben"
-
-msgid "Add meta date (publication date, modification date, etc.)"
-msgstr "Meta Datum (Veröffentlichungsdatum, Bearbeitungsdatum usw.) hinzufügen"
-
-msgid "Add meta keywords (category, keywords, etc.)"
-msgstr "Meta Schlüsselwörter (Kategorie, Keywords usw.) hinzufügen"
-
-msgid "Add meta table of content"
-msgstr "Meta Inhaltsverzeichnis hinzufügen"
-
-msgid "Add meta images"
-msgstr "Meta Bilder hinzufügen"
-
-msgid "The number of current user is %s"
-msgstr "Die Anzahl der aktuellen Besucher beträgt %s"
-
-msgid "Unknown keywords."
-msgstr "Unbekannte Schlüsselwörter (Keywords)."
-
-msgid "No data for now... Please wait until someone visits your website"
-msgstr "Keine Daten zum auswerten vorhanden. Warten Sie, bis jemand ihre Seite besucht hat."
-
-msgid "Details on the Last %s Viewed Pages"
-msgstr "Details der letzten %s besuchten Seiten"
+msgid "The authorization seems to have expired or has been revoked. Please revoke the authorization (see below) and re-authentify!"
+msgstr ""
 
 msgid "An unknown error occured during the API request"
-msgstr "Bei der API-Anfrage ist ein unbekannter Fehler aufgetreten"
+msgstr ""
 
 msgid "No token provided!"
-msgstr "Es steht kein Token zur Verfügung!"
+msgstr ""
 
 msgid "No website selected for Google statistics (see the parameter tab)!"
-msgstr "Es wurde keine Webseite für die Google Statistiken angegeben (Im Tab Parameter eintragen!)"
+msgstr ""
 
 msgid "No website selected!"
-msgstr "Keine Webseite ausgewählt!"
+msgstr ""
 
 msgid "The file %s cannot be created. Please make sure that the file rights allow writing in the following folder: %s"
-msgstr "Datei %s kann nicht erstellt werden. Bitte stellen Sie sicher, dass Schreibrechte für den Ordner %s bestehen."
+msgstr ""
+
+msgid "Problem with folder rights on %s"
+msgstr ""
 

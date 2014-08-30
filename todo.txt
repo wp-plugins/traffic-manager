@@ -1,3 +1,0 @@
-Refresh du graph toutes les 2 minutes
-Shortcode pour afficher le graph cotÃ© front
-Exclure que certaines catÃ©gory de admin
