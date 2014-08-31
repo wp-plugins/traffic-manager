@@ -19,7 +19,6 @@ You may:
 
 * see statistics on users browsing your website; 
 * see statistics on web crawler;
-* see statistics on web crawler;
 * inform Google, Bing, etc. when your site is updated; 
 * geolocate the visits on your site;
 * configure your statistics cookies to be in conformity with the CNIL regulations;
@@ -119,4 +118,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:0886915af9d4a0ca360e1a303280056de8669e75
+InfoVersion:6d353281d265e3ead2db3f4823dc7f440765d318

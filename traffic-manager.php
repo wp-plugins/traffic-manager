@@ -2,7 +2,7 @@
 /**
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
-Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated; </li><li>geolocate the visits on your site;</li><li>configure your statistics cookies to be in conformity with the CNIL regulations;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
+Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated; </li><li>geolocate the visits on your site;</li><li>configure your statistics cookies to be in conformity with the CNIL regulations;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
 Version: 1.4.0
 Framework: SL_Framework
 Author: SedLex
