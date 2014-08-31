@@ -65,11 +65,14 @@ Have fun !
 1. Statistics on the web traffic
 2. Distribution of the OS and browser
 3. Details on connections
+4. Geolocation - World map
+5. Geolocation - Country map (many maps are included)
 
 == Changelog ==
 
 = 1.4.0 =
 * NEW: The graph are now entirely generate with elycharts/raphael javascript library
+* NEW: Geolocation features
 
 = 1.3.1 =
 * BUG: typo error
@@ -113,4 +116,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:64147b633117b73524879d80b856bffc70b4b83a
+InfoVersion:425a2dc70813cb1f528e42043215a5403862a2ef
