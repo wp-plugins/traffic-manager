@@ -6,7 +6,7 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.9.2
+Tested up to: 3.9.3
 Stable tag: trunk
 
 You will be able to manage the Internet traffic on your website and to enhance it.
@@ -72,6 +72,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.4.1 =
+* BUG: A JS error prevent the graph to be displayed ... sorry
+
 = 1.4.0 =
 * NEW: The graph are now entirely generate with elycharts/raphael javascript library
 * NEW: Geolocation features
@@ -118,4 +121,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:6d353281d265e3ead2db3f4823dc7f440765d318
+InfoVersion:e64da8747339b3b3ce0559cc52546083ffbfed2d
