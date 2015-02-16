@@ -6,8 +6,9 @@ Author URI: http://www.sedlex.fr/
 Plugin URI: http://wordpress.org/plugins/traffic-manager/
 Tags: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Requires at least: 3.0
-Tested up to: 3.9.3
+Tested up to: 4.2
 Stable tag: trunk
+License: GPLv3
 
 You will be able to manage the Internet traffic on your website and to enhance it.
 
@@ -33,6 +34,7 @@ This plugin is compatible with multisite installation.
 
 = Localization =
 
+* Arabic (Morocco) translation provided by SedLex, mehdimazzout
 * German (Germany) translation provided by xmee.de, Textdrache, ziix.de
 * English (United States), default language
 * Spanish (Spain) translation provided by Verto, Verto Producciones
@@ -41,7 +43,7 @@ This plugin is compatible with multisite installation.
 * French (France) translation provided by SedLex, Claude, Froozeify, NEPLES, Drew
 * Italian (Italy) translation provided by SedLex, ollol, Emilio
 * Lithuanian (Lithuania) translation provided by Zydrius, ydrius
-* Polish (Poland) translation provided by Rafatokarro666
+* Polish (Poland) translation provided by Rafatokarro666, PolskieKontakty
 * Portuguese (Brazil) translation provided by CristianoLagame
 * Russian (Russia) translation provided by rad96, AnatoliyNovyk
 * Swedish (Sweden) translation provided by Arvidvinblad
@@ -71,6 +73,11 @@ Have fun !
 5. Geolocation - Country map (many maps are included)
 
 == Changelog ==
+
+= 1.4.2 =
+* BUG: Geolocalisation improved
+* NEW: icons
+* NEW: delete content on uninstall
 
 = 1.4.1 =
 * BUG: A JS error prevent the graph to be displayed ... sorry
@@ -121,4 +128,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:e64da8747339b3b3ce0559cc52546083ffbfed2d
+InfoVersion:8f8fd1a3f721fffc0b7afb75180bb4458b506b91

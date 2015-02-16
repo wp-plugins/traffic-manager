@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated; </li><li>geolocate the visits on your site;</li><li>configure your statistics cookies to be in conformity with the CNIL regulations;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.4.1
+Version: 1.4.2
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -38,7 +38,7 @@ class traffic_manager extends pluginSedLex {
 		$this->maxTime = 600 ; 
 		
 		// The structure of the SQL table if needed (for instance, 'id_post mediumint(9) NOT NULL, short_url TEXT DEFAULT '', UNIQUE KEY id_post (id_post)') 
-		$this->tableSQL = "id mediumint(9) NOT NULL AUTO_INCREMENT, count mediumint(9) NOT NULL, uniq_visit mediumint(9) NOT NULL, viewed BOOL, type VARCHAR(15), ip VARCHAR(100), browserName VARCHAR(30), browserVersion VARCHAR(100), platformName VARCHAR(30), platformVersion VARCHAR(30),  browserUserAgent VARCHAR(250), referer VARCHAR(500), page VARCHAR(100), time DATETIME, singleCookie VARCHAR(100), refreshNumber mediumint(9) NOT NULL, geolocate_state TEXT, geolocate TEXT, UNIQUE KEY id (id)" ; 
+		$this->tableSQL = "id mediumint(9) NOT NULL AUTO_INCREMENT, count mediumint(9) NOT NULL, uniq_visit mediumint(9) NOT NULL, viewed BOOL, type VARCHAR(15), ip VARCHAR(100), browserName VARCHAR(30), browserVersion VARCHAR(100), platformName VARCHAR(30), platformVersion VARCHAR(30),  browserUserAgent VARCHAR(250), referer VARCHAR(500), page VARCHAR(500), time DATETIME, singleCookie VARCHAR(100), refreshNumber mediumint(9) NOT NULL, geolocate_state TEXT, geolocate TEXT, UNIQUE KEY id (id)" ; 
 
 		// The name of the SQL table (Do no modify except if you know what you do)
 		$this->table_name = $wpdb->prefix . "pluginSL_" . get_class() ; 
@@ -106,6 +106,20 @@ class traffic_manager extends pluginSedLex {
 		} else {
 			$wpdb->query("DROP TABLE ".$wpdb->prefix . "pluginSL_" . 'traffic_manager' ) ; 
 		}
+		
+		// DELETE FILES if needed
+		//SLFramework_Utils::rm_rec(WP_CONTENT_DIR."/sedlex/my_plugin/"); 
+		$plugins_all = 	get_plugins() ; 
+		$nb_SL = 0 ; 	
+		foreach($plugins_all as $url => $pa) {
+			$info = pluginSedlex::get_plugins_data(WP_PLUGIN_DIR."/".$url);
+			if ($info['Framework_Email']=="sedlex@sedlex.fr"){
+				$nb_SL++ ; 
+			}
+		}
+		if ($nb_SL==1) {
+			SLFramework_Utils::rm_rec(WP_CONTENT_DIR."/sedlex/"); 
+		}
 	}
 
 	/**====================================================================================================================================================
@@ -123,6 +137,8 @@ class traffic_manager extends pluginSedLex {
 			$wpdb->query("ALTER TABLE ".$this->table_name." ADD geolocate_state TEXT;");
 			$wpdb->query("ALTER TABLE ".$this->table_name." ADD geolocate TEXT;");
 		}  
+		// This update aims at increasing the size of the size of the page field
+		$wpdb->query("ALTER TABLE `wp_pluginSL_traffic_manager` CHANGE `page` `page` VARCHAR(500)") ;
 	}
 	
 	
@@ -193,10 +209,10 @@ class traffic_manager extends pluginSedLex {
 					$rus = @unserialize($r->geolocate) ; 
 					if (is_array($rus)){
 						$first = false ; 
-						echo $rus['countryCode'].':'.$r->nombre ; 
+						echo '"'.$rus['countryCode'].'":'.$r->nombre ; 
 					}
 				}
-				echo "};\r\n"
+				echo "};\r\n" ; 
 			?>
 				jQuery(function(){
 					jQuery('#geolocate_show_world').vectorMap({
@@ -238,7 +254,7 @@ class traffic_manager extends pluginSedLex {
 					$rus = @unserialize($r->geolocate) ; 
 					if (is_array($rus)){
 						$first = false ; 
-						echo $rus['countryCode'].':'.$r->nombre ; 
+						echo '"'.$rus['countryCode'].'":'.$r->nombre ; 
 					}
 				}
 				echo "};\r\n"
@@ -249,7 +265,7 @@ class traffic_manager extends pluginSedLex {
 						backgroundColor: '#A1A1A1',
 						series: {
 						    regions: [{
-						      values: gdpData,
+						      values: gdpData_europe,
 							  hoverOpacity: 0.7,
     						  hoverColor: false,
 						      scale: ['#C8EEFF', '#000066'],
@@ -257,7 +273,7 @@ class traffic_manager extends pluginSedLex {
 						    }]
 						},
 						onRegionLabelShow: function(e, el, code){
-						    el.html(el.html()+' ('+gdpData[code]+')');
+						    el.html(el.html()+' ('+gdpData_europe[code]+')');
 						}
 					});
 				}) ; 
@@ -272,7 +288,7 @@ class traffic_manager extends pluginSedLex {
 			foreach ($state as $st) {
 				$this->add_js(plugin_dir_url("/").'/'.str_replace(basename( __FILE__),"",plugin_basename( __FILE__)) .'js/jquery-jvectormap-'.$st.'.js') ; 
 				ob_start();
-					$results = $wpdb->get_results("SELECT geolocate, count(*) as nombre FROM ".$this->table_name." WHERE type='single' AND geolocate_state != '' AND time BETWEEN '".date_i18n('Y-m-d 0:0:0', strtotime(date_i18n("Y-m-d").' -'.$this->get_param('local_keep_detailed_info').' day'))."' AND '".date_i18n('Y-m-d H:i:s')."' GROUP BY geolocate") ; 
+					$results = $wpdb->get_results("SELECT geolocate, count(*) as nombre FROM ".$this->table_name." WHERE type='single' AND geolocate_state != '' AND time BETWEEN '".date_i18n('Y-m-d 0:0:0', strtotime(date_i18n("Y-m-d").' -'.$this->get_param('local_keep_detailed_info').' day'))."' AND '".date_i18n('Y-m-d H:i:s')."' GROUP BY geolocate ORDER BY nombre DESC ") ; 
 					// markers
 					echo "\r\nvar markers_".sha1($st)." = [\r\n" ; 
 					$first = true;
@@ -328,7 +344,7 @@ class traffic_manager extends pluginSedLex {
       							  values: size_<?php echo sha1($st) ; ?>
       						    },{
 								  attribute: 'r',
-      							  scale: [4, 40],
+      							  scale: [2, 40],
       							  values: size_<?php echo sha1($st) ; ?>
 								}]
 							}
@@ -2887,9 +2903,15 @@ class traffic_manager extends pluginSedLex {
 			if (is_null($ip)){
 				$ip = explode(",", $this->getRemoteAddress(false)) ; 
 				$ip=$ip[0] ;
+				$ip = "&ip=".$ip;
+
+			} else {
+				if ($ip!="") {
+					$ip = "&ip=".$ip ; 
+				}
 			}
 			if ($this->get_param('geolocate_ipinfodb_key')!="") {
-				$result_geo_xml = @file_get_contents("http://api.ipinfodb.com/v3/ip-city/?key=".trim($this->get_param('geolocate_ipinfodb_key'))."&format=xml&ip=".$ip) ; 
+				$result_geo_xml = @file_get_contents("http://api.ipinfodb.com/v3/ip-city/?key=".trim($this->get_param('geolocate_ipinfodb_key'))."&format=xml".$ip) ; 
 				
 				if ($result_geo_xml!==false){
 					

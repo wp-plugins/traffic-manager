@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-04-07T16:22:48+00:00\n"
+"PO-Revision-Date: 2014-12-11T08:12:14+00:00\n"
 "Last-Translator: Rafatokarro666 <rafal.tokarski@o2.pl>\n"
+"Last-Translator: PolskieKontakty <polskiekontakty.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,14 +147,11 @@ msgstr "Wystąpił błąd podczas tworzenia kolejnej mapy witryny : %s"
 msgid "The last sitemap has been generated on %s."
 msgstr "Ostatnia mapa witryny została wygenerowana w %s."
 
-msgid "You may see your sitemap at %s."
-msgstr ""
-
 msgid "How many posts and pages will be included in this file?"
 msgstr "Jak wiele postów i stron będzie zawartych w tym pliku?"
 
 msgid "If you have too many posts, set this number to 1000 for instance in order to avoid any memory issue. If you set this number to 0, all posts will be included."
-msgstr "Jeśli masz zbyt wiele postów, ustaw tę liczbę na przykład na 1000, w celu uniknięcia problemów z  pamięcią. Jeśli ustawisz tę liczbę na 0, wszystkie posty strony będą uwzględnione."
+msgstr "Jeśli masz zbyt wiele postów, ustaw tę liczbę na przykład na 1000, w celu uniknięcia problemów z pamięcią. Jeśli ustawisz tę liczbę na 0, wszystkie posty strony będą uwzględnione."
 
 msgid "Do you want to notify %s when the sitemap is updated?"
 msgstr "Chcesz powiadomić %s gdy mapa witryny jest zaktualizowana?"
@@ -340,4 +338,13 @@ msgstr "Plik %s nie może zostać utworzony. Prosimy upewnić się, że uprawnie
 
 msgid "Problem with folder rights on %s"
 msgstr "Problem z uprawnieniami folderu w %s"
+
+msgid "%s visits"
+msgstr "%s odwiedzin"
+
+msgid "Accept"
+msgstr "Akcepuj"
+
+msgid "Refuse"
+msgstr "Odrzuć"
 
