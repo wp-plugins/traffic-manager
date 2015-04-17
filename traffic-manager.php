@@ -3,7 +3,7 @@
 Plugin Name: Traffic Manager
 Plugin Tag: traffic, stats, google, analytics, sitemaps, sitemaps.xml, bing, yahoo
 Description: <p>You will be able to manage the Internet traffic on your website and to enhance it.</p><p>You may: </p><ul><li>see statistics on users browsing your website; </li><li>see statistics on web crawler;</li><li>inform Google, Bing, etc. when your site is updated; </li><li>geolocate the visits on your site;</li><li>configure your statistics cookies to be in conformity with the CNIL regulations;</li><li>configure Google Analytics;</li><li>add sitemap.xml information on your website;</li></ul><p>This plugin is under GPL licence</p>
-Version: 1.4.2
+Version: 1.4.3
 Framework: SL_Framework
 Author: SedLex
 Author Email: sedlex@sedlex.fr
@@ -898,7 +898,7 @@ class traffic_manager extends pluginSedLex {
 					<?php }	?>
 														
 					function acceptGoogleCookies() {
-						UserWebStat_sC("whatChoiceForGoogleCookies","ACCEPT_COOKIE",30) ; 
+						UserWebStat_sC_g("whatChoiceForGoogleCookies","ACCEPT_COOKIE",30) ; 
 						jQuery('#infoGoogleCookies').remove() ;
 						
 						jQuery(".google_traffic_cookies_allow").hide() ; 
@@ -906,15 +906,36 @@ class traffic_manager extends pluginSedLex {
 					}
 					
 					function refusGoogleCookies() {
-						UserWebStat_sC("whatChoiceForGoogleCookies","REFUS_COOKIE",30) ; 
+						UserWebStat_sC_g("whatChoiceForGoogleCookies","REFUS_COOKIE",30) ; 
 						jQuery('#infoGoogleCookies').remove() ;
 						
 						jQuery(".google_traffic_cookies_allow").show() ; 
 						jQuery(".google_traffic_cookies_refuse").hide() ; 
 					}
 					
+					function UserWebStat_gC_g(name) {
+						var nameEQ = name + "=";
+						var ca = document.cookie.split<?php $a='avoid problem with deprecated function';?>(';');
+						for(var i=0; i < ca.length;i++) {
+							var c = ca[i];
+							while (c.charAt(0)==' ') c = c.substring(1,c.length);
+							if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+						}
+						return null;
+					}
+					
+					function UserWebStat_sC_g(name,value,days) {
+						if (days) {
+							var date = new Date();
+							date.setTime(date.getTime()+(days*24*60*60*1000));
+							var expires = "; expires="+date.toGMTString();
+						}
+						else var expires = "";
+						document.cookie = name+"="+value+expires+"; path=/";
+					}
+					
 					function whatChoiceForGoogleCookies() {
-						var choix = UserWebStat_gC("whatChoiceForGoogleCookies") ; 
+						var choix = UserWebStat_gC_g("whatChoiceForGoogleCookies") ; 
 						if (choix==null) {
 							return "NO_CHOICE" ; 
 						}

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-12-10T18:42:50+00:00\n"
+"PO-Revision-Date: 2015-02-17T09:39:04+00:00\n"
 "Last-Translator: SedLex <http://www.sedlex.fr>\n"
 "Last-Translator: Limych <http://khrolenok.ru/>\n"
 "Last-Translator: Pacifik <http://www.androiddeveloper.ru>\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Last-Translator: vyachek <vyachek@op.pl>\n"
 "Last-Translator: Copyright <http://belfast.by>\n"
 "Last-Translator: Oleg <1uham@rambler.ru>\n"
+"Last-Translator: MegaJeme <megajeme@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -242,7 +243,7 @@ msgid "Send to the author of the plugin"
 msgstr "Отправить автору плагина"
 
 msgid "You may add a new translation hereafter (Please note that it is recommended to send your translation to the author so that he would be able to add your translation to the future release of the plugin !)"
-msgstr "Тут вы можете создать свой язык, если для него нет перевода и перевести  &#039;SL framework&#039; на ваш родной язык и отправить его автору плагина."
+msgstr "Тут вы можете создать свой язык, если для него нет перевода и перевести &#039;SL framework&#039; на ваш родной язык и отправить его автору плагина."
 
 msgid "Add"
 msgstr "Добавить"
@@ -444,4 +445,10 @@ msgstr "Файл %s нельзя переименовать. У вас не до
 
 msgid "The file %s cannot be modified. You should have a problem with file permissions or security restrictions."
 msgstr "Файл %s нельзя переименовать. У вас не достаточно прав для этого."
+
+msgid "About SL plugins..."
+msgstr "О плагинах SL..."
+
+msgid "Location of the SL plugins"
+msgstr "Расположение плагинов SL"
 

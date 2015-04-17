@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-09-10T15:44:21+00:00\n"
+"PO-Revision-Date: 2015-03-13T17:19:23+00:00\n"
 "Last-Translator: Mehdi <behzadi724@gmail.com>\n"
 "Last-Translator: AhmadWayfarer <http://7eshop.ir>\n"
 "Last-Translator: eminem <>\n"
@@ -12,6 +12,7 @@ msgstr ""
 "Last-Translator: Arashbytranslate.parsijoo.ir <http://arash-ne.ir>\n"
 "Last-Translator: Arash..by...translate.parsijoo.ir <http://arash-ne.ir>\n"
 "Last-Translator: Arash...by...translate.parsijoo.ir <http://arash-ne.ir>\n"
+"Last-Translator: shahinsalek <shst69@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -360,7 +361,7 @@ msgid "Contact the author"
 msgstr "تماس با نویسنده"
 
 msgid "Your email:"
-msgstr "ایمیل:"
+msgstr "ایمیل شما:"
 
 msgid "Useful... so that the author will be able to anwser you."
 msgstr "مفید بود... برای این که نویسنده قادر به پاسخ شما باشد."
@@ -432,7 +433,7 @@ msgid "(if your name/pseudo is already in the list, there is no need to fill thi
 msgstr "(اگر نام شما در لیست هست، نیازی به ورود آن ندارید)"
 
 msgid "About SL plugins..."
-msgstr "دربارهSL plugins"
+msgstr "درباره اس ال پلاگین"
 
 msgid "Location of the SL plugins"
 msgstr "مكانSL plugins"
@@ -454,4 +455,7 @@ msgstr "در قسمت تنظيمات"
 
 msgid "Choose a media"
 msgstr "انتخاب يك رسانه"
+
+msgid "The URL is not a media file."
+msgstr "این آدرس شامل فایل مدیا نمی باشد."
 

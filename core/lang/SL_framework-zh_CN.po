@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-02-16T10:43:51+00:00\n"
+"PO-Revision-Date: 2015-03-04T08:43:28+00:00\n"
 "Last-Translator: 1231 <1231>\n"
 "Last-Translator: OWenT <http://www.owent.net>\n"
 "Last-Translator: peteryeung <http://winplus.tk>\n"
@@ -442,4 +442,10 @@ msgstr "这不是强制性的! 但是这表明您喜欢我的插件, 这会让�
 
 msgid "The following plugins have been developed by the author and are not yet been installed:"
 msgstr "以下由当前作者开发的插件您可能会感兴趣(未被安装)"
+
+msgid "Standard"
+msgstr "标准"
+
+msgid "under Plugins"
+msgstr "根据插件"
 

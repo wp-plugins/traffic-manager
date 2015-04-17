@@ -74,6 +74,9 @@ Have fun !
 
 == Changelog ==
 
+= 1.4.3 =
+* BUG: Bug for Google only tracking and CNIL configuration
+
 = 1.4.2 =
 * BUG: Geolocalisation improved
 * NEW: icons
@@ -128,4 +131,4 @@ Have fun !
 Visit http://www.sedlex.fr/cote_geek/
  
  
-InfoVersion:8f8fd1a3f721fffc0b7afb75180bb4458b506b91
+InfoVersion:7252e0c243a7b88898208e81d0aaa3ebafd093fe
